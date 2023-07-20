@@ -3,6 +3,9 @@ var Router = require('./Components/router')
 window.router = new Router()
 // Router ist global bekannt und kann überall genutzt werden
 
+var Appstatus = require('./Model/appstatus')
+window.appstatus = new Appstatus()
+
 const io = require('socket.io-client')
 window.socket = io();
 
@@ -16,6 +19,6 @@ router.addView('welcome', welcomeComponent);
 
 //Startsteite
 router.gotoView('welcome');
-console.log("Los geht's!!!!!! ")
+console.log("Willkommen zur Projektwoche 2023!")
 
 
