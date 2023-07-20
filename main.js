@@ -18,4 +18,6 @@ router.addView('welcome', welcomeComponent);
 router.gotoView('welcome');
 console.log("Los geht's!!!!!! ")
 
+// Hallo Ingo!!
+
 
