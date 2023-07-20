@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.2",
+    "socket.io-client": "^4.6.2"
+  },
+  "scripts": {
+    "nodemon": "nodemon server.js",
+    "watchify": "watchify main.js -o ./public/bundle.js"
+  }
+}
