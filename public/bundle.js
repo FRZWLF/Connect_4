@@ -2293,6 +2293,8 @@ router.gotoView('welcome');
 console.log("Los geht's!!!!!! ")
 
 // Zeile 21 ergänzt IB
+// Hallo Ingo!!
+
 
 
 },{"./Components/WelcomeComponent":5,"./Components/router":6,"socket.io-client":32}],8:[function(require,module,exports){
