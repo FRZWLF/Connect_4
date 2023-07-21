@@ -30,4 +30,4 @@ node_modules
 
 # Ergänzt IB
 public/bundle.js
-package_lock.json
+package-lock.json
