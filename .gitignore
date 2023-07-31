@@ -31,3 +31,5 @@ node_modules
 # Ergänzt IB
 public/bundle.js
 package-lock.json
+
+Test.js
