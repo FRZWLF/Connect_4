@@ -2,7 +2,7 @@ const fs = require('fs');
 class UserList {
     constructor() {
         // Store the provided filename as a property of the instance
-        this.file = fs.readFileSync("./userlist.json", "utf8");
+        this.file = fs.readFileSync("./Model/userlist.json", "utf8");
         this.userlist = JSON.parse(this.file)
     }
     // adds a User into the existing list and saves changes into userlist.json
@@ -10,7 +10,7 @@ class UserList {
         try {
             this.userlist[user.username] = user
             const liststring = JSON.stringify(this.userlist)
-            fs.writeFileSync("./userlist.json", liststring)
+            fs.writeFileSync("./Model/userlist.json", liststring)
         }
 
         catch (err) {
@@ -24,18 +24,8 @@ class UserList {
     }
 
     containsUser(username){
-
-        for(let i=0 ; i< this.userlist.length ; i++){
-            if(username == userlist[i].username){
-                return false
-            }
-
-            
-        }
-        return true
-
     
-
+        return Object.hasOwn(this.userlist, username)
     }
 }
 module.exports = UserList

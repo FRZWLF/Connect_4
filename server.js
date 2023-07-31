@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
   
     
         let answer = userList.containsUser(data.username)
-        if(answer){
+        if(!answer){
             userList.addUser(data)
         }
         socket.emit("regisanswer",answer)

@@ -19,11 +19,10 @@ router.addView('welcome', welcomeComponent);
 
 var registrationComponent = require("./Components/registrationComponent")
 var registrationcomponent = new registrationComponent()
-router.addView("registration", registrationcomponent)
+router.addView("registrierung", registrationcomponent)
 
 //Startsteite
-router.gotoView('welcome');
-console.log("Willkommen zur Projektwoche 2023!")
+
 
 
 
@@ -38,4 +37,7 @@ router.addView('spielregeln', spielregelnComponent)
 var ImpressumComponent = require('./Components/ImpressumComponent')
 var impressumComponent = new ImpressumComponent()
 router.addView('impressum', impressumComponent)
+
+router.gotoView('spielregeln');
+console.log("Willkommen zur Projektwoche 2023!")
 

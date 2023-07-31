@@ -38,20 +38,22 @@ class RegistrationComponent {
             let pwHash = hash.digest('hex')
 
             const user = new User(username, pwHash, firstname, surname, email)
-            alert(JSON.stringify(user))
 
             socket.emit("registration", user)
 
             socket.on("regisanswer", (answer) => {
                 if (answer) {
-                    alert("User wurde angelegt")
-                } else {
                     alert("Registration fehlgeschlagen")
+                } else {
+                    alert("User wurde angelegt")
                 }
             })
 
 
 
+        }
+        else{
+            alert("Passwörter sind ungleich!")
         }
 
     }
