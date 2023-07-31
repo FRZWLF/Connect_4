@@ -21,4 +21,6 @@ router.addView('welcome', welcomeComponent);
 router.gotoView('welcome');
 console.log("Willkommen zur Projektwoche 2023!")
 
+//wow, Dies ist eine Änderung von Marvin!
+
 
