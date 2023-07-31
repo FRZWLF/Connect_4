@@ -22,7 +22,8 @@ router.gotoView('welcome');
 console.log("Willkommen zur Projektwoche 2023!")
 
 //ein lustiger Kommentar
+//hallo wie geht es dir
+
 //wow, Dies ist eine Änderung von Marvin!
-
-
 // Test Comment to be deleted
+//hi
