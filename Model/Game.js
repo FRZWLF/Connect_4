@@ -28,8 +28,7 @@ module.exports = class Game {
   moveGueltig(user, spalte) {
     if(!this.gewinnStatus) {
       if(!this.checkGiveUp(spalte)) {
-        this.move(user, spalte)
-        return 1
+        return this.move(user, spalte)
       } else {
         return 0
       }
@@ -37,7 +36,7 @@ module.exports = class Game {
       console.log("Unentschieden")
       return 0
     } else {
-      console.log(`Player ${user} winner`);
+      console.log(`Player ${this.gewinnStatus} winner`);
       return 0
     } 
   }
@@ -59,8 +58,13 @@ module.exports = class Game {
         } else {
           this.aktiverSpieler = this.user1
         }
-        this.checkWinner(amZug)
-        return
+
+        if(this.checkWinner(amZug)) {
+          return false
+        } else {
+          return true
+        }
+       
       }
     }
   }
@@ -69,10 +73,8 @@ module.exports = class Game {
     //horizontally
     for (let zeile = 0; zeile < this.maxZeile; zeile++) {
       for (let spalte = 0; spalte < this.maxSpalte - 3; spalte++) {
-        if (this.spielfeld[zeile][spalte] == 0) {
-          console.log("test1");
           if (this.spielfeld[zeile][spalte] === playerID && this.spielfeld[zeile][spalte + 1] === playerID && this.spielfeld[zeile][spalte + 2] === playerID && this.spielfeld[zeile][spalte + 3] === playerID) {
-            console.log("test1");
+
             if(playerID == 1) {
               this.gewinnStatus = this.user1;
             } else {
@@ -80,30 +82,31 @@ module.exports = class Game {
             }
             return true;
           }
-        }
+        
       }
     }
     //vertically
     for (let spalte = 0; spalte < this.maxSpalte; spalte++) {
       for (let zeile = 0; zeile < this.maxZeile - 3; zeile++) {
-        if (this.spielfeld[zeile][spalte] == 0) {
+
           if (this.spielfeld[zeile][spalte] === playerID && this.spielfeld[zeile + 1][spalte] === playerID && this.spielfeld[zeile + 2][spalte] === playerID && this.spielfeld[zeile + 3][spalte] === playerID) {
-            console.log("test2");
+
             if(playerID == 1) {
               this.gewinnStatus = this.user1;
             } else {
               this.gewinnStatus = this.user2;
             }
+            console.log(this.gewinnStatus)
             return true;
           }
-        }
+        
       }
     }
     //anti diagonally
     for (let zeile = 0; zeile < this.maxZeile - 3; zeile++) {
       for (let spalte = 0; spalte < this.maxSpalte - 3; spalte++) {
-        if (this.spielfeld[zeile][spalte] == 0) {
           if (this.spielfeld[zeile][spalte] === playerID && this.spielfeld[zeile + 1][spalte + 1] === playerID && this.spielfeld[zeile + 2][spalte + 2] === playerID && this.spielfeld[zeile + 3][spalte + 3] === playerID) {
+     
             if(playerID == 1) {
               this.gewinnStatus = this.user1;
             } else {
@@ -111,14 +114,15 @@ module.exports = class Game {
             }
             return true;
           }
-        }
+        
       }
     }
     //diagonally
     for (let zeile = 3; zeile < this.maxZeile; zeile++) {
       for (let spalte = 0; spalte < this.maxSpalte - 3; spalte++) {
-        if (this.spielfeld[zeile][spalte] == 0) {
+
           if (this.spielfeld[zeile][spalte] === playerID && this.spielfeld[zeile - 1][spalte + 1] === playerID && this.spielfeld[zeile - 2][spalte + 2] === playerID && this.spielfeld[zeile - 3][spalte + 3] === playerID) {
+
             if(playerID == 1) {
               this.gewinnStatus = this.user1;
             } else {
@@ -126,14 +130,13 @@ module.exports = class Game {
             }
             return true;
           }
-        }
+        
       }
     }
     if(this.unentschieden()){
       this.gewinnStatus = "unentschieden"
       return true
     }
-   
     return false;
   }
 
