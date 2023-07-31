@@ -27,31 +27,24 @@ module.exports = class Game {
 
   moveGueltig(user, spalte) {
     if(!this.gewinnStatus) {
-      if(!this.checkGiveUp(spalte)) {
-        return this.move(user, spalte)
-      } else {
-        return 0
-      }
-    } else if (this.gewinnStatus == "unentschieden") {
-      console.log("Unentschieden")
-      return 0
+      if (user != this.aktiverSpieler) return false
+      if (this.spielfeld[0][spalte] != 0) return false
+      return true
     } else {
-      console.log(`Player ${this.gewinnStatus} winner`);
-      return 0
-    } 
+      return false
+    }
   }
 
   move(user, spalte) {
     let amZug = this.getUserNummer(user)
 
-    if (user != this.aktiverSpieler) {
-      console.error("Nicht am Zug.")
-      return
-    }
+    if(!this.moveGueltig(user, spalte)) return false
 
     for (let zeile = this.maxZeile - 1; zeile >= 0; zeile--) {
-      if (this.spielfeld[zeile][spalte] == 0) {
+      if (this.spielfeld[zeile][spalte] == 0 && spalte < this.maxSpalte) {
         this.spielfeld[zeile][spalte] = amZug;
+
+        this.checkWinner(amZug)
 
         if (amZug == 1) {
           this.aktiverSpieler = this.user2
@@ -59,12 +52,7 @@ module.exports = class Game {
           this.aktiverSpieler = this.user1
         }
 
-        if(this.checkWinner(amZug)) {
-          return false
-        } else {
-          return true
-        }
-       
+        break
       }
     }
   }
@@ -146,21 +134,17 @@ module.exports = class Game {
         return false
         }
     }
-
     return true
   }
 
   checkGiveUp(user) {
-    if (user == this.aktiverSpieler) {
       console.log(`Player ${user} gave up.`)
       if(user == this.user1) {
-        this.gewinnStatus = this.user1;
-      } else {
         this.gewinnStatus = this.user2;
+      } else {
+        this.gewinnStatus = this.user1;
       }
       return true;
-    }
-    return false
   }
 
 }
