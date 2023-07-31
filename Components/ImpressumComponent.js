@@ -5,7 +5,9 @@ class ImpressumComponent {
         var text = /*html*/`
     <style>
         h1 {
-            text-align: center;
+            text-align: left;
+            width: 80%;
+            margin: 1em auto; 
             }
         .impressum {
             hyphens: auto; 
@@ -18,51 +20,30 @@ class ImpressumComponent {
     </style>
      <h1>Impressum</h1>
 
-     <h1> Allgemeine Hinweise </h1>
      <p class=impressum>
-     Das Impressum gilt für die zentralen Seiten des Webauftritts der Ernst-Abbe-Hochschule Jena sowie für die Seiten der Fachbereiche dieser Hochschule. Weiterhin gilt es für alle Telemedien der Ernst-Abbe-Hochschule Jena. Die Redaktion der Seiten der Fachbereiche sowie der Seiten der Telemedien obliegt den verantwortlichen Personen des jeweiligen Bereiches.
-     <br>Die Ernst-Abbe-Hochschule Jena ist eine Körperschaft des öffentlichen Rechts und wird durch den Rektor, Prof. Dr. Steffen Teichert, vertreten.​
+     Dieses Impressum gilt für die Single Page Application. 
     </p>
 
 
 
-
-
-
-
-
-
-
      
-     <h1> Hochschule </h1>
+     <h1> Inhalte der Seite  </h1>
          <p class=impressum>
-            Ernst-Abbe-Hochschule Jena
-
+         4-Gewinnt-Spiel 
          </p>
-     <h1> Verantwortlicher </h1>
+    
+         <h1> Verantwortliche für die Entwicklung dieser Seite </h1>
         <p class=impressum>
 
-
+        Teilnehmer des Moduls „Webprogrammierung“ im Sommersemester 2023 
         </p>
-     <h1> Anschrift </h1>
+     <h1>Verantwortlicher Professor   </h1>
          <p class=impressum>
-
-
+        Prof. Dr. Thomas Wöhner  <br> 
+        Telefon : +49 3641 205 498 <br>
+        Telefax	: +49 3641 205 551<br>
+        E-Mail : thomas.woehner@eah-jena.de<br>
          </p>
-     <h1> Rechtsform </h1>
-        <p class=impressum>
-
-
-        </p>
-     <h1> Kontaktdaten </h1>
-        <p class=impressum>
-
-
-        </p>
-
-
-
-
 
     `
         return (text);

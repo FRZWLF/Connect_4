@@ -6,6 +6,7 @@ class SpielregelnComponent {
     <style>
         h1 {
             text-align: center;
+         
             }
         .p1 {
             hyphens: auto; 
@@ -18,7 +19,9 @@ class SpielregelnComponent {
     </style>
 
 <h1>Ein Spiel für zwei Spieler</h1>
-    <p class="p1">
+<div style="float:left;"> <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Connect4_Wins.PNG" > </div>
+
+<p class="p1">
         Mach Dich bereit für geistiges Kräftemessen,
         bei dem Sieg oder Niederlage ganz dicht beieinander liegen!
         Du brauchst nur vier Chips in eine Reihe zu bringen,
@@ -40,7 +43,6 @@ class SpielregelnComponent {
         senkrecht in einer Reihe zum liegen kommen. 
         Der Spieler, dem das zuerst gelingt, der erhält einen Punkt oder hat gewonnen. 
      </p>
-
 <br>
 <h1>SPIELABLAUF</h1>
     <p class="p1">
