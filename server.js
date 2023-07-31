@@ -4,13 +4,32 @@ const http = require('http')
 const server = http.createServer(app)
 const SocketIO = require('socket.io')
 const io = SocketIO(server)
+const UserList = require('./Model/userlist.js');
+
 
 var port = 5555
+let userList = new UserList()
+
+
 
 io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
+
+
+    socket.on("registration",(data) =>{
+    
+  
+    
+        let answer = userList.containsUser(data.username)
+        if(!answer){
+            userList.addUser(data)
+        }
+        socket.emit("regisanswer",answer)
+    })
 }
 )
+
+
 
 // Server lauscht
 server.listen(port, () => console.log("http://localhost:5555/index.html"));
@@ -23,5 +42,3 @@ app.get("*", function (req, res) {
         if (err) res.status(404).send('Du Depp! Die Seite gibt es garnicht!');
     });
 });
-
-
