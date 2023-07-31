@@ -1,4 +1,4 @@
-class Game {
+module.exports = class Game {
 
   //Model
   constructor(user1, user2, maxZeile, maxSpalte) {
