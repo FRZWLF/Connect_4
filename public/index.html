@@ -2,15 +2,34 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>4 Gewinnt</title>
         <link rel="stylesheet" type="text/css" href="spa.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+      
+	    <h1 id="h1">4 Gewinnt</h1>
     </head>
 
-    <body>
-	    <h1 id="h1"></h1>
-	    <main id="appcontent"></main>   
+    <body>  
+    
+        <ul>
+            <li><a href="javascript: router.gotoView('welcome')"> Startseite </a></li>
+            <li><a href="javascript: router.gotoView('login')"> Login </a></li>
+            <li><a href="javascript: router.gotoView('registrierung')"> Registrierung </a></li>
+            <li><a href="javascript: router.gotoView('spielregeln')"> Spielregeln</a></li>
+        </ul>
+        
+
+        
+        
+        
+        <main id="appcontent"></main> 
+        
+        <footer>
+            <p><a href="javascript: router.gotoView('impressum')">Impressum</a></p>
+            <p class="Year"><script>document.write(new Date().getFullYear())</script></p>
+            <p class="user">Name des Spielers</p>
+        </footer>
         
         <script src="bundle.js"></script>
     </body>

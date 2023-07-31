@@ -1,8 +1,66 @@
 body {
-    background-color:	#aed8c9;
+    background-color:	#0099ff;
     font-size:14px;
     font-family:Arial;  
 }
 
 
 
+ul {
+    top:0;
+    position: fixed;
+    list-style-type: none;
+    width: 99%;
+    margin-right: 1%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    }
+
+    li {
+    float: left;
+    }
+
+    li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    }
+
+    li a:hover {
+    background-color: #998e8e;
+    }
+
+    main {
+        padding-top: 5px;
+        }
+
+footer {
+    background-color: #333;
+    padding: 14px 16px;
+    margin-right: 2%;
+    bottom: 0;
+    width: 98%;
+    text-align: center;
+    
+}
+
+    footer a {
+           
+        text-decoration: none;
+        color: white;
+                        
+      }
+
+    .Year {
+        text-decoration: none;
+        color: white;
+    }
+
+    .user {
+        text-decoration: none;
+        color: white;
+    }

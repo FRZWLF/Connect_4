@@ -24,3 +24,14 @@ console.log("Willkommen zur Projektwoche 2023!")
 
 
 // Test Comment to be deleted
+//hi
+//hallo wie geht es dir
+
+var SpielregelnComponent = require('./Components/SpielregelnComponent')
+var spielregelnComponent = new SpielregelnComponent()
+router.addView('spielregeln', spielregelnComponent)
+
+var ImpressumComponent = require('./Components/ImpressumComponent')
+var impressumComponent = new ImpressumComponent()
+router.addView('impressum', impressumComponent)
+
