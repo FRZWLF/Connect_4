@@ -32,4 +32,5 @@ node_modules
 public/bundle.js
 package-lock.json
 
+# Mehr
 Test.js
