@@ -17,6 +17,10 @@ var WelcomeComponent = require('./Components/WelcomeComponent')
 var welcomeComponent = new WelcomeComponent(2023)
 router.addView('welcome', welcomeComponent);
 
+var registrationComponent = require("./Components/registrationComponent")
+var registrationcomponent = new registrationComponent()
+router.addView("registration", registrationcomponent)
+
 //Startsteite
 router.gotoView('welcome');
 console.log("Willkommen zur Projektwoche 2023!")

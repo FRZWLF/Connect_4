@@ -1,10 +1,10 @@
 class User {
 
-    #password;
+    password;
 
     constructor(username, password, firstname, surname, email) {
         this.username = username;
-        this.#password = password;
+        this.password = password;
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
@@ -12,8 +12,8 @@ class User {
 
     setpassword(password, oldpassword) {
 
-        if (oldpassword == this.#password) {
-            this.#password = password;
+        if (oldpassword == this.password) {
+            this.password = password;
 
             return true
         }
