@@ -29,3 +29,4 @@ console.log("Willkommen zur Projektwoche 2023!")
 
 // Test Comment to be deleted
 >>>>>>> f099867b3b3dd444be6cb5610a242e45fea62b9e
+//hi
