@@ -1,4 +1,4 @@
-class Game {
+module.exports = class Game {
 
     //Model
     constructor(user1, user2, maxZeile, maxSpalte){
@@ -9,8 +9,8 @@ class Game {
         this.maxSpalte = maxSpalte
         this.spielfeld = new Array(maxZeile).fill(0).map(()=>new Array(maxSpalte).fill(0));
       }
+
       // Controller
-      
       getUserNummer(user) {
         let userNummmer
         if(user == this.user1) {
