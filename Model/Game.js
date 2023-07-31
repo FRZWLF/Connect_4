@@ -5,6 +5,7 @@ class Game {
     this.user1 = user1
     this.user2 = user2
     this.maxZeile = maxZeile
+    this.gewinnStatus = null
     this.aktiverSpieler = user1 // Anfangsspieler
     this.maxSpalte = maxSpalte
     this.spielfeld = new Array(maxZeile).fill(0).map(() => new Array(maxSpalte).fill(0));
@@ -24,6 +25,18 @@ class Game {
     return userNummmer
   }
 
+  moveGueltig(user, spalte) {
+    if(!this.gewinnStatus) {
+      if(!this.checkGiveUp(spalte)) {
+        this.move(user, spalte)
+      }
+    } else if (this.gewinnStatus == "unentschieden") {
+      console.log("Unentschieden")
+    } else {
+      console.log(`Player ${user} winner`);
+    }
+  }
+
   move(user, spalte) {
     let amZug = this.getUserNummer(user)
 
@@ -41,68 +54,102 @@ class Game {
         } else {
           this.aktiverSpieler = this.user1
         }
+        this.checkWinner(amZug)
         return
       }
     }
   }
 
-  checkWinner(maxZeile, maxSpalte, playerID) {
+  checkWinner(playerID) {
     //horizontally
-    for (zeile = 0; zeile < maxZeile; zeile++) {
-      for (spalte = 0; spalte < maxSpalte - 3; spalte++) {
-        if (spielfeld[zeile][spalte] = ' ') {
+    for (zeile = 0; zeile < this.maxZeile; zeile++) {
+      for (spalte = 0; spalte < this.maxSpalte - 3; spalte++) {
+        if (spielfeld[zeile][spalte] = '0') {
           if (spielfeld[zeile][spalte] === playerID && spielfeld[zeile][spalte + 1] === playerID && spielfeld[zeile][spalte + 2] === playerID && spielfeld[zeile][spalte + 3] === playerID) {
-            //setWinner(zeile,spalte)
+            if(playerID == 1) {
+              this.gewinnStatus = this.user1;
+            } else {
+              this.gewinnStatus = this.user2;
+            }
             return true;
           }
         }
       }
     }
     //vertically
-    for (spalte = 0; spalte < maxSpalte; spalte++) {
-      for (zeile = 0; zeile < maxZeile - 3; zeile++) {
-        if (spielfeld[zeile][spalte] = ' ') {
+    for (spalte = 0; spalte < this.maxSpalte; spalte++) {
+      for (zeile = 0; zeile < this.maxZeile - 3; zeile++) {
+        if (spielfeld[zeile][spalte] = '0') {
           if (spielfeld[zeile][spalte] === playerID && spielfeld[zeile + 1][spalte] === playerID && spielfeld[zeile + 2][spalte] === playerID && spielfeld[zeile + 3][spalte] === playerID) {
-            //setWinner(zeile,spalte)
+            if(playerID == 1) {
+              this.gewinnStatus = this.user1;
+            } else {
+              this.gewinnStatus = this.user2;
+            }
             return true;
           }
         }
       }
     }
     //anti diagonally
-    for (zeile = 0; zeile < maxZeile - 3; zeile++) {
-      for (spalte = 0; spalte < maxSpalte - 3; spalte++) {
-        if (spielfeld[zeile][spalte] = ' ') {
+    for (zeile = 0; zeile < this.maxZeile - 3; zeile++) {
+      for (spalte = 0; spalte < this.maxSpalte - 3; spalte++) {
+        if (spielfeld[zeile][spalte] = '0') {
           if (spielfeld[zeile][spalte] === playerID && spielfeld[zeile + 1][spalte + 1] === playerID && spielfeld[zeile + 2][spalte + 2] === playerID && spielfeld[zeile + 3][spalte + 3] === playerID) {
-            //setWinner(zeile,spalte)
+            if(playerID == 1) {
+              this.gewinnStatus = this.user1;
+            } else {
+              this.gewinnStatus = this.user2;
+            }
             return true;
           }
         }
       }
     }
     //diagonally
-    for (zeile = 3; zeile < maxZeile; zeile++) {
-      for (spalte = 0; spalte < maxSpalte - 3; spalte++) {
-        if (spielfeld[zeile][spalte] = ' ') {
+    for (zeile = 3; zeile < this.maxZeile; zeile++) {
+      for (spalte = 0; spalte < this.maxSpalte - 3; spalte++) {
+        if (spielfeld[zeile][spalte] = '0') {
           if (spielfeld[zeile][spalte] === playerID && spielfeld[zeile - 1][spalte + 1] === playerID && spielfeld[zeile - 2][spalte + 2] === playerID && spielfeld[zeile - 3][spalte + 3] === playerID) {
-            //setWinner(zeile,spalte)
+            if(playerID == 1) {
+              this.gewinnStatus = this.user1;
+            } else {
+              this.gewinnStatus = this.user2;
+            }
             return true;
           }
         }
       }
     }
+    if(this.unentschieden()){
+      this.gewinnStatus = "unentschieden"
+      return true
+    }
+   
     return false;
   }
 
-  checkGiveUp() {
-    if (eingabe === 'give-up') {
-      console.log("Player %d left the game.", playerID)
-      setWinner()
-      return 0;
+  unentschieden(){
+    for(spalte = 0; spalte < this.maxSpalte; spalte++){
+      if (this.spielfeld[0][spalte] == '0') {
+        return false
+        }
     }
+
+    return true
   }
 
-  setWinner() {
-
+  checkGiveUp(user) {
+    if (user == this.aktiverSpieler) {
+      console.log(`Player ${user} left the game.`)
+      if(playerID == 1) {
+        this.gewinnStatus = this.user1;
+      } else {
+        this.gewinnStatus = this.user2;
+      }
+      return true;
+    }
+    return false
   }
+
 }
