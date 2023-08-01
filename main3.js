@@ -21,15 +21,15 @@ var registrationComponent = require("./Components/registrationComponent")
 var registrationcomponent = new registrationComponent()
 router.addView("registrierung", registrationcomponent)
 
-socket.emit('create', 'user1');
+var User = require("./Model/User")
+let user = new User('Lukas', '123456', 'firstname', 'surname', 'emai@outlook.com')
+appstatus.loginUser = user
+socket.emit('create', user.username);
 
-let match = new game("user1", "user2", 6, 7)
-
-
-
+let match = new game('daniel', user.username, 8, 8)
 
 var gameComponent = require("./Components/GameComponent")
-var gamecomponent = new gameComponent(match)
+var gamecomponent = new gameComponent(user, match)
 router.addView("game", gamecomponent)
 //Startsteite
 

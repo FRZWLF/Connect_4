@@ -9,28 +9,24 @@
     </head>
 
     <body>  
-
-
-
-
-    <br>
-    
-        
+        <header>
             <ul id="MenueContent">
-                <div id = "Logout" style="display: block;">
+                <div id = "Logout" style="display: block;"> <!--  Standard NavBar  -->
                     <li><a href="javascript: router.gotoView('welcome')"> Startseite </a></li>
                     <li><a href="javascript: router.gotoView('login')"> Login </a></li>
                     <li><a href="javascript: router.gotoView('registrierung')"> Registrierung </a></li>
                     <li><a href="javascript: router.gotoView('spielregeln')"> Spielregeln</a></li>
                 </div>
                 <div id = "Login" style="display: none;">
+                    <li><a href="javascript: spielstarten()"> Lobby </a></li>
+                <div id = "Login" style="display: none;"> <!--  Eingeloggte NavBar   -->
                     <li><a href="javascript: router.gotoView('--lobby--')"> Lobby </a></li>
                     <li><a href="javascript: router.gotoView('nutzerdaten_aendern')"> Nutzerdaten ändern </a></li>
                     <li><a href="javascript: router.gotoView('spielregeln')"> Spielregeln</a></li>
-                    <li><a href="javascript: router.gotoView('logout')" onclick="logout()"> Logout </a></li>
+                    <li><a href="javascript: logout()"> Logout </a></li> 
                 </div>
             </ul>
-        
+        </header>
             
 
            
