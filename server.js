@@ -14,11 +14,6 @@ let userList = new UserList()
 let waitlist = new WaitList()
 
 
-
-
-
-
-
 io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
 
@@ -32,12 +27,10 @@ io.on("connection", (socket) => {
     
     })
     socket.on("Newplayer",(user)=>{
-        console.log(user)
-        waitlist.addUsertoWatingList(user),
-
-        socket.join(user) //?
-
-        console.log(waitlist.getUsers())
+        if(!(waitlist.getUsers().includes(user))){
+            waitlist.addUsertoWatingList(user),
+            socket.join(user) 
+        }
         socket.emit("NewWList",waitlist.getUsers())
     })
 
@@ -73,3 +66,5 @@ app.get("*", function (req, res) {
         if (err) res.status(404).send('Du Depp! Die Seite gibt es garnicht!');
     });
 });
+
+
