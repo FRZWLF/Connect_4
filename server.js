@@ -27,17 +27,17 @@ io.on("connection", (socket) => {
     
     })
 
-    socket.on("login", (pwHash, username) => {
+    socket.on("login", (pwHash, username) => { // Neu eingegebenes pwHash
         let userExists = userList.containsUser(username)
-        let loginValide = false
+        let loginValide = false // Gültigkeit des Logins
         let user
         if (userExists) {
-                user = userList.getUser(username)
+                user = userList.getUser(username) // Indikator des Objekts
                 
-                userObj = new User(user.username,user.password,user.firstname,user.surname,user.email)
+                userObj = new User(user.username,user.password,user.firstname,user.surname,user.email) // Neues UserObjekt zum Nutzen der Funktion
                 loginValide = userObj.checkpassword(pwHash)
         } 
-        socket.emit("loginAnswer", loginValide, userExists, user)
+        socket.emit("loginAnswer", loginValide, userExists, user) // An Login.js
 
     } )
 
