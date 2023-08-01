@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
         console.log(waitlist.getUsers())
         socket.emit("NewWList",waitlist.getUsers())
     })
-    
+
     socket.on("login", (pwHash, username) => { // Neu eingegebenes pwHash
         let userExists = userList.containsUser(username)
         let loginValide = false // Gültigkeit des Logins
@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
         socket.emit("loginAnswer", loginValide, userExists, user) // An Login.js
         
     })
-
+})
 
 
 

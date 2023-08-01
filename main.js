@@ -51,9 +51,6 @@ var impressumComponent = new ImpressumComponent()
 router.addView('impressum', impressumComponent)
 
 router.gotoView('waitlist');
-var Logout = require('./Components/Logout')
-var logout = new Logout()
-router.addView('logout', logout)
 
 router.gotoView('welcome');
 console.log("Willkommen zur Projektwoche 2023!")
