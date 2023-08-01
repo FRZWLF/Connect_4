@@ -18,11 +18,11 @@ class WaitlistDisplayComponent{
         router.gotoView('waitlist')
     }
     
-    getHTML(){ /*html*/`
+    getHTML(){ let text = /*html*/`
     <br>
-        <h2 id="Waiting"></h2>
+        <h2 id="Waiting">Waitingslist</h2>
     `
-    let text = this.waitinglist
+    text += this.waitinglist
        
     return text
     }
