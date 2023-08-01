@@ -17,15 +17,22 @@ io.on("connection", (socket) => {
 
 
     socket.on("registration",(data) =>{
-    
-  
-    
         let answer = userList.containsUser(data.username)
         if(!answer){
             userList.addUser(data)
         }
         socket.emit("regisanswer",answer)
     })
+
+    socket.on("create",(data) => {
+        socket.join(data)
+        console.log(data)
+    })
+
+    socket.on("beitreten", (data) => {
+        socket.join("user1")
+    })
+
 }
 )
 
