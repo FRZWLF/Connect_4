@@ -12,8 +12,8 @@ const User = require('./Model/User.js')
 var port = 5555
 var userList = new UserList()
 
-function objectify(user){
-   return new User(user.username,user.password,user.firstname,user.surname,user.email)    
+function objectify(user) {
+    return new User(user.username, user.password, user.firstname, user.surname, user.email)
 }
 
 let waitlist = new WaitList()
@@ -58,11 +58,11 @@ io.on("connection", (socket) => {
     })
 
     socket.on("updateUser", (newUser, cpwhash) => {
-       
+
 
         let oldUser = objectify(userList.getUser(newUser.username))
         console.log(oldUser)
-     
+
         if (oldUser && oldUser.checkpassword(cpwhash)) {
             // oldUser.password = newUser.password;
             // oldUser.firstname = newUser.firstname;
@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
             socket.emit("updateAnswer", false);
         }
     })
-  
+
     socket.on("zug", (user, opp, data) => {
         socket.to(opp).emit("zuggegner", user, data);
     })
