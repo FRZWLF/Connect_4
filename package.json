@@ -1,15 +1,15 @@
 {
   "dependencies": {
     "express": "^4.18.2",
-    "nodemon": "^3.0.1",
     "socket.io": "^4.6.2",
     "socket.io-client": "^4.6.2",
-    "validator": "^13.9.0",
-    "watchify": "^4.0.0"
+    "validator": "^13.9.0"
   },
   "scripts": {
     "nodemon": "nodemon server.js",
     "watchify": "watchify main.js -o ./public/bundle.js",
+    "watchify1": "watchify main2.js -o ./public/bundle2.js",
+    "watchify2": "watchify main3.js -o ./public/bundle3.js",
     "preinstall": "npm i -g browserify watchify nodemon"
   }
 }

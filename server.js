@@ -15,7 +15,6 @@ let userList = new UserList()
 io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
 
-
     socket.on("registration",(data) =>{
         let answer = userList.containsUser(data.username)
         if(!answer){
@@ -26,13 +25,11 @@ io.on("connection", (socket) => {
 
     socket.on("create",(data) => {
         socket.join(data)
-        console.log(data)
     })
 
-    socket.on("beitreten", (data) => {
-        socket.join("user1")
+    socket.on("zug", (user, opp, data) => {
+        socket.to(opp).emit("zuggegner", user, data);
     })
-
 }
 )
 

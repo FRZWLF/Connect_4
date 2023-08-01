@@ -1,20 +1,96 @@
 class GameComponent {
-    constructor(Game) {
+    constructor(user, Game) {
+        window.spielZug = this.spielZug.bind(this)
         this.game = Game
+        this.user = user
 
+
+        socket.on("zuggegner", (user, data) => {
+            this.game.move(user, data)
+            if(this.game.gewinnStatus) {
+                if(this.game.gewinnStatus == "unentschieden") {
+                    document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
+                } else {
+                    if(this.game.gewinnStatus == this.user.username) {
+                        document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
+                    } else {
+                        document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
+                    }
+
+                }
+            } 
+            var spielfeldupdated = document.getElementById("spielefeld")
+            spielfeldupdated.innerHTML = this.erzeugeSpielfeld()
+        })
     }
 
     getHTML() {
-        var spielefeld = this.erzeugeSpielfeld()
+        var body = /*html*/`
+
+        <br><br><br><br>
         
-        return spielefeld
+        <h1>Spiel</h1>
+        <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
+        `
+
+        if(this.user.username == this.game.user1) {
+            body += /*html*/`<p id="gegner"><b>Gegener:</b> ${this.game.user2}</p>`
+        } else {
+            body += /*html*/`<p id="gegner"><b>Gegener: </b> ${this.game.user1}</p>`
+        }
+
+        body += /*html*/`<p>Dein Stein:</p>`
+
+        if(this.user.username == this.game.user1) {
+           body += /*html*/`<img src="./img/1.gif">`
+        } else {
+            body += /*html*/`<img src="./img/2.gif">`
+        }
+
+        
+
+        body += this.erzeugeSpielfeld()
+        body += /*html*/`<h2 id="WinnerMessage"> </h2>`
+        return body
+    }
+
+    spielZug(spalte) {
+
+        if(this.game.moveGueltig(this.user.username, spalte)) {
+
+            this.game.move(this.user.username, spalte)
+            for(let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
+                
+            }
+
+            if(this.game.gewinnStatus) {
+                if(this.game.gewinnStatus == "unentschieden") {
+                    document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
+                } else {
+                    if(this.game.gewinnStatus == this.user.username) {
+                        document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
+                    } else {
+                        document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
+                    }
+                }
+            } 
+
+            if(this.game.user1 == this.user.username) {
+                socket.emit('zug', this.user.username, this.game.user2, spalte);
+            } else {
+                socket.emit('zug', this.user.username, this.game.user1, spalte);
+            }  
+
+            var spielfeldupdated = document.getElementById("spielefeld")
+            spielfeldupdated.innerHTML = this.erzeugeSpielfeld()
+        }      
     }
 
     erzeugeSpielfeld() {
-        var spielefeld = /*html*/`<br><br><br><br><br>`
+        var spielefeld = /*html*/`<div id="spielefeld">`
         
         for(let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
-            spielefeld += /*html*/`<button style="width:50px">`+ String(spalte+1)+ /*html*/`</button>`
+            spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" onclick="spielZug( ${spalte})"> ${spalte+1} </button>`
         }
         
         spielefeld += /*html*/`<br>`
@@ -34,8 +110,14 @@ class GameComponent {
             spielefeld += /*html*/`<br>`
         }
 
+        spielefeld += /*html*/`</div>`
+
         return spielefeld
     }
+
+
+
+
 }
 
 module.exports = GameComponent
