@@ -14,7 +14,7 @@ class WaitlistDisplayComponent{
     }
 
     spielstarten(){
-        socket.emit("Newplayer","BerndXD")
+        socket.emit("Newplayer",appstatus.loginUser.username)
         router.gotoView('waitlist')
     }
     
@@ -22,7 +22,13 @@ class WaitlistDisplayComponent{
     <br>
         <h2 id="Waiting">Waitingslist</h2>
     `
-    text += this.waitinglist
+    this.waitinglist.forEach(element => {
+        text+= element 
+        text+= /*html*/`
+            <br>
+        `
+    });
+    
        
     return text
     }

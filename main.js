@@ -50,7 +50,7 @@ var ImpressumComponent = require('./Components/ImpressumComponent')
 var impressumComponent = new ImpressumComponent()
 router.addView('impressum', impressumComponent)
 
-router.gotoView('waitlist');
+// router.gotoView('waitlist');
 var Logout = require('./Components/Logout')
 var logout = new Logout()
 router.addView('logout', logout)

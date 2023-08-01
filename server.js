@@ -27,12 +27,10 @@ io.on("connection", (socket) => {
     
     })
     socket.on("Newplayer",(user)=>{
-        console.log(user)
-        waitlist.addUsertoWatingList(user),
-
-        socket.join(user) //?
-
-        console.log(waitlist.getUsers())
+        if(!(waitlist.getUsers().includes(user))){
+            waitlist.addUsertoWatingList(user),
+            socket.join(user) 
+        }
         socket.emit("NewWList",waitlist.getUsers())
     })
     
