@@ -3,29 +3,29 @@ const User = require("../Model/User")
 const val = require(`validator`)
 
 
-
+//let user = appstatus.loginUser
 class ChangeuserdataComponent {
     constructor() {
-        let user = new User("hans", "hgsdfhgsdf", "hans", "müller", "hjdsfhsd")
-        user = appstatus.loginUser
         window.change = this.change.bind(this)
     }
-   
+
     getHTML() {
+        this.user = appstatus.loginUser
         var text = /*html*/`
         <h2> Nutzerdaten ändern </h2>
         Aktuelles password: <input type="password" id="current_password" required><br>
         Password:<input type="password" id="password" required><br>
         Password again:<input type="password" id="password2" required><br>
-        First Name:<input type="text" id="firstname"><br>
-        Surname:<input type="text" id="surname"><br>
-        E-mail:<input type="email" id="email"><br>
+        First Name:<input type="text" id="firstname" value = ${this.user.firstname}><br>
+        Surname:<input type="text" id="surname" value=${this.user.surname}><br>
+        E-mail:<input type="email" id="email" value= ${this.user.email}><br>
         <button onclick="change()" >Ändern</button>
         `
         return (text)
     }
 
     change() {
+
         let password = document.getElementById("password").value
         let password2 = document.getElementById("password2").value
         let current_password = document.getElementById("current_password").value
@@ -40,38 +40,34 @@ class ChangeuserdataComponent {
         if (password == "" || current_password == "") {
             alert("Username und Passwort muss angegeben werden")
         } else {
-            if(cpwhash == this.loginUser.pwHash) {
+           
                 if (password == password2 && val.isEmail(email)) {
                     var hash = crypto.createHash('sha256')
                     hash.update(password)
                     let pwHash = hash.digest('hex')
-    
+
                     let oldUser = appstatus.loginUser
 
                     let newUser = new User(oldUser.username, pwHash, firstname, surname, email)
 
-            
+
                     socket.emit("updateUser", newUser, cpwhash)
-    
+
                     socket.on("updateAnswer", (answer) => {
                         if (answer) {
-                            alert("Update failed")
+                            appstatus.loginUser = newUser
+                            alert("Update erfolgt!")
                         } else {
 
-                            this.loginUser.pwHash = pwHash
-                            this.loginUser.firstname = firstname
-                            this.loginUser.surname = surname
-                            this.loginUser.email = email
-                            alert("Nutzerdaten wurden geändert.")
+                           
+                            alert("Update gescheitert.")
                         }
-                    })  
+                    })
                 }
                 else {
                     alert("Passwörter sind ungleich oder die Email ist ungültig.")
                 }
-            } else {
-                alert("User wurde angelegt")
-            }
+            
         }
     }
 }
