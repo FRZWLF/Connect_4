@@ -34,6 +34,10 @@ router.addView("registrierung", registrationcomponent)
 //hi
 //hallo wie geht es dir
 
+var ChangeuserdataComponent = require("./Components/ChangeuserdataComponent")
+var changeuserdataComponent = new ChangeuserdataComponent()
+router.addView("nutzerdaten_aendern", changeuserdataComponent)
+
 var SpielregelnComponent = require('./Components/SpielregelnComponent')
 var spielregelnComponent = new SpielregelnComponent()
 router.addView('spielregeln', spielregelnComponent)

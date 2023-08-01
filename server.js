@@ -17,41 +17,11 @@ io.on("connection", (socket) => {
 
 
     socket.on("registration",(data) =>{
-    
-  
-    
         let answer = userList.containsUser(data.username)
         if(!answer){
             userList.addUser(data)
         }
         socket.emit("regisanswer",answer)
-    })
-
-    socket.on("login",(pwHash,userName)=>{
-        let userExist=  userList.containsUser(userName)
-
-
-        let loginValid=false
-        if(userExist){
-            // if(userList.getPw(userName)==pwHash) {
-
-            //     loginValid=true
-                
-
-            // }else{
-            //     loginValid=false
-
-            // }
-            let user = userList.getUser(userName)
-            loginValid = user.checkpassword(pwHash)
-
-        }
-            
-        
-
-        socket.emit("loginAnswer",loginValid, userExist, user)
-        
-
     })
 }
 )
