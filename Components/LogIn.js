@@ -29,15 +29,15 @@ class WelcomeLogIn {
 
         
         socket.emit("login",pwHash, username)
-        socket.on("loginAnswer",(loginValid,userExists, user)=>{
+        socket.on("loginAnswer",(loginValid,userExists, user)=>{ 
             if(loginValid && userExists){
                 alert("Login erfolgreich")
                 appstatus.loginUser = user
-                document.getElementById("Logout").style.display="none"
+                document.getElementById("Logout").style.display="none" // NavBar Ein-/Ausblendung steuern
                 document.getElementById("Login").style.display="block"
 
             }else if(!loginValid && userExists){
-                alert("Passwort oder Benutzername ist Falsch!")
+                alert("Passwort ist Falsch!")
             }else if(!userExists){
                 alert("Nicht registriert")
                 router.gotoView("registrierung")

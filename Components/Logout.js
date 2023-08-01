@@ -1,7 +1,7 @@
 class Logout {
 
     constructor() {
-        window.logout = this.logout.bind(this)
+        window.logout = this.logout.bind(this) // Für FUnktionszugriff
     }
 
 logout() {
@@ -11,9 +11,6 @@ logout() {
 
     router.gotoView("welcome")
     }
-
-
-
 
 }
 module.exports = Logout
