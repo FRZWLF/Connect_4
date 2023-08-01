@@ -33,7 +33,9 @@ class WelcomeLogIn {
             if(loginValid && userExists){
                 alert("Login erfolgreich")
                 appstatus.loginUser = user
-                
+                document.getElementById("Logout").style.display="none"
+                document.getElementById("Login").style.display="block"
+
             }else if(!loginValid && userExists){
                 alert("Passwort oder Benutzername ist Falsch!")
             }else if(!userExists){
