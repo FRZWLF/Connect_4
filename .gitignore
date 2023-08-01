@@ -35,3 +35,5 @@ package-lock.json
 # Mehr
 Test.js
 Testwaitinglist.js
+package.json
+model/userlist.json
