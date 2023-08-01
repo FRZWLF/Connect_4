@@ -6,10 +6,15 @@ const SocketIO = require('socket.io')
 const io = SocketIO(server)
 const UserList = require('./Model/userlist.js');
 const WaitList = require("./Model/WaitingList.js")
+const User = require('./Model/User.js')
+
 
 var port = 5555
 let userList = new UserList()
 let waitlist = new WaitList()
+
+
+
 
 
 
@@ -19,14 +24,12 @@ io.on("connection", (socket) => {
 
 
     socket.on("registration",(data) =>{
-    
-  
-    
         let answer = userList.containsUser(data.username)
         if(!answer){
             userList.addUser(data)
         }
         socket.emit("regisanswer",answer)
+    
     })
     socket.on("Newplayer",(user)=>{
 
@@ -37,9 +40,13 @@ io.on("connection", (socket) => {
 
         console.log(waitlist.getUsers())
         socket.emit("NewWList",waitlist.getUsers())
+
     })
 }
 )
+
+
+
 
 
 

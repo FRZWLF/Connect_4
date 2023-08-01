@@ -17,6 +17,10 @@ var WelcomeComponent = require('./Components/WelcomeComponent')
 var welcomeComponent = new WelcomeComponent(2023)
 router.addView('welcome', welcomeComponent);
 
+var WelcomeLogin = require('./Components/LogIn.js')
+var welcomeLogin = new WelcomeLogin(2023)
+router.addView('login', welcomeLogin);
+
 var registrationComponent = require("./Components/registrationComponent")
 var registrationcomponent = new registrationComponent()
 router.addView("registrierung", registrationcomponent)
@@ -47,5 +51,10 @@ var impressumComponent = new ImpressumComponent()
 router.addView('impressum', impressumComponent)
 
 router.gotoView('waitlist');
+var Logout = require('./Components/Logout')
+var logout = new Logout()
+router.addView('logout', logout)
+
+router.gotoView('welcome');
 console.log("Willkommen zur Projektwoche 2023!")
 

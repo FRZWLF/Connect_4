@@ -9,6 +9,10 @@
     </head>
 
     <body>  
+
+
+
+
     <br>
     
         <ul>
@@ -21,6 +25,25 @@
         </ul>
         
         
+        
+            <ul id="MenueContent">
+                <div id = "Logout" style="display: block;">
+                    <li><a href="javascript: router.gotoView('welcome')"> Startseite </a></li>
+                    <li><a href="javascript: router.gotoView('login')"> Login </a></li>
+                    <li><a href="javascript: router.gotoView('registrierung')"> Registrierung </a></li>
+                    <li><a href="javascript: router.gotoView('spielregeln')"> Spielregeln</a></li>
+                </div>
+                <div id = "Login" style="display: none;">
+                    <li><a href="javascript: router.gotoView('--lobby--')"> Lobby </a></li>
+                    <li><a href="javascript: router.gotoView('nutzerdaten_aendern')"> Nutzerdaten ändern </a></li>
+                    <li><a href="javascript: router.gotoView('spielregeln')"> Spielregeln</a></li>
+                    <li><a href="javascript: router.gotoView('logout')" onclick="logout()"> Logout </a></li>
+                </div>
+            </ul>
+        
+            
+
+           
         <main id="appcontent"></main> 
         
         <footer>
