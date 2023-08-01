@@ -5,11 +5,16 @@ const server = http.createServer(app)
 const SocketIO = require('socket.io')
 const io = SocketIO(server)
 const UserList = require('./Model/userlist.js');
+const WaitList = require("./Model/WaitingList.js")
 const User = require('./Model/User.js')
 
 
 var port = 5555
 let userList = new UserList()
+let waitlist = new WaitList()
+
+
+
 
 
 
@@ -26,7 +31,16 @@ io.on("connection", (socket) => {
         socket.emit("regisanswer",answer)
     
     })
+    socket.on("Newplayer",(user)=>{
+        console.log(user)
+        waitlist.addUsertoWatingList(user),
 
+        socket.join(user) //?
+
+        console.log(waitlist.getUsers())
+        socket.emit("NewWList",waitlist.getUsers())
+    })
+    
     socket.on("login", (pwHash, username) => { // Neu eingegebenes pwHash
         let userExists = userList.containsUser(username)
         let loginValide = false // Gültigkeit des Logins
@@ -38,11 +52,10 @@ io.on("connection", (socket) => {
                 loginValide = userObj.checkpassword(pwHash)
         } 
         socket.emit("loginAnswer", loginValide, userExists, user) // An Login.js
+        
+    })
 
-    } )
 
-}
-)
 
 
 
