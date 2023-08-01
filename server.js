@@ -5,10 +5,12 @@ const server = http.createServer(app)
 const SocketIO = require('socket.io')
 const io = SocketIO(server)
 const UserList = require('./Model/userlist.js');
-
+const WaitList = require("./Model/WaitingList.js")
 
 var port = 5555
 let userList = new UserList()
+let waitlist = new WaitList()
+
 
 
 
@@ -25,6 +27,16 @@ io.on("connection", (socket) => {
             userList.addUser(data)
         }
         socket.emit("regisanswer",answer)
+    })
+    socket.on("Newplayer",(user)=>{
+
+        console.log(user)
+        waitlist.addUsertoWatingList(user),
+
+        socket.join(user) //?
+
+        console.log(waitlist.getUsers())
+        socket.emit("NewWList",waitlist.getUsers())
     })
 }
 )

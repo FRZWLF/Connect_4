@@ -29,6 +29,10 @@ router.addView("registrierung", registrationcomponent)
 // Test Comment to be deleted
 //hi
 //hallo wie geht es dir
+var WaitlistDisplayComponent = require("./Components/WaitlistDisplayComponent")
+var WLComponent = new WaitlistDisplayComponent()
+router.addView("waitlist",WLComponent)
+
 
 var ChangeuserdataComponent = require("./Components/ChangeuserdataComponent")
 var changeuserdataComponent = new ChangeuserdataComponent()
@@ -42,6 +46,6 @@ var ImpressumComponent = require('./Components/ImpressumComponent')
 var impressumComponent = new ImpressumComponent()
 router.addView('impressum', impressumComponent)
 
-router.gotoView('spielregeln');
+router.gotoView('waitlist');
 console.log("Willkommen zur Projektwoche 2023!")
 
