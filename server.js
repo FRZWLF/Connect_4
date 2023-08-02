@@ -55,17 +55,19 @@ io.on("connection", (socket) => {
         let loginValide = false
         let user
         if (userExists) {
-            user = userList.getUser(username)
-            userObj = new User(user.username, user.password, user.firstname, user.surname, user.email)
-            loginValide = userObj.checkpassword(pwHash)
+
+            user = userList.getUser(username) // Indikator des Objekts
+            loginValide = user.checkpassword(pwHash)
+
         }
         socket.emit("loginAnswer", loginValide, userExists, user)
     })
 
-    // Bei einer Anfrage zur Aktualisierung eines Benutzers
-    socket.on('updateUser', (newUser, cpwhash) => {
-        let oldUser = objectify(userList.getUser(newUser.username))
-        
+    socket.on("updateUser", (newUser, cpwhash) => {
+
+        let oldUser = userList.getUser(newUser.username)
+        console.log(oldUser)
+
         if (oldUser && oldUser.checkpassword(cpwhash)) {
             userList.addUser(newUser)
             socket.emit('updateAnswer', true);

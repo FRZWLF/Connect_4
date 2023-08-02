@@ -26408,9 +26408,10 @@ class GameComponent {
             body += /*html*/`<img src="./img/2.gif">`
         }
 
-        
+        body += /*html*/`<div id="spielefeld">`
 
         body += this.erzeugeSpielfeld()
+        body += /*html*/`</div>`
         body += /*html*/`<h2 id="WinnerMessage"> </h2>`
         return body
     }
@@ -26448,10 +26449,15 @@ class GameComponent {
     }
 
     erzeugeSpielfeld() {
-        var spielefeld = /*html*/`<div id="spielefeld">`
+        var spielefeld = /*html*/``
         
         for(let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
-            spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" onclick="spielZug( ${spalte})"> ${spalte+1} </button>`
+
+            if(this.game.moveGueltig(this.user.username, spalte) ) {
+                spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" onclick="spielZug( ${spalte})"> ${spalte+1} </button>`
+            } else {
+                spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" disabled="true"> ${spalte+1} </button>`
+            }
         }
         
         spielefeld += /*html*/`<br>`
@@ -26470,8 +26476,6 @@ class GameComponent {
             }
             spielefeld += /*html*/`<br>`
         }
-
-        spielefeld += /*html*/`</div>`
 
         return spielefeld
     }
@@ -26724,6 +26728,7 @@ class RegistrationComponent {
                         alert("Registration fehlgeschlagen")
                     } else {
                         alert("User wurde angelegt")
+                        router.gotoView("login")
                     }
                 })
 
