@@ -26,10 +26,10 @@ let user = new User('Lukas', '123456', 'firstname', 'surname', 'emai@outlook.com
 appstatus.loginUser = user
 socket.emit('create', user.username);
 
-let match = new game('daniel', user.username, 8, 8)
+let match = new game('daniel', user.username, 6, 7)
 
 var gameComponent = require("./Components/GameComponent")
-var gamecomponent = new gameComponent(user, match)
+var gamecomponent = new gameComponent(match)
 router.addView("game", gamecomponent)
 //Startsteite
 
