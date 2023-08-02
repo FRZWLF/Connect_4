@@ -9,8 +9,6 @@ body {
     font-size: 14px;
     font-family: Arial;
     margin: 0;
-    padding-top: 4.5rem;
-    padding-left: 2rem;
 }
 
 body::-webkit-scrollbar {
@@ -29,6 +27,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 10000;
 }
 
 header a img {
@@ -37,14 +36,7 @@ header a img {
 }
 
 #MenueContent {
-    /* top:0;
-    position: fixed;
-    
-    width: 100%;
-    margin-bottom: 50px;
-    
-    overflow: hidden;
-    background-color: #333; */
+   
     width: 100%;
     list-style: none;
     margin: 0;
@@ -97,10 +89,194 @@ header a img {
     background-color: #998e8e;
 }
 
-main {
-    padding-top: 5px;
-    padding-bottom: 200px;
+
+
+
+#appcontent {
+
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    
+
 }
+
+
+/* welcome-page */
+
+.welcome-page {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    
+}
+
+.welcome-page h1 {
+    text-align: center;
+    font-size: 40px;
+    }
+
+    .welcome-page  h2 {
+    text-align: center;
+    font-size: 20px;
+    }
+  
+    .welcome-page   p {
+    text-align: center;
+    font-size: 30px;
+    }
+
+/* login-page */
+
+.login-page {
+
+    display: flex;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    line-height: 1em;
+    justify-content: center;
+    min-height: 100vh;
+    
+}
+
+#login-window {
+
+    background-color: #fff;
+    min-height: 400px;
+    width: 600px;
+    border-radius: 20px;
+    box-shadow: 5px 0 15px black;
+    padding: 80px 60px;
+    
+}
+
+
+
+.login-page input {
+
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
+
+
+.login-page input::placeholder {
+
+    font-size: 1rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+    color: #ccc;
+}
+
+.login-page #Headline_Forms {
+
+    margin-bottom: 70px;
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1em;
+    text-transform: uppercase;
+    color: #e8716d;
+    letter-spacing: 0.1rem;
+    margin-top: 0;
+}
+
+
+.login-page .forms_field-input {
+
+    width: 100%;
+    border-bottom: 1.5px solid #ccc;
+    padding: 6px 20px 6px 6px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #858585;
+    letter-spacing: 0.1rem;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.login-page .forms_field-input:focus {
+
+    border-color: #858585;
+}
+
+.login-page .forms_buttons {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+    
+
+
+}
+
+.login-page .forms-window button {
+
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
+.login-page .login_button-action {
+
+    background-color: #e8716d;
+    padding: 10px 35px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 1rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: background-color 0.2s ease-in-out;
+    
+}
+
+.login-page .login_button-action:hover {
+
+    background-color: #d16865;
+    
+}
+
+
+
+.login-page .login_field {
+
+    margin-bottom: 30px;
+}
+
+
+
+.login-page .login_button-forgot {
+
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 0.1rem;
+    color: #ccc;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out;
+
+}
+
+.login-page .login_button-forgot:hover {
+
+    color: #858585;
+
+}
+
+
+
 
 
 

@@ -12,16 +12,35 @@ class RegistrationComponent {
 
     getHTML() {
         var text = /*html*/`
-    <h2> Registrierung </h2>
-    Username:<input type="text" id="username" required><br>
-    Password:<input type="password" id="password" required><br>
-    Password again:<input type="password" id="password2" required><br>
-    First Name:<input type="text" id="firstname"><br>
-    Surname:<input type="text" id="surname"><br>
-    E-mail:<input type="email" id="email"><br>
-
-    
-    <button onclick="register()" >Registrieren</button>
+    <div class="registrierung-page">
+                <div class="forms-window">
+                   <h2 class="Headline_Forms"> Registrierung </h2>
+                   
+                   <div class="forms_field">
+                        <input type="text" placeholder="Vorname" id="firstname" class=forms_field-input required><br>
+                   </div>
+                   <div class="forms_field">
+                        <input type="text" placeholder="Nachname" id="surname" class=forms_field-input required><br>
+                   </div> 
+                   <div class="forms_field">
+                        <input type="text" placeholder="Benutzername" id="username" class=forms_field-input required><br>
+                   </div>
+                   <div class="forms_field">
+                        <input type="text" placeholder="E-Mail" id="email" class=forms_field-input required><br>
+                   </div>
+                   <div class="forms_field">
+                        <input type="text" placeholder="Passwort" id="password" class=forms_field-input required><br>
+                   </div>
+                   <div class="forms_field">
+                        <input type="password" placeholder="Passwort wiederholen" id="password2" class=forms_field-input required><br>
+                   </div>
+                   
+                   <div class="forms_buttons">
+                            <button class="forms_button-forgot">Clear</button>
+                            <button class="forms_button-action" onclick="register()" >Registrieren</button>
+                   </div>
+                 </div>
+            </div>     
     `
 
         return (text)
@@ -54,7 +73,7 @@ class RegistrationComponent {
                         alert("Registration fehlgeschlagen")
                     } else {
                         alert("User wurde angelegt")
-                        router.gotoView("login","", "login")
+                        router.gotoView("login"," ", "login")
                     }
                 })
 
