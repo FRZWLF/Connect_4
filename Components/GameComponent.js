@@ -1,8 +1,21 @@
+const Game = require("../Model/Game")
 class GameComponent {
+<<<<<<< HEAD
     constructor(Game) {
         window.spielZug = this.spielZug.bind(this)
         window.zeigeSteinSpalte = this.zeigeSteinSpalte.bind(this)
         window.blendeSteinAus = this.blendeSteinAus.bind(this)
+=======
+    constructor() {
+        socket.on("GameStart",(player1,player2)=>{
+
+                this.game = new Game(player1,player2,6,7)
+            
+            this.user = appstatus.loginUser
+            router.gotoView("game")
+        })
+        
+>>>>>>> 7710182061ebd0fcc3f3c5a8cb0dae72d997dba7
 
         this.game = Game
         this.user = appstatus.loginUser
@@ -23,11 +36,20 @@ class GameComponent {
                     }
 
                 }
+<<<<<<< HEAD
             } 
             document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
   
+=======
+            }  
+            
+            
+            var spielfeldupdated = document.getElementById("spielefeld")
+            spielfeldupdated.innerHTML = this.erzeugeSpielfeld()
+>>>>>>> 7710182061ebd0fcc3f3c5a8cb0dae72d997dba7
         })
+        window.spielZug = this.spielZug.bind(this)
     }
 
     getHTML() {

@@ -41,31 +41,42 @@ io.on("connection", (socket) => {
             waitlist.addUsertoWatingList(user),
                 socket.join(user)
         }
-        socket.emit("NewWList", waitlist.getUsers())
+        io.emit("NewWList", waitlist.getUsers())
     })
 
     // Bei einer Anfrage zum Erstellen eines neuen Raums
     socket.on("create", (data) => {
         socket.join(data)
     })
-
+    //Spielstart zwischen 2 Spielern
+    socket.on("startNewGame",(player1,player2)=>{
+        console.log(player1 + " "+player2)
+        waitlist.removeUserFromWaitingList(player1)
+        waitlist.removeUserFromWaitingList(player2)
+        io.to(player1).emit("GameStart",player1,player2)
+        io.to(player2).emit("GameStart",player1,player2)
+        io.emit("NewWList",waitlist.getUsers())
+    })
     // Bei einer Anmeldeanfrage
     socket.on("login", (pwHash, username) => {
         let userExists = userList.containsUser(username)
         let loginValide = false
         let user
         if (userExists) {
-            user = userList.getUser(username)
-            userObj = new User(user.username, user.password, user.firstname, user.surname, user.email)
-            loginValide = userObj.checkpassword(pwHash)
+
+            user = userList.getUser(username) // Indikator des Objekts
+            loginValide = user.checkpassword(pwHash)
+            socket.emit("loginValide", loginValide, userExists, user)
         }
-        socket.emit("loginAnswer", loginValide, userExists, user)
+
+        socket.emit("loginUnvalide", loginValide, userExists)
     })
 
-    // Bei einer Anfrage zur Aktualisierung eines Benutzers
-    socket.on('updateUser', (newUser, cpwhash) => {
-        let oldUser = objectify(userList.getUser(newUser.username))
-        //console.log(oldUser)
+    socket.on("updateUser", (newUser, cpwhash) => {
+
+        let oldUser = userList.getUser(newUser.username)
+        console.log(oldUser)
+
         if (oldUser && oldUser.checkpassword(cpwhash)) {
             userList.addUser(newUser)
             socket.emit('updateAnswer', true);
