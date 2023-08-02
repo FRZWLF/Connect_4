@@ -25,6 +25,14 @@ var registrationComponent = require("./Components/registrationComponent")
 var registrationcomponent = new registrationComponent()
 router.addView("registrierung", registrationcomponent)
 
+var GameComponent = require("./Components/GameComponent")
+var gameComp = new GameComponent()
+router.addView("game",gameComp)
+//Startsteite
+
+var Message = require("./Components/message")
+var message = new Message()
+
 var WaitlistDisplayComponent = require("./Components/WaitlistDisplayComponent")
 var WLComponent = new WaitlistDisplayComponent()
 router.addView("waitlist",WLComponent)

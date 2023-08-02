@@ -27,6 +27,7 @@ let chatlist = new Chatlist()
 io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
 
+    let socketuser
     // Bei einer Registrierungsanfrage
     socket.on("registration", (data) => {
         let answer = userList.containsUser(data.username)
@@ -38,18 +39,28 @@ io.on("connection", (socket) => {
 
     // Bei einer Anfrage für einen neuen Spieler
     socket.on("Newplayer", (user) => {
+
+       
         if (!(waitlist.getUsers().includes(user))) {
             waitlist.addUsertoWatingList(user),
                 socket.join(user)
         }
-        socket.emit("NewWList", waitlist.getUsers())
+        io.emit("NewWList", waitlist.getUsers())
     })
 
     // Bei einer Anfrage zum Erstellen eines neuen Raums
     socket.on("create", (data) => {
         socket.join(data)
     })
-
+    //Spielstart zwischen 2 Spielern
+    socket.on("startNewGame",(player1,player2)=>{
+        console.log(player1 + " "+player2)
+        waitlist.removeUserFromWaitingList(player1)
+        waitlist.removeUserFromWaitingList(player2)
+        io.to(player1).emit("GameStart",player1,player2)
+        io.to(player2).emit("GameStart",player1,player2)
+        io.emit("NewWList",waitlist.getUsers())
+    })
     // Bei einer Anmeldeanfrage
     socket.on("login", (pwHash, username) => {
         let userExists = userList.containsUser(username)
@@ -60,8 +71,15 @@ io.on("connection", (socket) => {
             user = userList.getUser(username) // Indikator des Objekts
             loginValide = user.checkpassword(pwHash)
 
+            if (loginValide){
+            socketuser = username
+            console.log('1',socketuser)
+            socket.emit("loginValide", loginValide, userExists, user)
+            } else
+            socket.emit("loginUnvalide", loginValide, userExists)    
         }
-        socket.emit("loginAnswer", loginValide, userExists, user)
+
+        socket.emit("loginUnvalide", loginValide, userExists)
     })
 
     socket.on("updateUser", (newUser, cpwhash) => {
@@ -80,6 +98,12 @@ io.on("connection", (socket) => {
     // Bei einer Anfrage für einen Spielzug
     socket.on("zug", (user, opp, data) => {
         socket.to(opp).emit("zuggegner", user, data);
+    })
+    
+    socket.on('disconnect', () => {
+        waitlist.removeUserFromWaitingList(socketuser)
+        io.emit("NewWList", waitlist.getUsers())
+        console.log('Ein Nutzer hat die Verbindung getrennt')
     })
 
     // Bei einer neuen Nachricht

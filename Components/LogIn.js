@@ -13,20 +13,33 @@ class WelcomeLogIn {
     logout() {
         alert("Du bist ausgeloggt")
         appstatus.loginUser = null;
-        document.getElementById("Logout").style.display = "flex"
-        document.getElementById("Login").style.display = "none"
-        router.gotoView("welcome")
+        router.gotoView("welcome", "","welcome")
 
     }
 
     getHTML() {
         var text = /*html*/`
-            <h2 id="Headline_Login"> Login </h2>
-                Username:<input type="text" id="username" required><br>
-                Password:<input type="password" id="password" required><br>
+            <div class="login-page">
+                <div id="login-window">
+                    <h2 id="Headline_Login"> Login </h2>
 
-                <button onclick="login()" >Login</button>
-        `
+
+                   <div class="login_field">
+                        <input type="text" placeholder="Benutzername" id="username" class=login_field-input required><br>
+                   </div>
+
+                   <div class="login_field">
+                        <input type="password" placeholder="Passwort" id="password" class=login_field-input required><br>
+                   </div>
+                   
+                   <div class="login_buttons">
+                            <button class="login_button-forgot">Passwort vergessen?</button>
+                            <button class="login_button-action" onclick="login()" >Login</button>
+                   </div>
+                 </div>
+            </div>     
+                
+                `
         return (text);
     }
 
@@ -41,29 +54,28 @@ class WelcomeLogIn {
 
 
         socket.emit("login", pwHash, username)
-        socket.on("loginAnswer", (loginValid, userExists, user) => {
+        socket.on("loginValide", (loginValid, userExists, user) => {
             if (loginValid && userExists) {
-                alert("Login erfolgreich")
+                message("Login", "erfolgreich")
                 appstatus.loginUser = user
-                document.getElementById("Logout").style.display = "none" // NavBar Ein-/Ausblendung steuern
-                document.getElementById("Login").style.display = "flex"
                 //spielstarten() //--> falls direkt Waitinglist
-                router.gotoView("spielregeln")
-            } else if (!loginValid && userExists) {
-                alert("Passwort ist Falsch!")
-                //Soll login "refreshen"
-                router.gotoView("registrierung")
-                router.gotoView("login")
-            } else if (!userExists) {
-                alert("Nicht registriert")
-                router.gotoView("registrierung")
-
+                router.gotoView("spielregeln", "logedin", "spielregeln")
             }
+
         })
 
+        socket.on("loginUnvalide", (loginValid, userExists) => {
+            if (!loginValid && userExists) {
+                alert("Passwort oder Benutzername ist Falsch!")
+                //Soll login "refreshen"
+                router.gotoView("registrierung")
+                router.gotoView("login", "", "login")
+            } else if (!userExists) {
+                alert("Nicht registriert")
+                router.gotoView("registrierung", "", "registrierung")
+            }
 
+        })
     }
-
 }
-
 module.exports = WelcomeLogIn
