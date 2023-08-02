@@ -20,21 +20,21 @@ class WelcomeLogIn {
     getHTML() {
         var text = /*html*/`
             <div class="login-page">
-                <div id="login-window">
-                    <h2 id="Headline_Login"> Login </h2>
+                <div class="forms-window">
+                    <h2 class="Headline_Forms"> Login </h2>
 
 
-                   <div class="login_field">
-                        <input type="text" placeholder="Benutzername" id="username" class=login_field-input required><br>
+                   <div class="forms_field">
+                        <input type="text" placeholder="Benutzername" id="username" class="forms_field-input" required><br>
                    </div>
 
-                   <div class="login_field">
-                        <input type="password" placeholder="Passwort" id="password" class=login_field-input required><br>
+                   <div class="forms_field">
+                        <input type="password" placeholder="Passwort" id="password" class="forms_field-input" required><br>
                    </div>
                    
-                   <div class="login_buttons">
-                            <button class="login_button-forgot">Passwort vergessen?</button>
-                            <button class="login_button-action" onclick="login()" >Login</button>
+                   <div class="forms_buttons">
+                            <button class="forms_button-forgot">Passwort vergessen?</button>
+                            <button class="forms_button-action" onclick="login()" >Login</button>
                    </div>
                  </div>
             </div>     

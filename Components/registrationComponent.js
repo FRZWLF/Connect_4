@@ -8,35 +8,36 @@ class RegistrationComponent {
 
     constructor() {
         window.register = this.register.bind(this)
+        window.reset = this.reset.bind(this)
     }
 
     getHTML() {
         var text = /*html*/`
     <div class="registrierung-page">
-                <div class="forms-window">
-                   <h2 class="Headline_Forms"> Registrierung </h2>
-                   
-                   <div class="forms_field">
-                        <input type="text" placeholder="Vorname" id="firstname" class=forms_field-input required><br>
-                   </div>
-                   <div class="forms_field">
-                        <input type="text" placeholder="Nachname" id="surname" class=forms_field-input required><br>
-                   </div> 
-                   <div class="forms_field">
-                        <input type="text" placeholder="Benutzername" id="username" class=forms_field-input required><br>
-                   </div>
-                   <div class="forms_field">
-                        <input type="text" placeholder="E-Mail" id="email" class=forms_field-input required><br>
-                   </div>
-                   <div class="forms_field">
-                        <input type="text" placeholder="Passwort" id="password" class=forms_field-input required><br>
-                   </div>
-                   <div class="forms_field">
-                        <input type="password" placeholder="Passwort wiederholen" id="password2" class=forms_field-input required><br>
-                   </div>
-                   
-                   <div class="forms_buttons">
-                            <button class="forms_button-forgot">Clear</button>
+                <div class="forms-window register-window">
+                   <h2 class="Headline_Forms Headline_Register"> Registrierung </h2>
+                   <form id="form">
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="Vorname" id="firstname" class=forms_field-input value="" required><br>
+                    	</div>
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="Nachname" id="surname" class=forms_field-input value="" required><br>
+                    	</div> 
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="Benutzername" id="username" class=forms_field-input value="" required><br>
+                    	</div>
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="E-Mail" id="email" class=forms_field-input value="" required><br>
+                    	</div>
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="Passwort" id="password" class=forms_field-input value="" required><br>
+                    	</div>
+                    	<div class="forms_field">
+                    	     <input type="password" placeholder="Passwort wiederholen" id="password2" class=forms_field-input value="" required><br>
+                    	</div>
+                   </form>
+                   <div class="forms_buttons register_buttons">
+                            <button class="forms_button-forgot" onclick="reset()">Clear</button>
                             <button class="forms_button-action" onclick="register()" >Registrieren</button>
                    </div>
                  </div>
@@ -44,6 +45,20 @@ class RegistrationComponent {
     `
 
         return (text)
+    }
+
+    reset(){
+        // Das Formular-Element abrufen
+        const form = document.getElementById("form");
+
+        // Alle Input-Elemente im Formular zurücksetzen
+        const inputElements = form.querySelectorAll("input");
+        inputElements.forEach((input) => {
+          if (input.type === "text" || input.type === "password") {
+            // Nur Text- und Passwort-Felder zurücksetzen
+            input.value = "";
+          }
+        });
     }
 
     register() {

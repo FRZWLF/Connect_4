@@ -5,7 +5,9 @@
 }
 
 body {
-    background-color: #0099ff;
+    min-height: 100vh;
+    background-image: url('./img/Home.jpg');
+    background-size: 100%;
     font-size: 14px;
     font-family: Arial;
     margin: 0;
@@ -28,6 +30,8 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 10000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
 }
 
 header a img {
@@ -49,8 +53,8 @@ header a img {
 #Logout {
     height: 100%;/* Set the height of the div to fill the header vertically */
     width: 100vw;
-    padding-right: 200px;
-    padding-left: 200px;
+    padding-right: 150px;
+    padding-left: 150px;
     display: flex;/* Use flexbox */
     justify-content: center;/* Center the content horizontally */
     align-items: center;/* Center the content vertically */
@@ -59,8 +63,8 @@ header a img {
 #Login {
     height: 100%;/* Set the height of the div to fill the header vertically */
     width: 100vw;
-    padding-right: 200px;
-    padding-left: 200px;
+    padding-right: 150px;
+    padding-left: 1500px;
     display: flex;/* Use flexbox */
     justify-content: center;/* Center the content horizontally */
     align-items: center;/* Center the content vertically */
@@ -129,16 +133,19 @@ header a img {
 .welcome-page h1 {
     text-align: center;
     font-size: 40px;
+    color: white;
     }
 
     .welcome-page  h2 {
     text-align: center;
     font-size: 20px;
+    color: white;
     }
   
     .welcome-page   p {
     text-align: center;
     font-size: 30px;
+    color: white;
     }
 
 /* login-page */
@@ -155,7 +162,7 @@ header a img {
     
 }
 
-#login-window {
+.forms-window {
 
     background-color: #fff;
     min-height: 400px;
@@ -168,7 +175,7 @@ header a img {
 
 
 
-.login-page input {
+ .forms_field input {
 
     background-color: transparent;
     padding: 0;
@@ -177,7 +184,7 @@ header a img {
 }
 
 
-.login-page input::placeholder {
+ .forms_field input::placeholder {
 
     font-size: 1rem;
     font-family: "Montserrat", sans-serif;
@@ -186,7 +193,12 @@ header a img {
     color: #ccc;
 }
 
-.login-page #Headline_Forms {
+ .forms_field input::placeholder:hover {
+
+    color: #858585;
+}
+
+ .Headline_Forms {
 
     margin-bottom: 70px;
     font-size: 2.5rem;
@@ -199,7 +211,7 @@ header a img {
 }
 
 
-.login-page .forms_field-input {
+ .forms_field .forms_field-input {
 
     width: 100%;
     border-bottom: 1.5px solid #ccc;
@@ -212,23 +224,25 @@ header a img {
     transition: border-color 0.2s ease-in-out;
 }
 
-.login-page .forms_field-input:focus {
+ .forms_field .forms_field-input:focus {
 
     border-color: #858585;
 }
 
-.login-page .forms_buttons {
+ .forms_field .forms_field-input:hover {
+
+    border-color: #858585;
+}
+
+ .forms_buttons {
 
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 80px;
-    
-
-
 }
 
-.login-page .forms-window button {
+ .forms-window button {
 
     background-color: transparent;
     padding: 0;
@@ -237,7 +251,7 @@ header a img {
     cursor: pointer;
 }
 
-.login-page .login_button-action {
+ .forms_buttons .forms_button-action {
 
     background-color: #e8716d;
     padding: 10px 35px;
@@ -255,7 +269,7 @@ header a img {
     
 }
 
-.login-page .login_button-action:hover {
+ .forms_buttons .forms_button-action:hover {
 
     background-color: #d16865;
     
@@ -263,14 +277,14 @@ header a img {
 
 
 
-.login-page .login_field {
+ .forms_field {
 
     margin-bottom: 30px;
 }
 
 
 
-.login-page .login_button-forgot {
+.forms_buttons .forms_button-forgot {
 
     font-family: "Montserrat", sans-serif;
     letter-spacing: 0.1rem;
@@ -280,18 +294,60 @@ header a img {
 
 }
 
-.login-page .login_button-forgot:hover {
+.forms_buttons .forms_button-forgot:hover {
 
     color: #858585;
 
 }
 
 
+/* registrierung-page*/
+
+.registrierung-page {
+    display: flex;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    line-height: 1em;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.Headline_Register {
+
+    margin-bottom: 40px;
+}
+
+.register-window {
+
+    padding: 40px 60px;
+    
+}
+
+.register_buttons {
+
+    margin-top: 40px;
+}
+
+.registrierung-page .forms_button-forgot {
+
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 0.1rem;
+    color: #ccc;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out;
+    margin-top: 20px;
+
+}
+
+.registrierung-page .forms_button-forgot:hover {
+
+    color: #858585;
+
+}
 
 
-
-
-
+/* Footer */
 footer {
     position: fixed;
     background-color: #333;
