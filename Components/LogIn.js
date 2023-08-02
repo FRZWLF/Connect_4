@@ -50,6 +50,9 @@ class WelcomeLogIn {
                 router.gotoView("spielregeln")
             } else if (!loginValid && userExists) {
                 alert("Passwort ist Falsch!")
+                //Soll login "refreshen"
+                router.gotoView("registrierung")
+                router.gotoView("login")
             } else if (!userExists) {
                 alert("Nicht registriert")
                 router.gotoView("registrierung")
