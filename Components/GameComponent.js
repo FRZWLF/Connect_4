@@ -88,34 +88,14 @@ class GameComponent {
             if (this.game.gewinnStatus) {
                 if (this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
-<<<<<<< HEAD
-                    console.log(this.game)
-                    delete(this.game)
-                    delete(this.user)
-                    console.log(this.game)
-=======
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
->>>>>>> 6060eab63051d040f2c09d1ff26b26660cf9091d
                 } else {
                     if (this.game.gewinnStatus == this.user.username) {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
-<<<<<<< HEAD
-                        console.log(this.game)
-                        delete(this.game)
-                        delete(this.user)
-                        console.log(this.game)
-                    } else {
-                        document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
-                        console.log(this.game)
-                        delete(this.game)
-                        delete(this.user)
-                        console.log(this.game)
-=======
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
->>>>>>> 6060eab63051d040f2c09d1ff26b26660cf9091d
                     }
                 }
             }
