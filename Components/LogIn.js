@@ -47,9 +47,13 @@ class WelcomeLogIn {
                 appstatus.loginUser = user
                 document.getElementById("Logout").style.display = "none" // NavBar Ein-/Ausblendung steuern
                 document.getElementById("Login").style.display = "flex"
+                //spielstarten() //--> falls direkt Waitinglist
                 router.gotoView("spielregeln")
             } else if (!loginValid && userExists) {
                 alert("Passwort ist Falsch!")
+                //Soll login "refreshen"
+                router.gotoView("registrierung")
+                router.gotoView("login")
             } else if (!userExists) {
                 alert("Nicht registriert")
                 router.gotoView("registrierung")

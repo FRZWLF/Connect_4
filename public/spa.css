@@ -24,7 +24,7 @@ header {
     height: 4rem;
     width: 100%;
     padding: 0px;
-    padding-left: 200px;
+    padding-left: 100px;
     background-color: #333;
     display: flex;
     justify-content: space-between;
@@ -58,7 +58,7 @@ header a img {
     height: 100%;/* Set the height of the div to fill the header vertically */
     width: 100vw;
     padding-right: 200px;
-    padding-left: 150px;
+    padding-left: 200px;
     display: flex;/* Use flexbox */
     justify-content: center;/* Center the content horizontally */
     align-items: center;/* Center the content vertically */
@@ -68,7 +68,7 @@ header a img {
     height: 100%;/* Set the height of the div to fill the header vertically */
     width: 100vw;
     padding-right: 200px;
-    padding-left: 150px;
+    padding-left: 200px;
     display: flex;/* Use flexbox */
     justify-content: center;/* Center the content horizontally */
     align-items: center;/* Center the content vertically */
@@ -87,7 +87,7 @@ header a img {
     
     text-decoration: none; */
     text-decoration: none;
-    padding: 6px 15px;
+    padding: 10px 19px;
     color: white;
     border-radius: 20px;
 }
