@@ -20,7 +20,7 @@ class UserList {
     }
     getUser(username) {
         // Retrieve the user object from the 'users' object using the provided 'username' as the key
-        return this.userlist[username]
+        return this.userlist[username] //Insert objectify, change server code accordingly
     }
 
     containsUser(username){

@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
     // Bei einer Anfrage zur Aktualisierung eines Benutzers
     socket.on('updateUser', (newUser, cpwhash) => {
         let oldUser = objectify(userList.getUser(newUser.username))
-        //console.log(oldUser)
+        
         if (oldUser && oldUser.checkpassword(cpwhash)) {
             userList.addUser(newUser)
             socket.emit('updateAnswer', true);
