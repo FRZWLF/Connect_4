@@ -54,7 +54,7 @@ class RegistrationComponent {
                         alert("Registration fehlgeschlagen")
                     } else {
                         alert("User wurde angelegt")
-                        router.gotoView("login")
+                        router.gotoView("login","", "login")
                     }
                 })
 

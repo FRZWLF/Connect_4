@@ -17,12 +17,13 @@ class ChangeuserdataComponent {
         // Erzeugung des HTML-Formulars
         var text = /*html*/`
         <h2> Nutzerdaten ändern </h2>
-        Aktuelles password: <input type="password" id="current_password" required><br>
-        Password:<input type="password" id="password" required><br>
-        Password again:<input type="password" id="password2" required><br>
-        First Name:<input type="text" id="firstname" value = ${this.user.firstname}><br>
-        Surname:<input type="text" id="surname" value=${this.user.surname}><br>
-        E-mail:<input type="email" id="email" value= ${this.user.email}><br>
+        <b>Username: ${this.user.username}</b><br>
+        <b>Aktuelles password:</b> <input type="password" id="current_password" required><br>
+        <b>Password:</b><input type="password" id="password" required><br>
+        <b>Password again:</b><input type="password" id="password2" required><br>
+        <b>First Name:</b><input type="text" id="firstname" value = ${this.user.firstname}><br>
+        <b>Surname:</b><input type="text" id="surname" value=${this.user.surname}><br>
+        <b>E-mail:</b><input type="email" id="email" value= ${this.user.email}><br>
         <button onclick="change()" >Ändern</button>
         `
         // Rückgabe des erzeugten HTML-Textes
@@ -44,16 +45,14 @@ class ChangeuserdataComponent {
         hash_c.update(current_password)
         let cpwhash = hash_c.digest('hex')
 
-        // Überprüfung, ob die Passwörter eingegeben wurden
-        if (password == "" || current_password == "") {
-            alert("Username und Passwort muss angegeben werden")
+        // Überprüfung, ob das aktuelle Passwort eingegeben wurde
+        if (current_password == "") {
+            alert("Aktuelles Passwort muss angegeben werden")
         } else {
-            // Überprüfung, ob die neuen Passwörter übereinstimmen und die E-Mail gültig ist
-            if (password == password2 && val.isEmail(email)) {
-                // Erzeugung eines Hashes aus dem neuen Passwort
-                var hash = crypto.createHash('sha256')
-                hash.update(password)
-                let pwHash = hash.digest('hex')
+            // Überprüfung, ob die E-Mail gültig ist
+            if (val.isEmail(email)) {
+                // Erzeugung eines Hashes aus dem neuen Passwort, falls eingegeben
+                let pwHash = password !== "" && password === password2 ? crypto.createHash('sha256').update(password).digest('hex') : appstatus.loginUser.password;
 
                 // Erzeugung eines neuen Benutzerobjekts mit den aktualisierten Daten
                 let oldUser = appstatus.loginUser
@@ -74,11 +73,10 @@ class ChangeuserdataComponent {
                 })
             }
             else {
-                alert("Passwörter sind ungleich oder die Email ist ungültig.")
+                alert("Die Email ist ungültig.")
             }
         }
     }
 }
-
 // Exportieren der Klasse ChangeuserdataComponent
 module.exports = ChangeuserdataComponent
