@@ -11,17 +11,17 @@ class WelcomeLogIn {
 
 
     logout() {
-
+        alert("Du bist ausgeloggt")
         appstatus.loginUser = null;
-        document.getElementById("Logout").style.display = "block"
+        document.getElementById("Logout").style.display = "flex"
         document.getElementById("Login").style.display = "none"
-
         router.gotoView("welcome")
+
     }
 
     getHTML() {
         var text = /*html*/`
-            <h2> Login </h2>
+            <h2 id="Headline_Login"> Login </h2>
                 Username:<input type="text" id="username" required><br>
                 Password:<input type="password" id="password" required><br>
 
@@ -46,8 +46,8 @@ class WelcomeLogIn {
                 alert("Login erfolgreich")
                 appstatus.loginUser = user
                 document.getElementById("Logout").style.display = "none" // NavBar Ein-/Ausblendung steuern
-                document.getElementById("Login").style.display = "block"
-
+                document.getElementById("Login").style.display = "flex"
+                router.gotoView("spielregeln")
             } else if (!loginValid && userExists) {
                 alert("Passwort ist Falsch!")
             } else if (!userExists) {

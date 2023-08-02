@@ -1,44 +1,106 @@
-
-body {
-    background-color:	#0099ff;
-    font-size:14px;
-    font-family:Arial; 
-    margin: 0; 
-}
-
-
-ul {
-    top:0;
-    position: fixed;
-    list-style-type: none;
-    width: 100%;
-    margin-bottom: 50px;
+* {
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0099ff;
+    font-size: 14px;
+    font-family: Arial;
+    margin: 0;
+    padding-top: 4.5rem;
+    padding-left: 2rem;
+}
+
+body::-webkit-scrollbar {
+    width: 0px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4rem;
+    width: 100%;
+    padding: 0px;
+    padding-left: 200px;
     background-color: #333;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    li {
-    float: left;
-    }
+header a img {
+    height: 3.5rem;
+    width: auto;
+}
 
-    li a {
-    display: block;
+#MenueContent {
+    /* top:0;
+    position: fixed;
+    
+    width: 100%;
+    margin-bottom: 50px;
+    
+    overflow: hidden;
+    background-color: #333; */
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#Logout {
+    height: 100%;/* Set the height of the div to fill the header vertically */
+    width: 100vw;
+    padding-right: 200px;
+    padding-left: 150px;
+    display: flex;/* Use flexbox */
+    justify-content: center;/* Center the content horizontally */
+    align-items: center;/* Center the content vertically */
+}
+
+#Login {
+    height: 100%;/* Set the height of the div to fill the header vertically */
+    width: 100vw;
+    padding-right: 200px;
+    padding-left: 150px;
+    display: flex;/* Use flexbox */
+    justify-content: center;/* Center the content horizontally */
+    align-items: center;/* Center the content vertically */
+}
+
+#MenueContent li {
+    /* float: left; */
+    margin: 0;
+
+}
+
+#MenueContent a {
+    /* display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    
+    text-decoration: none; */
     text-decoration: none;
-    }
+    padding: 6px 15px;
+    color: white;
+    border-radius: 20px;
+}
 
-    li a:hover {
+#MenueContent a:hover,
+#MenueContent a.active {
     background-color: #998e8e;
-    }
+}
 
-    main {
-        padding-top: 5px;
-        padding-bottom: 200px;
-        }
+main {
+    padding-top: 5px;
+    padding-bottom: 200px;
+}
 
 footer {
     position: fixed;
@@ -47,21 +109,22 @@ footer {
     bottom: 0;
     width: 100%;
     text-align: center;
-        
+    left: 0;
+
 }
 
-    footer a {
-           
-        color: white;
-                        
-      }
+footer a {
 
-    .Year {
-        text-decoration: none;
-        color: white;
-    }
+    color: white;
 
-    .user {
-        text-decoration: none;
-        color: white;
-    }
+}
+
+.Year {
+    text-decoration: none;
+    color: white;
+}
+
+.user {
+    text-decoration: none;
+    color: white;
+}
