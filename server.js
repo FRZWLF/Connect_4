@@ -26,6 +26,7 @@ let waitlist = new WaitList()
 io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
 
+    let socketuser
     // Bei einer Registrierungsanfrage
     socket.on("registration", (data) => {
         let answer = userList.containsUser(data.username)
@@ -37,6 +38,8 @@ io.on("connection", (socket) => {
 
     // Bei einer Anfrage für einen neuen Spieler
     socket.on("Newplayer", (user) => {
+
+       
         if (!(waitlist.getUsers().includes(user))) {
             waitlist.addUsertoWatingList(user),
                 socket.join(user)
@@ -66,7 +69,13 @@ io.on("connection", (socket) => {
 
             user = userList.getUser(username) // Indikator des Objekts
             loginValide = user.checkpassword(pwHash)
+
+            if (loginValide){
+            socketuser = username
+            console.log('1',socketuser)
             socket.emit("loginValide", loginValide, userExists, user)
+            } else
+            socket.emit("loginUnvalide", loginValide, userExists)    
         }
 
         socket.emit("loginUnvalide", loginValide, userExists)
@@ -92,6 +101,12 @@ io.on("connection", (socket) => {
 
     socket.on("matchtResolveToServer", (playername, opp) => {
         io.to(opp).emit("matchResolve", playername)
+    })
+    
+    socket.on('disconnect', () => {
+        waitlist.removeUserFromWaitingList(socketuser)
+        io.emit("NewWList", waitlist.getUsers())
+        console.log('Ein Nutzer hat die Verbindung getrennt')
     })
 })
 
