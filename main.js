@@ -27,7 +27,8 @@ router.addView("registrierung", registrationcomponent)
 
 //Startsteite
 
-
+var Message = require("./Components/message")
+var message = new Message()
 
 
 // Test Comment to be deleted

@@ -128,3 +128,19 @@ footer a {
     text-decoration: none;
     color: white;
 }
+
+
+
+.toast {
+    
+    display: none;
+    border-radius: 20px;
+    background-color: rgba(38, 255, 0, 0.63);
+    position: fixed;
+    bottom: 50px;
+    right: 30px;
+    width: 300px;
+    padding: 10px;
+    color: black;
+    text-align: left;
+}

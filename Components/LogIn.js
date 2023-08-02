@@ -43,14 +43,14 @@ class WelcomeLogIn {
         socket.emit("login", pwHash, username)
         socket.on("loginAnswer", (loginValid, userExists, user) => {
             if (loginValid && userExists) {
-                alert("Login erfolgreich")
+                message("Login", "erfolgreich")
                 appstatus.loginUser = user
                 document.getElementById("Logout").style.display = "none" // NavBar Ein-/Ausblendung steuern
                 document.getElementById("Login").style.display = "flex"
                 //spielstarten() //--> falls direkt Waitinglist
                 router.gotoView("spielregeln")
             } else if (!loginValid && userExists) {
-                alert("Passwort ist Falsch!")
+                message("login", "Passwort ist Falsch!", "fehler")
                 //Soll login "refreshen"
                 router.gotoView("registrierung")
                 router.gotoView("login")
