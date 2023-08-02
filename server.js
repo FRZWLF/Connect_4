@@ -8,19 +8,20 @@ const io = SocketIO(server)
 const UserList = require('./Model/userlist.js');
 const WaitList = require("./Model/WaitingList.js")
 const User = require('./Model/User.js')
+const Chatlist = require('./Model/chatlist.js')
 
 // Festlegen des Ports
 var port = 5555
 // Erstellen einer neuen Benutzerliste
 var userList = new UserList()
 
-// Funktion zur Umwandlung eines Benutzers in ein Benutzerobjekt
-function objectify(user) {
-    return new User(user.username, user.password, user.firstname, user.surname, user.email)
-}
+
 
 // Erstellen einer neuen Warteliste
 let waitlist = new WaitList()
+
+// Erstellen einer neuen Chatliste
+let chatlist = new Chatlist()
 
 // Bei einer neuen Socket.IO-Verbindung
 io.on("connection", (socket) => {
@@ -104,6 +105,16 @@ io.on("connection", (socket) => {
         io.emit("NewWList", waitlist.getUsers())
         console.log('Ein Nutzer hat die Verbindung getrennt')
     })
+
+    // Bei einer neuen Nachricht
+    socket.on("NewMessage", (text, username) => {
+        let message = username + ":" + text + "<br>"
+        chatlist.addChatlist(message)
+        
+        if (chatlist.chatlist.length > 20) chatlist.chatlist.shift()
+        io.emit("NewMessageList", chatlist.chatlist) 
+    })
+    
 })
 
 // Server starten und auf dem festgelegten Port lauschen
