@@ -1,33 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>4 Gewinnt</title>
-        <link rel="stylesheet" type="text/css" href="spa.css"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>4 Gewinnt</title>
+    <link rel="stylesheet" type="text/css" href="spa.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <body>  
-    <br>
-    
-        <ul>
-            <li><a href="javascript: router.gotoView('welcome')"> Startseite </a></li>
-            <li><a href="javascript: router.gotoView('login')"> Login </a></li>
-            <li><a href="javascript: router.gotoView('registrierung')"> Registrierung </a></li>
-            <li><a href="javascript: router.gotoView('nutzerdaten_aendern')"> Nutzerdaten ändern </a></li>
-            <li><a href="javascript: router.gotoView('spielregeln')"> Spielregeln</a></li>
-            
-        </ul>
-        
-        
-        <main id="appcontent"></main> 
-        
-        <footer>
-            <span><a href="javascript: router.gotoView('impressum')">Impressum</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="Year">2023 </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="user"> 4 Gewinnt </span>
-        </footer>
+</head>
+
+<body>
+    <header>
+        <a href="javascript: router.gotoView('welcome')"><img src="./img/connect4_logo.png" alt="connect4_logo"></a>
+        <div id="Logout"> <!--  Standard NavBar  -->
+            <ul id="MenueContent">
+                <li><a href="javascript: router.gotoView('welcome')" class="active"> Startseite </a></li>
+                <li><a href="javascript: router.gotoView('login')"> Login </a></li>
+                <li><a href="javascript: router.gotoView('registrierung')"> Registrierung </a></li>
+                <li><a href="javascript: router.gotoView('spielregeln')"> Spielregeln</a></li>
+            </ul>
+        </div>
+        <div id="Login" style="display: none;"><!--  Eingeloggte NavBar   -->
+            <ul id="MenueContent">
+                    <li><a href="javascript: spielstarten()" class="active"> Lobby </a></li>
+                    <li><a href="javascript: router.gotoView('nutzerdaten_aendern')"> Nutzerdaten ändern </a></li>
+                    <li><a href="javascript: router.gotoView('spielregeln')"> Spielregeln</a></li>
+                    <li><a href="javascript: logout()"> Logout </a></li>
+            </ul>
+        </div>
+    </header>
+
+
+
+    <main id="appcontent"></main>
+
+    <footer>
+        <span><a
+                href="javascript: router.gotoView('impressum')">Impressum</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="Year">2023 </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="user"> 4 Gewinnt </span>
+    </footer>
         
         <script src="bundle2.js"></script>
     </body>

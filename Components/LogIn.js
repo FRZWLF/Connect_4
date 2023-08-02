@@ -13,9 +13,7 @@ class WelcomeLogIn {
     logout() {
         alert("Du bist ausgeloggt")
         appstatus.loginUser = null;
-        document.getElementById("Logout").style.display = "flex"
-        document.getElementById("Login").style.display = "none"
-        router.gotoView("welcome")
+        router.gotoView("welcome", "","welcome")
 
     }
 
@@ -41,28 +39,28 @@ class WelcomeLogIn {
 
 
         socket.emit("login", pwHash, username)
-        socket.on("loginAnswer", (loginValid, userExists, user) => {
+        socket.on("loginValide", (loginValid, userExists, user) => {
             if (loginValid && userExists) {
                 alert("Login erfolgreich")
                 appstatus.loginUser = user
-                document.getElementById("Logout").style.display = "none" // NavBar Ein-/Ausblendung steuern
-                document.getElementById("Login").style.display = "flex"
-                router.gotoView("spielregeln")
-            } else if (!loginValid && userExists) {
-                alert("Passwort ist Falsch!")
-                //Soll login "refreshen"
-                router.gotoView("registrierung")
-                router.gotoView("login")
-            } else if (!userExists) {
-                alert("Nicht registriert")
-                router.gotoView("registrierung")
-
+                //spielstarten() //--> falls direkt Waitinglist
+                router.gotoView("spielregeln", "logedin", "spielregeln")
             }
+
         })
 
+        socket.on("loginUnvalide", (loginValid, userExists) => {
+            if (!loginValid && userExists) {
+                alert("Passwort oder Benutzername ist Falsch!")
+                //Soll login "refreshen"
+                router.gotoView("registrierung")
+                router.gotoView("login", "", "login")
+            } else if (!userExists) {
+                alert("Nicht registriert")
+                router.gotoView("registrierung", "", "registrierung")
+            }
 
+        })
     }
-
 }
-
 module.exports = WelcomeLogIn
