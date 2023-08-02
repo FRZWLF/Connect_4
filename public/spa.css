@@ -103,6 +103,17 @@ header a img {
 
 }
 
+#chatbox {
+    position: absolute;
+    right: 0px;
+    margin-top: 5px;
+    margin-right: 5px;
+    
+}
+
+#chatfenster{
+    background-color: aliceblue;
+}
 
 /* welcome-page */
 
