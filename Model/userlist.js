@@ -27,5 +27,7 @@ class UserList {
     
         return Object.hasOwn(this.userlist, username)
     }
+
+    //Add changeUser()
 }
 module.exports = UserList

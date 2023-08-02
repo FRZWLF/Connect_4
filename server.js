@@ -10,28 +10,36 @@ const User = require('./Model/User.js')
 
 
 var port = 5555
-let userList = new UserList()
+var userList = new UserList()
+
+function objectify(user) {
+    return new User(user.username, user.password, user.firstname, user.surname, user.email)
+}
+
 let waitlist = new WaitList()
 
 
 io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
 
-
-    socket.on("registration",(data) =>{
+    socket.on("registration", (data) => {
         let answer = userList.containsUser(data.username)
-        if(!answer){
+        if (!answer) {
             userList.addUser(data)
         }
-        socket.emit("regisanswer",answer)
-    
+        socket.emit("regisanswer", answer)
+
     })
-    socket.on("Newplayer",(user)=>{
-        if(!(waitlist.getUsers().includes(user))){
+    socket.on("Newplayer", (user) => {
+        if (!(waitlist.getUsers().includes(user))) {
             waitlist.addUsertoWatingList(user),
-            socket.join(user) 
+                socket.join(user)
         }
-        socket.emit("NewWList",waitlist.getUsers())
+        socket.emit("NewWList", waitlist.getUsers())
+    })
+
+    socket.on("create", (data) => {
+        socket.join(data)
     })
 
     socket.on("login", (pwHash, username) => { // Neu eingegebenes pwHash
@@ -39,19 +47,40 @@ io.on("connection", (socket) => {
         let loginValide = false // Gültigkeit des Logins
         let user
         if (userExists) {
-                user = userList.getUser(username) // Indikator des Objekts
-                
-                userObj = new User(user.username,user.password,user.firstname,user.surname,user.email) // Neues UserObjekt zum Nutzen der Funktion
-                loginValide = userObj.checkpassword(pwHash)
-        } 
+            user = userList.getUser(username) // Indikator des Objekts
+
+            userObj = new User(user.username, user.password, user.firstname, user.surname, user.email) // Neues UserObjekt zum Nutzen der Funktion
+            loginValide = userObj.checkpassword(pwHash)
+        }
         socket.emit("loginAnswer", loginValide, userExists, user) // An Login.js
-        
+
+
+    })
+
+    socket.on("updateUser", (newUser, cpwhash) => {
+
+
+        let oldUser = objectify(userList.getUser(newUser.username))
+        console.log(oldUser)
+
+        if (oldUser && oldUser.checkpassword(cpwhash)) {
+            // oldUser.password = newUser.password;
+            // oldUser.firstname = newUser.firstname;
+            // oldUser.surname = newUser.surname;
+            // oldUser.email = newUser.email;
+
+            // Update the JSON file
+            userList.addUser(newUser)
+            socket.emit("updateAnswer", true);
+        } else {
+            socket.emit("updateAnswer", false);
+        }
+    })
+
+    socket.on("zug", (user, opp, data) => {
+        socket.to(opp).emit("zuggegner", user, data);
     })
 })
-
-
-
-
 
 
 

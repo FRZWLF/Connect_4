@@ -8,6 +8,8 @@
   "scripts": {
     "nodemon": "nodemon server.js",
     "watchify": "watchify main.js -o ./public/bundle.js",
+    "watchify1": "watchify main2.js -o ./public/bundle2.js",
+    "watchify2": "watchify main3.js -o ./public/bundle3.js",
     "preinstall": "npm i -g browserify watchify nodemon"
   }
 }
