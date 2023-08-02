@@ -26360,45 +26360,51 @@ function config (name) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],187:[function(require,module,exports){
 class GameComponent {
-    constructor(user, Game) {
+    constructor(Game) {
         window.spielZug = this.spielZug.bind(this)
-        this.game = Game
-        this.user = user
+        window.zeigeSteinSpalte = this.zeigeSteinSpalte.bind(this)
+        window.blendeSteinAus = this.blendeSteinAus.bind(this)
 
+        this.game = Game
+        this.user = appstatus.loginUser
 
         socket.on("zuggegner", (user, data) => {
             this.game.move(user, data)
             if(this.game.gewinnStatus) {
                 if(this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
+                    document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
                     if(this.game.gewinnStatus == this.user.username) {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
+                        document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
+                        document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }
 
                 }
             } 
-            var spielfeldupdated = document.getElementById("spielefeld")
-            spielfeldupdated.innerHTML = this.erzeugeSpielfeld()
+            document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
+            document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
+  
         })
     }
 
     getHTML() {
         var body = /*html*/`
-
-        <br><br><br><br>
         
         <h1>Spiel</h1>
         <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
         `
 
         if(this.user.username == this.game.user1) {
-            body += /*html*/`<p id="gegner"><b>Gegener:</b> ${this.game.user2}</p>`
+            body += /*html*/`<p id="gegner"><b>Spieler:</b> ${this.game.user2}</p>`
         } else {
             body += /*html*/`<p id="gegner"><b>Gegener: </b> ${this.game.user1}</p>`
         }
+
+        body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
 
         body += /*html*/`<p>Dein Stein:</p>`
 
@@ -26428,11 +26434,14 @@ class GameComponent {
             if(this.game.gewinnStatus) {
                 if(this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
+                    document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
                     if(this.game.gewinnStatus == this.user.username) {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
+                        document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
+                        document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }
                 }
             } 
@@ -26442,9 +26451,8 @@ class GameComponent {
             } else {
                 socket.emit('zug', this.user.username, this.game.user1, spalte);
             }  
-
-            var spielfeldupdated = document.getElementById("spielefeld")
-            spielfeldupdated.innerHTML = this.erzeugeSpielfeld()
+            document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
+            document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
         }      
     }
 
@@ -26454,7 +26462,7 @@ class GameComponent {
         for(let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
 
             if(this.game.moveGueltig(this.user.username, spalte) ) {
-                spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" onclick="spielZug( ${spalte})"> ${spalte+1} </button>`
+                spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})"  onclick="spielZug( ${spalte})"> ${spalte+1} </button>`
             } else {
                 spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" disabled="true"> ${spalte+1} </button>`
             }
@@ -26467,11 +26475,11 @@ class GameComponent {
 
             for(let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
                 if(this.game.spielfeld[zeile][spalte] == 1) {
-                    spielefeld += /*html*/`<img src="./img/1.gif">`
+                    spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/1.gif">`
                 } else if(this.game.spielfeld[zeile][spalte] == 2) {
-                    spielefeld += /*html*/`<img src="./img/2.gif">`
+                    spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}"  onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/2.gif">`
                 } else {
-                    spielefeld += /*html*/`<img src="./img/0.gif">`
+                    spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/0.gif">`
                 }
             }
             spielefeld += /*html*/`<br>`
@@ -26480,6 +26488,32 @@ class GameComponent {
         return spielefeld
     }
 
+    zeigeSteinSpalte(spalte) {
+        if(this.user.username == this.game.aktiverSpieler && !this.game.gewinnStatus) {
+            for(let zeilenZahl= this.game.maxZeile-1; zeilenZahl < this.game.maxZeile; zeilenZahl--) {
+                if(this.game.spielfeld[zeilenZahl][spalte] == 0) {
+                    if(this.user.username == this.game.user1) {
+                        document.getElementById("spalte-" + spalte + " zeile-" + zeilenZahl).src = "./img/1_transparent.gif"
+                    } else {
+                        document.getElementById("spalte-" + spalte + " zeile-" + zeilenZahl).src = "./img/2_transparent.gif"
+                    }
+                    
+                    break
+                }
+            }
+        }
+    }
+
+    blendeSteinAus(spalte) {
+        if(this.user.username == this.game.aktiverSpieler) {
+            for(let zeilenZahl= this.game.maxZeile-1; zeilenZahl < this.game.maxZeile; zeilenZahl--) {
+                if(this.game.spielfeld[zeilenZahl][spalte] == 0) {
+                    document.getElementById("spalte-" + spalte + " zeile-" + zeilenZahl).src = "./img/0.gif"
+                    break
+                }
+            }
+        }
+    }
 
 
 
@@ -27031,10 +27065,10 @@ let user = new User('Lukas', '123456', 'firstname', 'surname', 'emai@outlook.com
 appstatus.loginUser = user
 socket.emit('create', user.username);
 
-let match = new game('daniel', user.username, 8, 8)
+let match = new game('daniel', user.username, 6, 7)
 
 var gameComponent = require("./Components/GameComponent")
-var gamecomponent = new gameComponent(user, match)
+var gamecomponent = new gameComponent(match)
 router.addView("game", gamecomponent)
 //Startsteite
 
