@@ -58,8 +58,11 @@ io.on("connection", (socket) => {
             user = userList.getUser(username)
             userObj = new User(user.username, user.password, user.firstname, user.surname, user.email)
             loginValide = userObj.checkpassword(pwHash)
+            
+            socket.emit("loginValide", loginValide, userExists, user)
         }
-        socket.emit("loginAnswer", loginValide, userExists, user)
+
+        socket.emit("loginUnvalide", loginValide, userExists)
     })
 
     // Bei einer Anfrage zur Aktualisierung eines Benutzers

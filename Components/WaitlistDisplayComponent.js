@@ -15,7 +15,7 @@ class WaitlistDisplayComponent{
 
     spielstarten(){
         socket.emit("Newplayer",appstatus.loginUser.username)
-        router.gotoView('waitlist')
+        router.gotoView('waitlist', 'logedin', "waitlist")
     }
     
     getHTML(){ let text = /*html*/`
