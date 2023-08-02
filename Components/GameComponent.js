@@ -1,8 +1,14 @@
+const Game = require("../Model/Game")
 class GameComponent {
-    constructor(user, Game) {
-        window.spielZug = this.spielZug.bind(this)
-        this.game = Game
-        this.user = user
+    constructor() {
+        socket.on("GameStart",(player1,player2)=>{
+
+                this.game = new Game(player1,player2,6,7)
+            
+            this.user = appstatus.loginUser
+            router.gotoView("game")
+        })
+        
 
 
         socket.on("zuggegner", (user, data) => {
@@ -18,10 +24,13 @@ class GameComponent {
                     }
 
                 }
-            } 
+            }  
+            
+            
             var spielfeldupdated = document.getElementById("spielefeld")
             spielfeldupdated.innerHTML = this.erzeugeSpielfeld()
         })
+        window.spielZug = this.spielZug.bind(this)
     }
 
     getHTML() {

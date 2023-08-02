@@ -41,14 +41,22 @@ io.on("connection", (socket) => {
             waitlist.addUsertoWatingList(user),
                 socket.join(user)
         }
-        socket.emit("NewWList", waitlist.getUsers())
+        io.emit("NewWList", waitlist.getUsers())
     })
 
     // Bei einer Anfrage zum Erstellen eines neuen Raums
     socket.on("create", (data) => {
         socket.join(data)
     })
-
+    //Spielstart zwischen 2 Spielern
+    socket.on("startNewGame",(player1,player2)=>{
+        console.log(player1 + " "+player2)
+        waitlist.removeUserFromWaitingList(player1)
+        waitlist.removeUserFromWaitingList(player2)
+        io.to(player1).emit("GameStart",player1,player2)
+        io.to(player2).emit("GameStart",player1,player2)
+        io.emit("NewWList",waitlist.getUsers())
+    })
     // Bei einer Anmeldeanfrage
     socket.on("login", (pwHash, username) => {
         let userExists = userList.containsUser(username)
