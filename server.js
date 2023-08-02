@@ -89,6 +89,10 @@ io.on("connection", (socket) => {
     socket.on("zug", (user, opp, data) => {
         socket.to(opp).emit("zuggegner", user, data);
     })
+
+    socket.on("matchtResolveToServer", (playername, opp) => {
+        io.to(opp).emit("matchResolve", playername)
+    })
 })
 
 // Server starten und auf dem festgelegten Port lauschen

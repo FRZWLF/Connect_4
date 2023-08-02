@@ -4,18 +4,21 @@ class GameComponent {
         window.spielZug = this.spielZug.bind(this)
         window.zeigeSteinSpalte = this.zeigeSteinSpalte.bind(this)
         window.blendeSteinAus = this.blendeSteinAus.bind(this)
+        window.beendeSpiel = this.beendeSpiel.bind(this)
 
         socket.on("GameStart", (player1, player2) => {
-
             this.game = new Game(player1, player2, 6, 7)
-
             this.user = appstatus.loginUser
             router.gotoView("game")
         })
 
-
-        this.game = Game
-        this.user = appstatus.loginUser
+        socket.on("matchResolve", (playerName) => {
+            if (!this.game.gewinnStatus) {
+                document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
+                document.getElementById("WinnerMessage").innerHTML = "Gewonnen, der Gegener hat das Spiel verlassen! Herzlichen Glückwunsch. "
+                this.game.gewinnStatus = this.user.username
+            }
+        })
 
         socket.on("zuggegner", (user, data) => {
             this.game.move(user, data)
@@ -25,7 +28,7 @@ class GameComponent {
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
                     if (this.game.gewinnStatus == this.user.username) {
-                        document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
+                        document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch. "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
@@ -33,16 +36,11 @@ class GameComponent {
                     }
 
                 }
+            } else {
+                document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
             }
-            document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
-
-        }
-
-
-
-        )
-
+        })
     }
 
     getHTML() {
@@ -53,9 +51,10 @@ class GameComponent {
         `
 
         if (this.user.username == this.game.user1) {
-            body += /*html*/`<p id="gegner"><b>Spieler:</b> ${this.game.user2}</p>`
+
+            body += /*html*/`<p id="gegner"><b>Gegner:</b> ${this.game.user2}</p>`
         } else {
-            body += /*html*/`<p id="gegner"><b>Gegener: </b> ${this.game.user1}</p>`
+            body += /*html*/`<p id="gegner"><b>Gegner: </b> ${this.game.user1}</p>`
         }
 
         body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
@@ -72,7 +71,17 @@ class GameComponent {
 
         body += this.erzeugeSpielfeld()
         body += /*html*/`</div>`
-        body += /*html*/`<h2 id="WinnerMessage"> </h2>`
+        console.log(this.game.gewinnStatus)
+        if (!this.game.gewinnStatus) {
+            body += /*html*/`<h2 id="WinnerMessage"> </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+        } else if (this.game.gewinnStatus == this.user.username) {
+            body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch. </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+        } else if (this.game.gewinnStatus == "unentschieden") {
+            body += /*html*/`<h2 id="WinnerMessage"> Unentschieden, keep trying! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+        } else {
+            body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+        }
+
         return body
     }
 
@@ -94,7 +103,7 @@ class GameComponent {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
-                        document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
+                        document.getElementById("WinnerMessage").innerHTML = "Du hast verloren! "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }
                 }
@@ -166,10 +175,17 @@ class GameComponent {
                     break
                 }
             }
-        }
+        } 2
     }
 
-
+    beendeSpiel() { 
+        if(this.user.username == this.game.user1) {
+            socket.emit('matchtResolveToServer', this.user.username, this.game.user2)
+        } else {
+            socket.emit('matchtResolveToServer', this.user.username, this.game.user1)
+        }
+        delete(this.game)
+    }
 
 }
 
