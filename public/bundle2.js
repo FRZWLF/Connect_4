@@ -26359,23 +26359,33 @@ function config (name) {
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],187:[function(require,module,exports){
+const Game = require("../Model/Game")
 class GameComponent {
-    constructor(Game) {
+    constructor() {
         window.spielZug = this.spielZug.bind(this)
         window.zeigeSteinSpalte = this.zeigeSteinSpalte.bind(this)
         window.blendeSteinAus = this.blendeSteinAus.bind(this)
+
+        socket.on("GameStart", (player1, player2) => {
+
+            this.game = new Game(player1, player2, 6, 7)
+
+            this.user = appstatus.loginUser
+            router.gotoView("game")
+        })
+
 
         this.game = Game
         this.user = appstatus.loginUser
 
         socket.on("zuggegner", (user, data) => {
             this.game.move(user, data)
-            if(this.game.gewinnStatus) {
-                if(this.game.gewinnStatus == "unentschieden") {
+            if (this.game.gewinnStatus) {
+                if (this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
-                    if(this.game.gewinnStatus == this.user.username) {
+                    if (this.game.gewinnStatus == this.user.username) {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
@@ -26384,11 +26394,16 @@ class GameComponent {
                     }
 
                 }
-            } 
+            }
             document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
-  
-        })
+
+        }
+
+
+
+        )
+
     }
 
     getHTML() {
@@ -26398,7 +26413,7 @@ class GameComponent {
         <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
         `
 
-        if(this.user.username == this.game.user1) {
+        if (this.user.username == this.game.user1) {
             body += /*html*/`<p id="gegner"><b>Spieler:</b> ${this.game.user2}</p>`
         } else {
             body += /*html*/`<p id="gegner"><b>Gegener: </b> ${this.game.user1}</p>`
@@ -26408,8 +26423,8 @@ class GameComponent {
 
         body += /*html*/`<p>Dein Stein:</p>`
 
-        if(this.user.username == this.game.user1) {
-           body += /*html*/`<img src="./img/1.gif">`
+        if (this.user.username == this.game.user1) {
+            body += /*html*/`<img src="./img/1.gif">`
         } else {
             body += /*html*/`<img src="./img/2.gif">`
         }
@@ -26424,19 +26439,19 @@ class GameComponent {
 
     spielZug(spalte) {
 
-        if(this.game.moveGueltig(this.user.username, spalte)) {
+        if (this.game.moveGueltig(this.user.username, spalte)) {
 
             this.game.move(this.user.username, spalte)
-            for(let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
-                
+            for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
+
             }
 
-            if(this.game.gewinnStatus) {
-                if(this.game.gewinnStatus == "unentschieden") {
+            if (this.game.gewinnStatus) {
+                if (this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
-                    if(this.game.gewinnStatus == this.user.username) {
+                    if (this.game.gewinnStatus == this.user.username) {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
@@ -26444,39 +26459,39 @@ class GameComponent {
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }
                 }
-            } 
+            }
 
-            if(this.game.user1 == this.user.username) {
+            if (this.game.user1 == this.user.username) {
                 socket.emit('zug', this.user.username, this.game.user2, spalte);
             } else {
                 socket.emit('zug', this.user.username, this.game.user1, spalte);
-            }  
+            }
             document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
-        }      
+        }
     }
 
     erzeugeSpielfeld() {
         var spielefeld = /*html*/``
-        
-        for(let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
 
-            if(this.game.moveGueltig(this.user.username, spalte) ) {
-                spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})"  onclick="spielZug( ${spalte})"> ${spalte+1} </button>`
+        for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
+
+            if (this.game.moveGueltig(this.user.username, spalte)) {
+                spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})"  onclick="spielZug( ${spalte})"> ${spalte + 1} </button>`
             } else {
-                spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" disabled="true"> ${spalte+1} </button>`
+                spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" disabled="true"> ${spalte + 1} </button>`
             }
         }
-        
+
         spielefeld += /*html*/`<br>`
 
-        for(let zeile = 0; zeile < this.game.maxZeile; zeile++) {
-            
+        for (let zeile = 0; zeile < this.game.maxZeile; zeile++) {
 
-            for(let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
-                if(this.game.spielfeld[zeile][spalte] == 1) {
+
+            for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
+                if (this.game.spielfeld[zeile][spalte] == 1) {
                     spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/1.gif">`
-                } else if(this.game.spielfeld[zeile][spalte] == 2) {
+                } else if (this.game.spielfeld[zeile][spalte] == 2) {
                     spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}"  onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/2.gif">`
                 } else {
                     spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/0.gif">`
@@ -26489,15 +26504,15 @@ class GameComponent {
     }
 
     zeigeSteinSpalte(spalte) {
-        if(this.user.username == this.game.aktiverSpieler && !this.game.gewinnStatus) {
-            for(let zeilenZahl= this.game.maxZeile-1; zeilenZahl < this.game.maxZeile; zeilenZahl--) {
-                if(this.game.spielfeld[zeilenZahl][spalte] == 0) {
-                    if(this.user.username == this.game.user1) {
+        if (this.user.username == this.game.aktiverSpieler && !this.game.gewinnStatus) {
+            for (let zeilenZahl = this.game.maxZeile - 1; zeilenZahl < this.game.maxZeile; zeilenZahl--) {
+                if (this.game.spielfeld[zeilenZahl][spalte] == 0) {
+                    if (this.user.username == this.game.user1) {
                         document.getElementById("spalte-" + spalte + " zeile-" + zeilenZahl).src = "./img/1_transparent.gif"
                     } else {
                         document.getElementById("spalte-" + spalte + " zeile-" + zeilenZahl).src = "./img/2_transparent.gif"
                     }
-                    
+
                     break
                 }
             }
@@ -26505,9 +26520,9 @@ class GameComponent {
     }
 
     blendeSteinAus(spalte) {
-        if(this.user.username == this.game.aktiverSpieler) {
-            for(let zeilenZahl= this.game.maxZeile-1; zeilenZahl < this.game.maxZeile; zeilenZahl--) {
-                if(this.game.spielfeld[zeilenZahl][spalte] == 0) {
+        if (this.user.username == this.game.aktiverSpieler) {
+            for (let zeilenZahl = this.game.maxZeile - 1; zeilenZahl < this.game.maxZeile; zeilenZahl--) {
+                if (this.game.spielfeld[zeilenZahl][spalte] == 0) {
                     document.getElementById("spalte-" + spalte + " zeile-" + zeilenZahl).src = "./img/0.gif"
                     break
                 }
@@ -26520,7 +26535,7 @@ class GameComponent {
 }
 
 module.exports = GameComponent
-},{}],188:[function(require,module,exports){
+},{"../Model/Game":193}],188:[function(require,module,exports){
 class ImpressumComponent {
 
     //View
@@ -26596,47 +26611,50 @@ class SpielregelnComponent {
             }    
     </style>
 
-<h1>Ein Spiel für zwei Spieler</h1>
-<div style="float:left;"> <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Connect4_Wins.PNG" > </div>
-
-<p class="p1">
-        Mach Dich bereit für geistiges Kräftemessen,
-        bei dem Sieg oder Niederlage ganz dicht beieinander liegen!
-        Du brauchst nur vier Chips in eine Reihe zu bringen,
-        horizontal, vertikal oder diagonal.<br><br> 
-    </p>
-
-<h1>Hört sich einfach an</h1>
-    <p class="p1">
-        ist es aber nicht! Du brauchst Dein ganzes taktisches Geschick,
-        um vorauszuplanen - und gleichzeitig eine gute Defensivstrategie,
-        um Deinen Gegenspieler in Schach zu halten!<br><br>
-    </p>
-    
-     <p>
-<h1>Ziel des Spiels</h1>
-     <p class="p1">
-        Ziel bei „Vier gewinnt“ ist es, die Steine der eigenen Farbe 
-        so zu platzieren, dass 4 Steine diagonal, waagerecht oder 
-        senkrecht in einer Reihe zum liegen kommen. 
-        Der Spieler, dem das zuerst gelingt, der erhält einen Punkt oder hat gewonnen. 
-     </p>
-<br>
-<h1>SPIELABLAUF</h1>
-    <p class="p1">
-    Entscheidet, wer das Spiel beginnt. <br>
-    Wenn Du an der Reihe bist, wirfst Du EINEN Chip in IRGENDEINEN <br>
-    der Einwurfschlitze an der Oberseite des Gitters. <br>
-    Jeder wirft der Reihe nach seinen Chip ein, bis einer von Euch vier seiner Chips <br>
-    in einer Reihe positioniert hat. Die vier in einer Reihe können <br>
-    horizontal, vertikal oder diagonal sein. Siehe die Beispiele auf Seite 4. <br>
-    Wer als erster vier in einer Reihe hat, gewinnt. <br>
-    Um den Rahmen zu entleeren, muß man nur den Riegel auf der Unterseite zur Seite ziehen,<br>
-    damit die Chips herausfallen. Dann wird der Riegel wieder zurückgestellt, <br>
-    die Chips werden sortiert und das nächste Spiel kann beginnen!<br>
-    </p>
-
-
+<h1>Spielregeln</h1>
+<div class="SpielregelnContent">
+    <div id="links">
+        <h1>Ein Spiel für zwei Spieler</h1>
+            <p class="p1">
+                Mach Dich bereit für geistiges Kräftemessen,
+                bei dem Sieg oder Niederlage ganz dicht beieinander liegen!
+                Du brauchst nur vier Chips in eine Reihe zu bringen,
+                horizontal, vertikal oder diagonal.<br><br> 
+            </p>
+        <h1>Hört sich einfach an</h1>
+        <p class="p1">
+            ist es aber nicht! Du brauchst Dein ganzes taktisches Geschick,
+            um vorauszuplanen - und gleichzeitig eine gute Defensivstrategie,
+            um Deinen Gegenspieler in Schach zu halten!<br><br>
+        </p> 
+    </div>
+    <div id="mitte">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Connect4_Wins.PNG" >
+    </div>
+    <div id="rechts">
+        <h1>Ziel des Spiels</h1>
+             <p class="p1">
+                Ziel bei „Vier gewinnt“ ist es, die Steine der eigenen Farbe 
+                so zu platzieren, dass 4 Steine diagonal, waagerecht oder 
+                senkrecht in einer Reihe zum liegen kommen. 
+                Der Spieler, dem das zuerst gelingt, der erhält einen Punkt oder hat gewonnen. 
+             </p>
+            <br>
+        <h1>SPIELABLAUF</h1>
+            <p class="p1">
+                Entscheidet, wer das Spiel beginnt. <br>
+                Wenn Du an der Reihe bist, wirfst Du EINEN Chip in IRGENDEINEN <br>
+                der Einwurfschlitze an der Oberseite des Gitters. <br>
+                Jeder wirft der Reihe nach seinen Chip ein, bis einer von Euch vier seiner Chips <br>
+                in einer Reihe positioniert hat. Die vier in einer Reihe können <br>
+                horizontal, vertikal oder diagonal sein. Siehe die Beispiele auf Seite 4. <br>
+                Wer als erster vier in einer Reihe hat, gewinnt. <br>
+                Um den Rahmen zu entleeren, muß man nur den Riegel auf der Unterseite zur Seite ziehen,<br>
+                damit die Chips herausfallen. Dann wird der Riegel wieder zurückgestellt, <br>
+                die Chips werden sortiert und das nächste Spiel kann beginnen!<br>
+            </p>
+    </div>
+</div>
         `
         return (text);
     }
@@ -26762,7 +26780,7 @@ class RegistrationComponent {
                         alert("Registration fehlgeschlagen")
                     } else {
                         alert("User wurde angelegt")
-                        router.gotoView("login")
+                        router.gotoView("login","", "login")
                     }
                 })
 
@@ -26794,8 +26812,90 @@ module.exports = class Router {
         this.viewMap.set(viewname, component);
     }
 
-    gotoView(viewname) {
-        document.location.hash = '#' + viewname;
+    gotoView(viewname, menue, setActive) {
+        if (menue=="logedin") {
+            console.log("Logedin")
+            document.getElementById("Logout").style.display = "none" // NavBar Ein-/Ausblendung steuern
+            document.getElementById("Login").style.display = "flex"
+            if(setActive == "lobby") {
+                document.getElementById("nutzerdaten").classList.remove('active')
+                document.getElementById("spielregelnLogin").classList.remove('active')
+                document.getElementById("lobby").classList.add('active')
+
+                document.getElementById("appcontent").classList.add('lobby-page')
+                document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
+                document.getElementById("appcontent").classList.remove('nutzerdaten-page')
+            } else if (setActive == "nutzerdaten") {
+                document.getElementById("lobby").classList.remove('active')
+                document.getElementById("nutzerdaten").classList.add('active')
+                document.getElementById("spielregelnLogin").classList.remove('active')
+
+                document.getElementById("appcontent").classList.remove('lobby-page')
+                document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
+                document.getElementById("appcontent").classList.add('nutzerdaten-page')
+            } else if (setActive == "spielregeln") {
+                document.getElementById("lobby").classList.remove('active')
+                document.getElementById("nutzerdaten").classList.remove('active')
+                document.getElementById("spielregelnLogin").classList.add('active')
+
+                document.getElementById("appcontent").classList.remove('lobby-page')
+                document.getElementById("appcontent").classList.add('spielregelnLogin-page')
+                document.getElementById("appcontent").classList.remove('nutzerdaten-page')
+            }
+        } else {
+
+            document.getElementById("Logout").style.display = "flex" // NavBar Ein-/Ausblendung steuern
+            document.getElementById("Login").style.display = "none"
+
+            if(setActive == "welcome") {
+                document.getElementById("welcome").classList.add('active')
+                document.getElementById("login").classList.remove('active')
+                document.getElementById("registrierung").classList.remove('active')
+                document.getElementById("spielregelnLogout").classList.remove('active')
+
+                document.getElementById("appcontent").classList.add('welcome-page')
+                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                document.getElementById("appcontent").classList.remove('registrierung-page')
+                document.getElementById("appcontent").classList.remove('login-page')
+            } else if (setActive == "login") {
+                document.getElementById("welcome").classList.remove('active')
+                document.getElementById("login").classList.add('active')
+                document.getElementById("registrierung").classList.remove('active')
+                document.getElementById("spielregelnLogout").classList.remove('active')
+
+                document.getElementById("appcontent").classList.remove('welcome-page')
+                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                document.getElementById("appcontent").classList.remove('registrierung-page')
+                document.getElementById("appcontent").classList.add('login-page')
+            } else if (setActive == "registrierung") {
+                document.getElementById("welcome").classList.remove('active')
+                document.getElementById("login").classList.remove('active')
+                document.getElementById("registrierung").classList.add('active')
+                document.getElementById("spielregelnLogout").classList.remove('active')
+
+                document.getElementById("appcontent").classList.remove('welcome-page')
+                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                document.getElementById("appcontent").classList.add('registrierung-page')
+                document.getElementById("appcontent").classList.remove('login-page')
+            } else if (setActive == "spielregeln") {
+                document.getElementById("welcome").classList.remove('active')
+                document.getElementById("login").classList.remove('active')
+                document.getElementById("registrierung").classList.remove('active')
+                document.getElementById("spielregelnLogout").classList.add('active')
+
+                document.getElementById("appcontent").classList.remove('welcome-page')
+                document.getElementById("appcontent").classList.add('spielregelnLogout-page')
+                document.getElementById("appcontent").classList.remove('registrierung-page')
+                document.getElementById("appcontent").classList.remove('login-page')
+            }
+
+        }
+     
+     
+           document.location.hash = '#' + viewname;
+
+     
+
     }
 
     refresh() {
