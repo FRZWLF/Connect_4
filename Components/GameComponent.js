@@ -76,11 +76,23 @@ class GameComponent {
             if(this.game.gewinnStatus) {
                 if(this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
+                    console.log(this.game)
+                    delete(this.game)
+                    delete(this.user)
+                    console.log(this.game)
                 } else {
                     if(this.game.gewinnStatus == this.user.username) {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
+                        console.log(this.game)
+                        delete(this.game)
+                        delete(this.user)
+                        console.log(this.game)
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
+                        console.log(this.game)
+                        delete(this.game)
+                        delete(this.user)
+                        console.log(this.game)
                     }
                 }
             } 
