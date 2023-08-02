@@ -1,4 +1,5 @@
 const fs = require('fs');
+const User = require('./User')
 class UserList {
     constructor() {
         // Store the provided filename as a property of the instance
@@ -20,7 +21,11 @@ class UserList {
     }
     getUser(username) {
         // Retrieve the user object from the 'users' object using the provided 'username' as the key
-        return this.userlist[username]
+
+        let userJson = this.userlist[username]
+        let userObjkt = new User ( userJson.username, userJson.password, userJson.firstname, userJson.surname, userJson.email)
+
+        return userObjkt
     }
 
     containsUser(username){

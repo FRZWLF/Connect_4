@@ -47,10 +47,10 @@ io.on("connection", (socket) => {
         let loginValide = false // Gültigkeit des Logins
         let user
         if (userExists) {
-            user = userList.getUser(username) // Indikator des Objekts
 
-            userObj = new User(user.username, user.password, user.firstname, user.surname, user.email) // Neues UserObjekt zum Nutzen der Funktion
-            loginValide = userObj.checkpassword(pwHash)
+            user = userList.getUser(username) // Indikator des Objekts
+            loginValide = user.checkpassword(pwHash)
+
         }
         socket.emit("loginAnswer", loginValide, userExists, user) // An Login.js
 
@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
     socket.on("updateUser", (newUser, cpwhash) => {
 
 
-        let oldUser = objectify(userList.getUser(newUser.username))
+        let oldUser = userList.getUser(newUser.username)
         console.log(oldUser)
 
         if (oldUser && oldUser.checkpassword(cpwhash)) {
