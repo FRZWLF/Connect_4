@@ -40,7 +40,6 @@ class GameComponent {
 
 
         socket.on("zuggegner", (user, data) => {
-            
             this.game.move(user, data)
            //try { clearInterval(this.seti) } catch { }
             if (this.game.gewinnStatus) {
