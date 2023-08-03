@@ -111,7 +111,16 @@ io.on("connection", (socket) => {
 
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
-        socket.emit("matchResolve", socketuser)
+        console.log("if this game2121")
+        if(this.game){
+            console.log("if this game")
+        if(!this.game.user1 == socketuser){
+            io.to(this.game.user1).emit("matchResolve", socketuser)
+        }else{
+            io.to(this.game.user2).emit("matchResolve", socketuser)
+        }
+    }
+        
         // Der Benutzer wird aus der Warteliste entfernt
         waitlist.removeUserFromWaitingList(socketuser)
         // Die aktualisierte Warteliste wird an alle Clients gesendet
