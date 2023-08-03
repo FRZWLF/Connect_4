@@ -11,24 +11,21 @@ class SpielregelnComponent {
                      <div class="spielregelnContent">
                          <div class="links">
                             <div class="introduction">
-                                <h1>Ein Spiel für zwei Spieler</h1>
+                                <h1>Ein Spiel für 2</h1>
                                     <div class="intro">
                                            <p class="p1">
-                                               Mach Dich bereit für geistiges Kräftemessen,
-                                               bei dem Sieg oder Niederlage ganz dicht beieinander liegen!
-                                               Du brauchst nur vier Chips in eine Reihe zu bringen,
-                                               horizontal, vertikal oder diagonal.
+                                           Mach Dich bereit für den Kampf um den Sieg. 
+                                           Die Regeln sind Simpel und das Spiel immer wieder spannend.   
                                        	</p>
                                     </div>
                             </div>
                              
                             <div class="introduction2">
-                                 <h1>Hört sich einfach an</h1>
+                                 <h1>Was brauchst du um zu gewinnen? </h1>
                                  <div class="intro">
                                      <p class="p1">
-                                         ist es aber nicht! Du brauchst Dein ganzes taktisches Geschick,
-                                         um vorauszuplanen - und gleichzeitig eine gute Defensivstrategie,
-                                         um Deinen Gegenspieler in Schach zu halten!
+                                     Sei deinem Gegner immer einen Schritt voraus! 
+                                     Achte darauf, wie deine Steine liegen und du bist auf der Sicheren Seite.  
                                      </p> 
                                 </div>
                             </div>
@@ -42,10 +39,8 @@ class SpielregelnComponent {
                                 <h1>Ziel des Spiels</h1>
                                 <div class="intro">
                                     <p class="p1">
-                                     Ziel bei „Vier gewinnt“ ist es, die Steine der eigenen Farbe 
-                                     so zu platzieren, dass 4 Steine diagonal, waagerecht oder 
-                                     senkrecht in einer Reihe zum liegen kommen. 
-                                     Der Spieler, dem das zuerst gelingt, der erhält einen Punkt oder hat gewonnen. 
+                                    Versuche durch dein strategisches Denken bei dem Spiel „Vier gewinnt “deinen Gegner zu übertrumpfen. 
+                                    Schaffe es als erster, vier deiner Chips in eine Reihe, horizontal, vertikal oder diagonal zu positionieren und du gewinnst! 
                                   </p>
                                 </div>            
                             </div>
@@ -53,13 +48,14 @@ class SpielregelnComponent {
                                 <h1>SPIELABLAUF</h1>
                                 <div class="spielablauf">
                                     <p class="p1">
-                                     Entscheidet, wer das Spiel beginnt. <br>
-                                     Wenn Du an der Reihe bist, wirfst Du EINEN Chip in IRGENDEINEN
-                                     der Einwurfschlitze an der Oberseite des Gitters. <br>
-                                     Jeder wirft der Reihe nach seinen Chip ein, bis einer von Euch vier seiner Chips
-                                     in einer Reihe positioniert hat. <br> Die vier in einer Reihe können 
-                                     horizontal, vertikal oder diagonal sein. Siehe die Beispiele auf Seite 4. <br>
-                                     Wer als erster vier in einer Reihe hat, gewinnt. <br>
+                                    Ein Spieler Startet das Spiel mit einem Zug. 
+                                    Drücke mit der Maus jeweils auf die Spalte, in der du deinen Chip einwerfen möchtest.
+                                    Das Spiel ist beendet, sobald einer von den Spielern vier Chips in einer horizontalen, 
+                                    vertikalen oder diagonalen Reihe positioniert hat. 
+                                    Achte auf den Timer, für jeden Zug hat jeder Spieler 60 Sekunden.
+                                    Wenn die Zei ohne einen Spielzug Abläuft, hat der andere Spieler gewonnen.
+                                    Wer die ersten vier Chips in der Reihe zusammen positioniert, hat gewonnen.
+
                                  </p>
                                 </div>    
                              </div>
