@@ -103,6 +103,11 @@ io.on("connection", (socket) => {
         socket.to(opp).emit("zuggegner", user, data);
     })
 
+    socket.on("matchtResolveToServer", (playername, opp) => {
+        io.to(opp).emit("matchResolve", playername)
+    })
+    
+
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
         // Der Benutzer wird aus der Warteliste entfernt

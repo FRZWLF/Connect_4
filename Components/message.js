@@ -7,7 +7,7 @@ module.exports = class MessageComponent{
     info(ueberschrift, Nachricht, type){
 
         
-        let messagediv = document.getElementById('message') 
+        let messagediv = document.getElementById('alert') 
         messagediv.style.display='block'
 
 
@@ -19,7 +19,7 @@ module.exports = class MessageComponent{
         setInterval(() => {
             messagediv.style.opacity = messagediv.style.opacity -0.01
             if (messagediv.style.opacity==0) messagediv.style.display='none'
-        }, 10)
+        }, 100)
        },5000) 
         
         
