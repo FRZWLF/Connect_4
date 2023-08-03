@@ -11,7 +11,7 @@ class WelcomeLogIn {
 
 
     logout() {
-        alert("Du bist ausgeloggt")
+        message("Logout","Du bist ausgeloggt","info")
         appstatus.loginUser = null;
         router.gotoView("welcome", "","welcome")
 
@@ -66,12 +66,12 @@ class WelcomeLogIn {
 
         socket.on("loginUnvalide", (loginValid, userExists) => {
             if (!loginValid && userExists) {
-                alert("Passwort oder Benutzername ist Falsch!")
+                message("Achtung","Passwort oder Benutzername ist Falsch!")
                 //Soll login "refreshen"
                 router.gotoView("registrierung")
                 router.gotoView("login", "", "login")
             } else if (!userExists) {
-                alert("Nicht registriert")
+                message("Achtung","Nicht registriert","fehler")
                 router.gotoView("registrierung", "", "registrierung")
             }
 
