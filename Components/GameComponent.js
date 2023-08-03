@@ -50,43 +50,56 @@ class GameComponent {
     getHTML() {
         var body = /*html*/`
         <div class="Game">
-        <h1>Spiel</h1>
-        <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
-        `
+            <div class="spielregeln-window game-window">
+                <div class="gameContent">
+            <div class="links">
+                <div class="You_Player">
+                    <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>`
 
-        if (this.user.username == this.game.user1) {
+                        body += /*html*/`<p>Dein Stein:</p>`
 
-            body += /*html*/`<p id="gegner"><b>Gegner:</b> ${this.game.user2}</p>`
-        } else {
-            body += /*html*/`<p id="gegner"><b>Gegner: </b> ${this.game.user1}</p>`
-        }
+                        if (this.user.username == this.game.user1) {
+                            body += /*html*/`<img src="./img/1.gif">`
+                        } else {
+                            body += /*html*/`<img src="./img/2.gif">`
+                        }
+                    
+                        body += /*html*/` 
+                </div>
+            </div>
+            <div class="mitte Connect4">`
 
-        body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
+                body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
+                body += /*html*/`<div id="spielefeld">`
 
-        body += /*html*/`<p>Dein Stein:</p>`
+                body += this.erzeugeSpielfeld()
+                body += /*html*/`</div>`
+                console.log(this.game.gewinnStatus)
+                if (!this.game.gewinnStatus) {
+                    body += /*html*/`<h2 id="WinnerMessage"> </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+                } else if (this.game.gewinnStatus == this.user.username) {
+                    body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch. </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+                } else if (this.game.gewinnStatus == "unentschieden") {
+                    body += /*html*/`<h2 id="WinnerMessage"> Unentschieden, keep trying! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+                } else {
+                    body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+                }
+                body += /*html*/`
+            </div>
+            <div class="rechts">`
+                
+                if (this.user.username == this.game.user1) {
 
-        if (this.user.username == this.game.user1) {
-            body += /*html*/`<img src="./img/1.gif">`
-        } else {
-            body += /*html*/`<img src="./img/2.gif">`
-        }
+                    body += /*html*/`<p id="gegner"><b>Gegner:</b> ${this.game.user2}</p>`
+                } else {
+                    body += /*html*/`<p id="gegner"><b>Gegner: </b> ${this.game.user1}</p>`
+                }
 
-        body += /*html*/`<div id="spielefeld">`
-
-        body += this.erzeugeSpielfeld()
-        body += /*html*/`</div>`
-        console.log(this.game.gewinnStatus)
-        if (!this.game.gewinnStatus) {
-            body += /*html*/`<h2 id="WinnerMessage"> </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
-        } else if (this.game.gewinnStatus == this.user.username) {
-            body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch. </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
-        } else if (this.game.gewinnStatus == "unentschieden") {
-            body += /*html*/`<h2 id="WinnerMessage"> Unentschieden, keep trying! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
-        } else {
-            body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
-        }
+                body += /*html*/` 
+            </div>`
         body += /*html*/`
-
+        </div>
+        </div>
         </div>
         `
         return body
