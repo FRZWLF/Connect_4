@@ -443,6 +443,7 @@ header a img {
     padding-left: 30px;
     padding-right: 10px;
     padding-bottom: 20px;
+    height: 100%;
 }
 
 .links h1 {
@@ -473,6 +474,7 @@ header a img {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
 .mitte img {
@@ -488,6 +490,7 @@ header a img {
     padding-right: 40px;
     padding-bottom: 20px;
     justify-content: center;
+    height: 100%;
 }
 
 .rechts h1 {
@@ -933,16 +936,7 @@ margin-top: 80px;
     padding: 40px 60px;
 }
 
-.Game {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    position: absolute;
-    top: 20%;
-    left: 30px;
-    color: white;
-}
+
 
 .loader {
 
@@ -1004,6 +998,37 @@ margin-top: 80px;
     100% {
         transform: translateY(-1em);
     }
+}
+
+/* Game */
+
+.Game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.game-window {
+
+    min-height: 83vh;
+    
+}
+
+.gameContent {
+
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    
+}
+
+.Connect4 {
+
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Footer */
