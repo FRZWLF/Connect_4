@@ -94,32 +94,24 @@ class GameComponent {
     getHTML() {
         var body = /*html*/`
         <div class="Game">
-        <h1>Spiel</h1>
-        <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
-        <p id="timer"></p>
-        `
+            <div class="spielregeln-window game-window">
+                <div class="gameContent">
+                    <div class="links">
+                        <div class="You_Player">
+                            <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>`
+                            body += /*html*/`<p>Dein Stein:</p>`
 
-        if (this.user.username == this.game.user1) {
-
-            body += /*html*/`<p id="gegner"><b>Gegner:</b> ${this.game.user2}</p>`
-        } else {
-            body += /*html*/`<p id="gegner"><b>Gegner: </b> ${this.game.user1}</p>`
-        }
+                            if (this.user.username == this.game.user1) {
+                                body += /*html*/`<img src="./img/1.gif">`
+                            } else {
+                                body += /*html*/`<img src="./img/2.gif">`
+                            }
+                            body += /*html*/`<p id="timer"></p>`
+                                    
+                            body += /*html*/` 
+                        </div>
+                    </div>
         
-        body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
-
-        body += /*html*/`<p>Dein Stein:</p>`
-
-                        if (this.user.username == this.game.user1) {
-                            body += /*html*/`<img src="./img/1.gif">`
-                        } else {
-                            body += /*html*/`<img src="./img/2.gif">`
-                        }
-                        <p id="timer"></p>
-                    
-                        body += /*html*/` 
-                </div>
-            </div>
             <div class="mitte Connect4">`
 
                 body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
