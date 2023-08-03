@@ -37,7 +37,6 @@ class GameComponent {
             }
         })
 
-        this.zugzeit = 10
 
         socket.on("zuggegner", (user, data) => {
             
