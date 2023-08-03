@@ -159,7 +159,7 @@ module.exports = class Game {
 
   // Methode, um zu überprüfen, ob ein Spieler aufgegeben hat.
   checkGiveUp(user) {
-      console.log(`Player ${user} gave up.`)
+      //console.log(`Player ${user} gave up.`)
       // Wenn ein Spieler aufgibt, setze den Gewinnstatus auf den anderen Spieler und gib 'true' zurück.
       if(user == this.user1) {
         this.gewinnStatus = this.user2;

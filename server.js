@@ -97,7 +97,7 @@ io.on("connection", (socket) => {
 
     // Bei einer Anfrage für einen Spielzug
     socket.on("zug", (user, opp, data) => {
-        socket.to(opp).emit("zuggegner", user, data);
+        socket.to(opp).emit("zuggegner", user, data); 
     })
 
     socket.on("matchtResolveToServer", (playername, opp) => {
@@ -110,6 +110,12 @@ io.on("connection", (socket) => {
         console.log('Ein Nutzer hat die Verbindung getrennt')
     })
 
+    socket.on('Zeitabgelaufen', (gewinner) => {
+        console.log(gewinner)
+        socket.to(gewinner).emit("zeitgegner", true)
+
+    })
+ 
     // Bei einer neuen Nachricht
     socket.on("NewMessage", (text, username) => {
         let message = username + ":" + text + "<br>"
