@@ -111,7 +111,7 @@ io.on("connection", (socket) => {
 
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
-        io.emit("matchResolve", socketuser)
+        socket.emit("matchResolve", socketuser)
         // Der Benutzer wird aus der Warteliste entfernt
         waitlist.removeUserFromWaitingList(socketuser)
         // Die aktualisierte Warteliste wird an alle Clients gesendet
