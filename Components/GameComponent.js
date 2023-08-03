@@ -14,6 +14,7 @@ class GameComponent {
                 this.zugZeitAnzeigen()
             }
         })
+        
 
         socket.on("matchResolve", (playerName) => {
             
