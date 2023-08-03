@@ -19,22 +19,34 @@ class WaitlistDisplayComponent{
     getHTML(){ let text = /*html*/`
     <br>
     <div class="Waiting">
-        <h2 id="Waiting">Waitingslist</h2>
-    
+        <div class="forms-window waiting-window">
+            <h2 class="Headline_Game Headline_Waiting">Spielersuche</h2>
+                <div class="Waiting_list">
         
     `
     this.waitinglist.forEach(element => {
         if(element==appstatus.loginUser.username){
-            text += element
+            text += "<div class='Waiting_Player'>"+element+"</div>"
         } 
         else{
-            text+= "<a href='javascript:startGame(\""+element+"\")'>" + element + "</a>"
+            text+= "<div class='Waiting_Player'><a id='Player_Link' href='javascript:startGame(\""+element+"\")'>" + element + "</a></div>"
         }
         text+= /*html*/`
             <br>
         `
     });
     text += /*html*/`
+    </div>
+            <div class="loader">
+                <span class="loader_letter">W</span>
+                <span class="loader_letter">a</span>
+                <span class="loader_letter">i</span>
+                <span class="loader_letter">t</span>
+                <span class="loader_letter">i</span>
+                <span class="loader_letter">n</span>
+                <span class="loader_letter">g</span>
+            </div>
+    </div>
     </div>
     `
        

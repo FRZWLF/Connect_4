@@ -118,7 +118,14 @@ io.on("connection", (socket) => {
         console.log('Ein Nutzer hat die Verbindung getrennt')
     })
 
+    socket.on('Zeitabgelaufen', (gewinner) => {
+        console.log(gewinner)
+        socket.to(gewinner).emit("zeitgegner", true)
 
+    })
+ 
+
+    
     // Bei einer neuen Nachricht
     socket.on("NewMessage", (text, username) => {
         // Die Nachricht wird zur Chatliste hinzugefügt

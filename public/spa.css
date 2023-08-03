@@ -113,7 +113,7 @@ header a img {
     margin-top: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
-    z-index: 1;
+    z-index: 10;
     border-radius: 4px;
 }
 
@@ -252,7 +252,10 @@ header a img {
     letter-spacing: 0.3rem;
     margin-top: 0;
     text-align: center;
+    
+    
 }
+
 
 
  .forms_field .forms_field-input {
@@ -440,6 +443,7 @@ header a img {
     padding-left: 30px;
     padding-right: 10px;
     padding-bottom: 20px;
+    height: 100%;
 }
 
 .links h1 {
@@ -470,6 +474,7 @@ header a img {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
 .mitte img {
@@ -485,6 +490,7 @@ header a img {
     padding-right: 40px;
     padding-bottom: 20px;
     justify-content: center;
+    height: 100%;
 }
 
 .rechts h1 {
@@ -854,28 +860,176 @@ margin-top: 80px;
 
 }
 
+/* .pulse {
+
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
+}
+
+@keyframes pulse {
+
+    0% {
+        text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
+    }
+    50% {
+        text-shadow: 0 0 10px rgba(0, 0, 0 0.6);
+    }
+    100% {
+        text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
+    }
+} */
+
 .Waiting {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    position: absolute;
-    top: 20%;
-    left: 30px;
-    color: white;
+    
 }
+
+.Waiting .Headline_Waiting {
+
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+.Waiting_list {
+
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    min-height: 15vh;
+    padding: 10px 10px;
+}
+
+
+.Waiting .Waiting_list .Waiting_Player {
+
+    padding: 10px 35px;
+    background-color: #e99f9d;
+    color: white;
+    border-radius: 10px;
+    font-size: 24px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    width: 100%;
+    
+}
+
+.Waiting .Waiting_list .Waiting_Player #Player_Link {
+
+    text-decoration: none;
+    color: white;
+    
+}
+
+.Waiting .Waiting_list .Waiting_Player:hover {
+
+
+}
+
+.Waiting .waiting-window {
+
+    padding: 40px 60px;
+}
+
+
+
+.loader {
+
+    text-align: center;
+    width: 100%;
+    height: 1em;
+    margin-top: 1em;
+    padding-top: 4em;
+    
+}
+
+.loader_letter {
+
+    text-transform: uppercase;
+    color: #e8716d;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    padding: 0 0 0.2em;
+    font-size: 2em;
+    line-height: 1;
+    position: relative;
+    display: inline-block;
+    animation: bounce 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) infinite alternate;
+}
+
+.loader_letter:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loader_letter:nth-child(2) {
+    animation-delay: 0.05s;
+}
+
+.loader_letter:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+.loader_letter:nth-child(4) {
+    animation-delay: 0.15s;
+}
+
+.loader_letter:nth-child(5) {
+    animation-delay: 0.2s;
+}
+
+.loader_letter:nth-child(6) {
+    animation-delay: 0.25s;
+}
+
+.loader_letter:nth-child(7) {
+    animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(-1em);
+    }
+}
+
+/* Game */
 
 .Game {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    position: absolute;
-    top: 20%;
-    left: 30px;
-    color: white;
 }
 
+.game-window {
+
+    min-height: 83vh;
+    
+}
+
+.gameContent {
+
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    
+}
+
+.Connect4 {
+
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* Footer */
 footer {
