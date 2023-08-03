@@ -47,7 +47,7 @@ class ChangeuserdataComponent {
                         <div id="status_uebersicht">
                             <div class="status">
                                 <h1>Übersicht</h1>
-                                <input type="text">
+                                <input type="text" class="disable">
                             </div>
                             <div class="cards">
                                 <div class="card">
@@ -62,51 +62,80 @@ class ChangeuserdataComponent {
                         <div id="status_userdata" style ="display: none;">
                             <div class="status" >
                                 <h1>Nutzerdaten ändern</h1>
-                                <input type="text">
+                                <input type="text" class="disable">
                             </div>
                             <div class="cards">
                                 <div class="card">
                                     <div class="card-info">
+                                        <div class="userdata_box">
+                                        <div class="userdata_text">
+                                            <div class="userdata_field">
+                                                <p>Username</p>                                                
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>Aktuelles Passwort</p>                                                
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>Neues Passwort</p>                                                
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>Passwort wiederholen</p>                                                
+                                            </div>
+                                            <div class="userdata_field">
+                                            <p>Vorname</p>                                             
+                                            </div>
+                                            <div class="userdata_field">
+                                            <p>Nachname</p>                                              
+                                            </div>
+                                            <div class="userdata_field">
+                                            <p>E-Mail</p>                                              
+                                            </div>
+                                        </div>
+
                                         <div class="userdata_inputs">
-                                            <div class="userdata_field">
-                                                <p>Username</p> ${this.user.username}
+
+                                        <div class="userdata_field">
+                                            <div class="forms_field_username">
+                                                    <input type="text" id="current_username" placeholder="Benutzername" class="username_field-input" value = ${this.user.username} required>
                                             </div>
-                                            <div class="userdata_field">
-                                                <p>Aktuelles Passwort</p>
-                                                <div class="forms_field forms_field_userdata">
-                                                    <input type="password" id="current_password" class="forms_field-input user_field-input" required>
-                                                </div>
                                             </div>
+
                                             <div class="userdata_field">
-                                                <p>Neues Passwort</p>
-                                                <div class="forms_field forms_field_userdata">
+                                            <div class="forms_field forms_field_userdata">
+                                                    <input type="password" id="current_password" placeholder="Aktuelles Passwort" class="forms_field-input user_field-input" required>
+                                            </div>
+                                            </div>
+                                           
+                                            <div class="userdata_field">
+                                            <div class="forms_field forms_field_userdata">
                                                     <input type="password" placeholder="Passwort" class="forms_field-input user_field-input" id="password" required>
-                                                </div>
                                             </div>
-                                            <div class="userdata_field">
-                                                <p>Passwort wiederholen</p>
+                                            </div>
+
+                                            <div class="userdata_field">                                                
                                                 <div class="forms_field forms_field_userdata">
                                                     <input type="password" placeholder="Passwort wiederholen" class="forms_field-input user_field-input" id="password2" required>
                                                 </div>
                                             </div>
-                                            <div class="userdata_field">
-                                                <p>Vorname</p>
+
+                                            <div class="userdata_field">                                                
                                                 <div class="forms_field forms_field_userdata">
-                                                    <input type="text" id="firstname" class="forms_field-input user_field-input" value = ${this.user.firstname}>
+                                                    <input type="text" id="firstname" placeholder="Vorname" class="forms_field-input user_field-input" value = ${this.user.firstname}>
                                                 </div>
                                             </div>
-                                            <div class="userdata_field">
-                                                <p>Nachname</p>
+
+                                            <div class="userdata_field">                                                
                                                 <div class="forms_field forms_field_userdata">
-                                                    <input type="text" id="surname" class="forms_field-input user_field-input" value=${this.user.surname}>
+                                                    <input type="text" id="surname" placeholder="Nachname" class="forms_field-input user_field-input" value=${this.user.surname}>
                                                 </div>
                                             </div>
-                                            <div class="userdata_field">
-                                                <p>E-Mail</p>
+
+                                            <div class="userdata_field">                                               
                                                 <div class="forms_field forms_field_userdata">
-                                                    <input type="email" id="email" class="forms_field-input user_field-input" value= ${this.user.email}>
+                                                    <input type="email" id="email" placeholder="E-Mail" class="forms_field-input user_field-input" value= ${this.user.email}>
                                                 </div>
                                             </div>
+                                        </div>
                                         </div>
                                         <div class="forms_buttons profil_buttons">
                                             <button class="forms_button-action user_button-action" onclick="change()" >Ändern</button>

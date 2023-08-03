@@ -52,6 +52,11 @@ var ImpressumComponent = require('./Components/ImpressumComponent')
 var impressumComponent = new ImpressumComponent()
 router.addView('impressum', impressumComponent)
 
+var Lobby = require('./Components/Lobby')
+var lobby = new Lobby()
+router.addView('lobby', lobby)
+
+
 router.gotoView('waitlist');
 
 router.gotoView('welcome');

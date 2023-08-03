@@ -97,28 +97,58 @@ header a img {
 
 
 #appcontent {
-
     display: flex;
     min-height: 100vh;
     flex-direction: column;
     margin: 0;
     padding: 0;
-    
-
 }
 
+/* chatfenster */
 #chatbox {
-    position: absolute;
-    top: 50%;
+    position: fixed;
+    top: 4rem;
     right: 0px;
+    width: 300px;
     margin-top: 5px;
     margin-right: 5px;
+    margin-bottom: 5px;
     z-index: 10;
-    
+    border-radius: 4px;
 }
 
-#chatfenster{
+#chatfenster {
     background-color: aliceblue;
+    padding: 10px;
+    word-wrap: break-word;
+    border-radius: 4px;
+    height: calc(20em); /* Set the height to 15 lines */
+    overflow-y: auto; /* Make it scrollable */
+}
+
+#chatbtn {
+    background-color: #e8716d; 
+    border: none;
+    border-color: #333;
+    border-radius: 4px;
+    color: white;
+    padding: 3px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#chatbtn:hover {
+    background-color: #45a049;
+}
+
+#chatbtn:active {
+    background-color: red;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 /* welcome-page */
@@ -211,6 +241,21 @@ header a img {
     letter-spacing: 0.1rem;
     margin-top: 0;
 }
+
+.Headline_Game{
+
+    margin-bottom: 70px;
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1em;
+    color: #e8716d;
+    letter-spacing: 0.3rem;
+    margin-top: 0;
+    text-align: center;
+    
+    
+}
+
 
 
  .forms_field .forms_field-input {
@@ -364,21 +409,25 @@ header a img {
 
 .spielregeln-window {
     background: white;
-    min-height: 75vh;
+    min-height: 50vh;
     width: 95%;
     background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
     border-radius: 2rem;
     backdrop-filter: blur(2rem);
     display: flex;
     flex-direction: column;
-    padding-top: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
 }
 
 .Headline_Spielregeln h1 {
     text-align: center;
     font-size: 40px;
     color: white;
-    margin-bottom: 1.7rem;
+    margin-bottom: 2.5rem;
 }
 
 .spielregelnContent {
@@ -392,6 +441,7 @@ header a img {
     flex-direction: column;
     justify-content: center;
     padding-left: 30px;
+    padding-right: 10px;
     padding-bottom: 20px;
 }
 
@@ -481,7 +531,9 @@ header a img {
 }
 
 .profil-page p {
-    font-size: 16px;
+    font-size: 20px;
+    padding-top: 2px;
+    padding-bottom: 7px;
 }
 
 .profil-page h2 {
@@ -595,9 +647,9 @@ header a img {
     background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
     border: none;
     width: 80%;
-    padding: 0.3rem;
+    height: 15px;
     border-radius: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .profil-page .profil-view {
@@ -626,9 +678,22 @@ header a img {
     width: 100%;
 }
 
+.profil-page .userdata_box {
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.profil-page .userdata_text {
+
+    flex: 1;
+}
+
 .profil-page .userdata_inputs {
     width: 100%;
     border-radius: 10px;
+    flex: 2;
 }
 
 .profil-page .userdata_field {
@@ -643,6 +708,25 @@ header a img {
     left: 10%;
     width: 300px;
 }
+
+.profil-page .forms_field_username {
+
+    margin-bottom: 0;
+    position: relative;
+    left: 10%;
+    width: 300px;
+    
+}
+
+.profil-page .forms_field_username input {
+
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    outline: 0;
+
+}
+
 
 .profil-page .forms_field_userdata .forms_field-input {
     padding-right: 0;
@@ -688,6 +772,22 @@ header a img {
     transition: border-color 0.2s ease-in-out;
 }
 
+.profil-page .forms_field_username .username_field-input {
+
+    width: 100%;
+    border: none;
+    padding: 6px 20px 6px 6px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: black;
+    border-radius: 10px;
+    letter-spacing: 0.1rem;
+    transition: border-color 0.2s ease-in-out;
+    
+}
+
+
 .forms_field_userdata .user_field-input:focus {
 
     border-color: #858585;
@@ -698,15 +798,139 @@ header a img {
     border-color: #858585;
 }
 
+
+.disable {
+
+    pointer-events: none;
+
+}
+
+/* Lobby */
+
+.lobby-page {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+        
+}
+
+.lobby-page h2 {
+
+    position: relative;
+    top: -5rem;
+}
+
+.lobby-page .play_button {
+
+display: flex;
+align-items: center;
+justify-content: center;
+margin-top: 80px;
+
+}
+
+.play_button .forms_button-action {
+
+    background-color: #e8716d;
+    padding: 10px 80px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: background-color 0.2s ease-in-out;
+
+}
+
+.lobby_window {
+
+    align-items: center;
+    justify-content: center;
+       
+
+}
+
+/* .pulse {
+
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
+}
+
+@keyframes pulse {
+
+    0% {
+        text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
+    }
+    50% {
+        text-shadow: 0 0 10px rgba(0, 0, 0 0.6);
+    }
+    100% {
+        text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
+    }
+} */
+
 .Waiting {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    position: absolute;
-    top: 20%;
-    left: 30px;
+    
+}
+
+.Waiting .Headline_Waiting {
+
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+.Waiting_list {
+
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    min-height: 15vh;
+    padding: 10px 10px;
+}
+
+
+.Waiting .Waiting_list .Waiting_Player {
+
+    padding: 10px 35px;
+    background-color: #e99f9d;
     color: white;
+    border-radius: 10px;
+    font-size: 24px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    width: 100%;
+    
+}
+
+.Waiting .Waiting_list .Waiting_Player #Player_Link {
+
+    text-decoration: none;
+    color: white;
+    
+}
+
+.Waiting .Waiting_list .Waiting_Player:hover {
+
+
+}
+
+.Waiting .waiting-window {
+
+    padding: 40px 60px;
 }
 
 .Game {
@@ -720,6 +944,67 @@ header a img {
     color: white;
 }
 
+.loader {
+
+    text-align: center;
+    width: 100%;
+    height: 1em;
+    margin-top: 1em;
+    padding-top: 4em;
+    
+}
+
+.loader_letter {
+
+    text-transform: uppercase;
+    color: #e8716d;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    padding: 0 0 0.2em;
+    font-size: 2em;
+    line-height: 1;
+    position: relative;
+    display: inline-block;
+    animation: bounce 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) infinite alternate;
+}
+
+.loader_letter:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loader_letter:nth-child(2) {
+    animation-delay: 0.05s;
+}
+
+.loader_letter:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+.loader_letter:nth-child(4) {
+    animation-delay: 0.15s;
+}
+
+.loader_letter:nth-child(5) {
+    animation-delay: 0.2s;
+}
+
+.loader_letter:nth-child(6) {
+    animation-delay: 0.25s;
+}
+
+.loader_letter:nth-child(7) {
+    animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(-1em);
+    }
+}
 
 /* Footer */
 footer {
@@ -752,7 +1037,7 @@ footer a {
 
 
 .toast {
-    
+    font-family: "Montserrat", sans-serif;
     display: none;
     border-radius: 20px;
     background-color: rgba(38, 255, 0, 0.63);
@@ -761,6 +1046,22 @@ footer a {
     right: 30px;
     width: 300px;
     padding: 10px;
-    color: black;
-    text-align: left;
+    color: lightgrey;
+    text-align: center;
+}
+
+#close{
+    border-radius: 5px;
+    border-style: none;
+    position: fixed;
+    right: 45px;
+    padding: 2px;
+    width: 20px;
+    color: white;
+    background-color: transparent;
+}
+
+#close:hover{
+    background-color: #998e8e;
+
 }
