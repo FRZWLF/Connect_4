@@ -30,16 +30,15 @@ var gameComp = new GameComponent()
 router.addView("game",gameComp)
 //Startsteite
 
+var Message = require("./Components/message")
+var message = new Message()
 
-
-
-// Test Comment to be deleted
-//hi
-//hallo wie geht es dir
 var WaitlistDisplayComponent = require("./Components/WaitlistDisplayComponent")
 var WLComponent = new WaitlistDisplayComponent()
 router.addView("waitlist",WLComponent)
 
+var Chat = require("./Components/chat")
+var chat = new Chat()
 
 var ChangeuserdataComponent = require("./Components/ChangeuserdataComponent")
 var changeuserdataComponent = new ChangeuserdataComponent()
@@ -56,6 +55,11 @@ router.addView('spielregeln', spielregelnComponent)
 var ImpressumComponent = require('./Components/ImpressumComponent')
 var impressumComponent = new ImpressumComponent()
 router.addView('impressum', impressumComponent)
+
+var Lobby = require('./Components/Lobby')
+var lobby = new Lobby()
+router.addView('lobby', lobby)
+
 
 router.gotoView('waitlist');
 

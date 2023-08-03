@@ -21,25 +21,25 @@ module.exports = class Router {
                 document.getElementById("spielregelnLogin").classList.remove('active')
                 document.getElementById("lobby").classList.add('active')
 
-                document.getElementById("appcontent").classList.add('lobby-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
-                document.getElementById("appcontent").classList.remove('nutzerdaten-page')
+                // document.getElementById("appcontent").classList.add('lobby-page')
+                // document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
+                // document.getElementById("appcontent").classList.remove('nutzerdaten-page')
             } else if (setActive == "nutzerdaten") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.add('active')
                 document.getElementById("spielregelnLogin").classList.remove('active')
 
-                document.getElementById("appcontent").classList.remove('lobby-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
-                document.getElementById("appcontent").classList.add('nutzerdaten-page')
+                // document.getElementById("appcontent").classList.remove('lobby-page')
+                // document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
+                // document.getElementById("appcontent").classList.add('nutzerdaten-page')
             } else if (setActive == "spielregeln") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.remove('active')
                 document.getElementById("spielregelnLogin").classList.add('active')
 
-                document.getElementById("appcontent").classList.remove('lobby-page')
-                document.getElementById("appcontent").classList.add('spielregelnLogin-page')
-                document.getElementById("appcontent").classList.remove('nutzerdaten-page')
+                // document.getElementById("appcontent").classList.remove('lobby-page')
+                // document.getElementById("appcontent").classList.add('spielregelnLogin-page')
+                // document.getElementById("appcontent").classList.remove('nutzerdaten-page')
             }
         } else {
 
@@ -52,40 +52,41 @@ module.exports = class Router {
                 document.getElementById("registrierung").classList.remove('active')
                 document.getElementById("spielregelnLogout").classList.remove('active')
 
-                document.getElementById("appcontent").classList.add('welcome-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
-                document.getElementById("appcontent").classList.remove('registrierung-page')
-                document.getElementById("appcontent").classList.remove('login-page')
+                // document.getElementById("appcontent").classList.add('welcome-page') 
+                // console.log("welcome-page")
+                // document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                // document.getElementById("appcontent").classList.remove('registrierung-page')
+                // document.getElementById("appcontent").classList.remove('login-page')
             } else if (setActive == "login") {
                 document.getElementById("welcome").classList.remove('active')
                 document.getElementById("login").classList.add('active')
                 document.getElementById("registrierung").classList.remove('active')
                 document.getElementById("spielregelnLogout").classList.remove('active')
 
-                document.getElementById("appcontent").classList.remove('welcome-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
-                document.getElementById("appcontent").classList.remove('registrierung-page')
-                document.getElementById("appcontent").classList.add('login-page')
+                // document.getElementById("appcontent").classList.remove('welcome-page')
+                // document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                // document.getElementById("appcontent").classList.remove('registrierung-page')
+                // document.getElementById("appcontent").classList.add('login-page')
             } else if (setActive == "registrierung") {
                 document.getElementById("welcome").classList.remove('active')
                 document.getElementById("login").classList.remove('active')
                 document.getElementById("registrierung").classList.add('active')
                 document.getElementById("spielregelnLogout").classList.remove('active')
 
-                document.getElementById("appcontent").classList.remove('welcome-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
-                document.getElementById("appcontent").classList.add('registrierung-page')
-                document.getElementById("appcontent").classList.remove('login-page')
+                // document.getElementById("appcontent").classList.remove('welcome-page')
+                // document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                // document.getElementById("appcontent").classList.add('registrierung-page')
+                // document.getElementById("appcontent").classList.remove('login-page')
             } else if (setActive == "spielregeln") {
                 document.getElementById("welcome").classList.remove('active')
                 document.getElementById("login").classList.remove('active')
                 document.getElementById("registrierung").classList.remove('active')
                 document.getElementById("spielregelnLogout").classList.add('active')
 
-                document.getElementById("appcontent").classList.remove('welcome-page')
-                document.getElementById("appcontent").classList.add('spielregelnLogout-page')
-                document.getElementById("appcontent").classList.remove('registrierung-page')
-                document.getElementById("appcontent").classList.remove('login-page')
+                // document.getElementById("appcontent").classList.remove('welcome-page')
+                // document.getElementById("appcontent").classList.add('spielregelnLogout-page')
+                // document.getElementById("appcontent").classList.remove('registrierung-page')
+                // document.getElementById("appcontent").classList.remove('login-page')
             }
 
         }

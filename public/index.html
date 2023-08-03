@@ -14,7 +14,8 @@
         <a href="javascript: router.gotoView('welcome')"><img src="./img/connect4_logo.png" alt="connect4_logo"></a>
         <div id="Logout"> <!--  Standard NavBar  -->
             <ul id="MenueContent">
-                <li><a id="welcome" href="javascript: router.gotoView('welcome', ' ', 'welcome')" class="active"> Startseite </a></li>
+                <li><a id="welcome" href="javascript: router.gotoView('welcome', ' ', 'welcome')" class="active">
+                        Startseite </a></li>
                 <li><a id="login" href="javascript: router.gotoView('login', ' ', 'login')"> Login </a></li>
                 <li><a id="registrierung" href="javascript: router.gotoView('registrierung', ' ', 'registrierung')"> Registrierung </a></li>
                 <li><a id="spielregelnLogout" href="javascript: router.gotoView('spielregeln', ' ', 'spielregeln')"> Spielregeln</a></li>
@@ -23,8 +24,8 @@
         </div>
         <div id="Login" style="display: none;"><!--  Eingeloggte NavBar   -->
             <ul id="MenueContent">
-                    <li><a id="lobby" href="javascript: spielstarten()" class="active" > Lobby </a></li>
-                    <li><a id="nutzerdaten" href="javascript: router.gotoView('nutzerdaten_aendern', 'logedin', 'nutzerdaten')"> Nutzerdaten ändern </a></li>
+                    <li><a id="lobby" href="javascript: router.gotoView('lobby', 'logedin', 'lobby')" class="active" > Lobby </a></li>
+                    <li><a id="nutzerdaten" href="javascript: router.gotoView('nutzerdaten_aendern', 'logedin', 'nutzerdaten')"> Profil </a></li>
                     <li><a id="spielregelnLogin" href="javascript: router.gotoView('spielregeln', 'logedin', 'spielregeln')"> Spielregeln</a></li>
                     <li><a id="ShoppingTime" a href="javascript: router.gotoView('GoingShopping','logedin','GoingShopping')">Shop</a></li>
                     <li><a href="javascript: logout()"> Logout </a></li>
@@ -32,7 +33,18 @@
         </div>
     </header>
 
+    <!-- umstylen wenn nötig, eigene id für input => Änderungen in CSS-->
+    <div id="chatbox">
+        <div id="chatfenster">
+        </div>
+        <div>
+            <input maxlength="55" type="text" id="message">
+            <button id="chatbtn" onclick="sendMessage()">Senden</button>
+        </div>
+    </div>
 
+    <div class="toast" id="alert" style="opacity: 1"> 
+    </div>
 
     <main id="appcontent"></main>
 
