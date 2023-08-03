@@ -13,12 +13,23 @@ class GameComponent {
         })
 
         socket.on("matchResolve", (playerName) => {
+            console.log("hello")
             if (!this.game.gewinnStatus) {
                 document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 document.getElementById("WinnerMessage").innerHTML = "Gewonnen, der Gegener hat das Spiel verlassen! Herzlichen Glückwunsch. "
                 this.game.gewinnStatus = this.user.username
             }
         })
+
+        socket.on("disconnect", () => {
+            console.log("hello")
+            if(this.user.username == this.game.user1) {
+                socket.emit('matchtResolveToServer', this.user.username, this.game.user2)
+            } else {
+                socket.emit('matchtResolveToServer', this.user.username, this.game.user1)
+            }
+        })
+
 
         socket.on("zuggegner", (user, data) => {
             this.game.move(user, data)
