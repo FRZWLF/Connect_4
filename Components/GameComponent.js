@@ -56,7 +56,7 @@ class GameComponent {
 
     getHTML() {
         var body = /*html*/`
-        
+        <div class="Game">
         <h1>Spiel</h1>
         <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
         `
@@ -92,7 +92,10 @@ class GameComponent {
         } else {
             body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         }
+        body += /*html*/`
 
+        </div>
+        `
         return body
     }
 

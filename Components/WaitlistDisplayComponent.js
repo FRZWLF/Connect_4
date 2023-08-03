@@ -18,7 +18,10 @@ class WaitlistDisplayComponent{
     
     getHTML(){ let text = /*html*/`
     <br>
+    <div class="Waiting">
         <h2 id="Waiting">Waitingslist</h2>
+    
+        
     `
     this.waitinglist.forEach(element => {
         if(element==appstatus.loginUser.username){
@@ -31,6 +34,9 @@ class WaitlistDisplayComponent{
             <br>
         `
     });
+    text += /*html*/`
+    </div>
+    `
        
     return text
     }

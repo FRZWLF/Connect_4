@@ -109,9 +109,11 @@ header a img {
 
 #chatbox {
     position: absolute;
+    top: 50%;
     right: 0px;
     margin-top: 5px;
     margin-right: 5px;
+    z-index: 10;
     
 }
 
@@ -694,6 +696,28 @@ header a img {
  .forms_field_userdata .user_field-input:hover {
 
     border-color: #858585;
+}
+
+.Waiting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: absolute;
+    top: 20%;
+    left: 30px;
+    color: white;
+}
+
+.Game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: absolute;
+    top: 20%;
+    left: 30px;
+    color: white;
 }
 
 
