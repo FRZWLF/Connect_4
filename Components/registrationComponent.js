@@ -87,7 +87,7 @@ class RegistrationComponent {
                     if (answer) {
                         alert("Registration fehlgeschlagen")
                     } else {
-                        alert("User wurde angelegt")
+                        message("Registrierung","User wurde angelegt")
                         router.gotoView("login"," ", "login")
                     }
                 })
@@ -96,7 +96,7 @@ class RegistrationComponent {
 
             }
             else {
-                alert("Passwörter sind ungleich oder die Email ist ungültig!")
+                message("Achtung","Passwörter sind ungleich oder die Email ist ungültig!","fehler")
             }
 
         }

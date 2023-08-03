@@ -10,6 +10,9 @@ class GameComponent {
             this.game = new Game(player1, player2, 6, 7)
             this.user = appstatus.loginUser
             router.gotoView("game")
+            if (this.game.aktiverSpieler == appstatus.loginUser.username) {
+                this.zugZeitAnzeigen()
+            }
         })
 
         socket.on("matchResolve", (playerName) => {
@@ -21,10 +24,21 @@ class GameComponent {
             }
         })
 
+        socket.on('zeitgegner', (response) => {
 
+            if (response) {
+                if (this.game.user1 == this.user.username) {
+                    this.game.checkGiveUp(this.game.user2)
+                } else {
+                    this.game.checkGiveUp(this.game.user1)
+                }
+                router.refresh()
+            }
+        })
 
 
         socket.on("zuggegner", (user, data) => {
+            this.zugZeitAnzeigen()
             this.game.move(user, data)
             if (this.game.gewinnStatus) {
                 if (this.game.gewinnStatus == "unentschieden") {
@@ -47,6 +61,33 @@ class GameComponent {
         })
     }
 
+    zugZeitAnzeigen() {
+        try { clearInterval(this.seti) } catch { }
+        this.zugzeit = 10
+
+        //Timer Start
+        this.seti = setInterval(() => {
+            const timerElement = document.getElementById('timer');
+            this.zugzeit--;
+            timerElement.innerText = 'Automatischer Abbruch in:' + this.zugzeit;
+
+            if (this.zugzeit <= 0) {
+                timerElement.innerText = " ";
+                this.game.checkGiveUp(appstatus.loginUser.username)
+                router.refresh()
+                clearInterval(this.seti)
+
+
+                if (this.game.user1 == this.user.username) {
+                    socket.emit("Zeitabgelaufen", this.game.user2);
+                } else {
+                    socket.emit('Zeitabgelaufen', this.game.user1);
+                }
+                return
+            }
+        }, 1000);
+    }
+
     getHTML() {
         var body = /*html*/`
         <div class="Game">
@@ -63,6 +104,7 @@ class GameComponent {
                         } else {
                             body += /*html*/`<img src="./img/2.gif">`
                         }
+                        <p id="timer"></p>
                     
                         body += /*html*/` 
                 </div>
@@ -102,12 +144,17 @@ class GameComponent {
         </div>
         </div>
         `
+
+    
         return body
     }
 
     spielZug(spalte) {
 
         if (this.game.moveGueltig(this.user.username, spalte)) {
+
+            try { clearInterval(this.seti) } catch { }
+            document.getElementById('timer').innerHTML = ""
 
             this.game.move(this.user.username, spalte)
             for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
@@ -198,13 +245,13 @@ class GameComponent {
         } 2
     }
 
-    beendeSpiel() { 
-        if(this.user.username == this.game.user1) {
+    beendeSpiel() {
+        if (this.user.username == this.game.user1) {
             socket.emit('matchtResolveToServer', this.user.username, this.game.user2)
         } else {
             socket.emit('matchtResolveToServer', this.user.username, this.game.user1)
         }
-        delete(this.game)
+        delete (this.game)
     }
 
 }
