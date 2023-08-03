@@ -97,28 +97,106 @@ header a img {
 
 
 #appcontent {
-
     display: flex;
     min-height: 100vh;
     flex-direction: column;
     margin: 0;
     padding: 0;
-    
-
 }
 
+/* chatfenster */
 #chatbox {
-    position: absolute;
+    position: fixed;
+    top: 4rem;
     right: 0px;
+    width: 300px;
     margin-top: 5px;
     margin-right: 5px;
-    
+    margin-bottom: 5px;
+    z-index: 1;
+    border-radius: 4px;
 }
 
-#chatfenster{
+#chatfenster {
     background-color: aliceblue;
+    padding: 10px;
+    word-wrap: break-word;
+    border-radius: 4px;
+    height: calc(20em); /* Set the height to 15 lines */
+    overflow-y: auto; /* Make it scrollable */
 }
 
+#chatbtn {
+    background-color: #e8716d; 
+    border: none;
+    border-color: #333;
+    border-radius: 4px;
+    color: white;
+    padding: 3px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#chatbtn:hover {
+    background-color: #45a049;
+}
+
+#chatbtn:active {
+    background-color: red;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+/*
+#chatbox {
+    position: fixed;
+    top: 4rem;
+    right: 0px;
+    width: 300px;
+    height: calc(100% - 4rem);
+    overflow-y: auto;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    z-index: 1;
+    border-radius: 4px;
+}
+
+#chatfenster {
+    background-color: aliceblue;
+    padding: 10px;
+    word-wrap: break-word;
+    border-radius: 4px;
+}
+
+#chatbtn {
+    background-color: #e8716d; 
+    border: none;
+    border-color: #333;
+    border-radius: 4px;
+    color: white;
+    padding: 5px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#chatbtn:hover {
+    background-color: #45a049;
+}
+
+#chatbtn:active {
+    background-color: red;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}*/
 /* welcome-page */
 
 .welcome-page {
