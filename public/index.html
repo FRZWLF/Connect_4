@@ -23,14 +23,24 @@
         <div id="Login" style="display: none;"><!--  Eingeloggte NavBar   -->
             <ul id="MenueContent">
                     <li><a id="lobby" href="javascript: spielstarten()" class="active" > Lobby </a></li>
-                    <li><a id="nutzerdaten" href="javascript: router.gotoView('nutzerdaten_aendern', 'logedin', 'nutzerdaten')"> Nutzerdaten ändern </a></li>
+                    <li><a id="nutzerdaten" href="javascript: router.gotoView('nutzerdaten_aendern', 'logedin', 'nutzerdaten')"> Profil </a></li>
                     <li><a id="spielregelnLogin" href="javascript: router.gotoView('spielregeln', 'logedin', 'spielregeln')"> Spielregeln</a></li>
                     <li><a href="javascript: logout()"> Logout </a></li>
             </ul>
         </div>
     </header>
 
+    <div id="chatbox">
+        <div id="chatfenster">            
+        </div>
+        <div>
+            <input maxlength="55" type="text" id="message">
+            <button onclick="sendMessage()">Senden</button>
+        </div>
+    </div>
 
+    <div class="toast" id="message" style="opacity: 1"> 
+    </div>
 
     <main id="appcontent"></main>
 
