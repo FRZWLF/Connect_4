@@ -26359,24 +26359,230 @@ function config (name) {
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],187:[function(require,module,exports){
+// Importieren der benötigten Module
+const crypto = require('crypto') // Modul zur Kryptographie
+const User = require('../Model/User') // Benutzermodell
+const val = require('validator') // Modul zur Validierung von Eingaben
+
+// Definition der Klasse ChangeuserdataComponent
+class ChangeuserdataComponent {
+    constructor() {
+        // Binden der Methode 'change' an das aktuelle Objekt
+        window.change = this.change.bind(this)
+        window.changeView = this.changeView.bind(this)
+    }
+
+    // Methode zur Erzeugung des HTML-Formulars
+    getHTML() {
+        // Zugriff auf den eingeloggten Benutzer
+        this.user = appstatus.loginUser
+        // Erzeugung des HTML-Formulars
+        var text = /*html*/`
+        <div class="profil-page">
+        <section class="glass">
+                    <div class="dashboard">
+                        <div class="user">
+                            <img src="./img/nouser.png" alt="">
+                            <h3>${this.user.firstname} ${this.user.surname}</h3>
+                            <p>${this.user.username}<p>
+                        </div>
+                        <div class="links">
+                            <div class="link">
+                                <h2 id="uebersicht" class="active" onclick="changeView('uebersicht')">Übersicht</h2>
+                            </div>
+                            <div class="link">
+                                <h2 id="userdata" onclick="changeView('profil')">Profil bearbeiten</h2>
+                            </div>
+                            <div class="link">
+                                <h2>Daten und Datenschutz</h2>
+                            </div>
+                            <div class="link">
+                                <h2>Sicherheit</h2>
+                            </div>
+                            <div class="link">
+                                <h2>Zahlungen</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profil-view">
+                        <div id="status_uebersicht">
+                            <div class="status">
+                                <h1>Übersicht</h1>
+                                <input type="text">
+                            </div>
+                            <div class="cards">
+                                <div class="card">
+                                    <div class="card-info">
+                                        <h2>Deine Stats</h2>
+                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="status_userdata" style ="display: none;">
+                            <div class="status" >
+                                <h1>Nutzerdaten ändern</h1>
+                                <input type="text">
+                            </div>
+                            <div class="cards">
+                                <div class="card">
+                                    <div class="card-info">
+                                        <div class="userdata_inputs">
+                                            <div class="userdata_field">
+                                                <p>Username</p> ${this.user.username}
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>Aktuelles Passwort</p>
+                                                <div class="forms_field forms_field_userdata">
+                                                    <input type="password" id="current_password" class="forms_field-input user_field-input" required>
+                                                </div>
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>Neues Passwort</p>
+                                                <div class="forms_field forms_field_userdata">
+                                                    <input type="password" placeholder="Passwort" class="forms_field-input user_field-input" id="password" required>
+                                                </div>
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>Passwort wiederholen</p>
+                                                <div class="forms_field forms_field_userdata">
+                                                    <input type="password" placeholder="Passwort wiederholen" class="forms_field-input user_field-input" id="password2" required>
+                                                </div>
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>Vorname</p>
+                                                <div class="forms_field forms_field_userdata">
+                                                    <input type="text" id="firstname" class="forms_field-input user_field-input" value = ${this.user.firstname}>
+                                                </div>
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>Nachname</p>
+                                                <div class="forms_field forms_field_userdata">
+                                                    <input type="text" id="surname" class="forms_field-input user_field-input" value=${this.user.surname}>
+                                                </div>
+                                            </div>
+                                            <div class="userdata_field">
+                                                <p>E-Mail</p>
+                                                <div class="forms_field forms_field_userdata">
+                                                    <input type="email" id="email" class="forms_field-input user_field-input" value= ${this.user.email}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="forms_buttons profil_buttons">
+                                            <button class="forms_button-action user_button-action" onclick="change()" >Ändern</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+        </div>
+        
+
+        
+        `
+        // Rückgabe des erzeugten HTML-Textes
+        return (text)
+    }
+
+    changeView(submenue) {
+        console.log("Ich mach was")
+        if(submenue == "uebersicht"){
+            document.getElementById("status_uebersicht").style.display = "block";
+            document.getElementById("status_userdata").style.display = "none";
+            document.getElementById("uebersicht").classList.add("active");
+            document.getElementById("userdata").classList.remove("active");
+        } else {
+            document.getElementById("status_uebersicht").style.display = "none";
+            document.getElementById("status_userdata").style.display = "block";
+            document.getElementById("uebersicht").classList.remove("active");
+            document.getElementById("userdata").classList.add("active");
+        }
+        
+    }
+
+    //Muss noch Seite refreshen für Änderungen!!!
+
+    // Methode zur Änderung der Benutzerdaten
+    change() {
+        // Abrufen der Eingabewerte aus dem Formular
+        let current_password = document.getElementById("current_password").value
+        let password = document.getElementById("password").value
+        let password2 = document.getElementById("password2").value
+        let firstname = document.getElementById("firstname").value
+        let surname = document.getElementById("surname").value
+        let email = document.getElementById("email").value
+
+        // Erzeugung eines Hashes aus dem aktuellen Passwort
+        var hash_c = crypto.createHash('sha256')
+        hash_c.update(current_password)
+        let cpwhash = hash_c.digest('hex')
+
+        // Überprüfung, ob das aktuelle Passwort eingegeben wurde
+        if (current_password == "") {
+            alert("Aktuelles Passwort muss angegeben werden")
+        } else {
+            // Überprüfung, ob die E-Mail gültig ist
+            if (val.isEmail(email)) {
+                // Erzeugung eines Hashes aus dem neuen Passwort, falls eingegeben
+                let pwHash = password !== "" && password === password2 ? crypto.createHash('sha256').update(password).digest('hex') : appstatus.loginUser.password;
+
+                // Erzeugung eines neuen Benutzerobjekts mit den aktualisierten Daten
+                let oldUser = appstatus.loginUser
+                let newUser = new User(oldUser.username, pwHash, firstname, surname, email)
+
+                // Senden des neuen Benutzerobjekts an den Server zur Aktualisierung
+                socket.emit('updateUser', newUser, cpwhash)
+
+                // Empfangen der Antwort vom Server
+                socket.on('updateAnswer', (answer) => {
+                    if (answer) {
+                        // Aktualisierung des eingeloggten Benutzers im Frontend
+                        appstatus.loginUser = newUser
+                        alert("Update erfolgt!")
+                    } else {
+                        alert("Update gescheitert.")
+                    }
+                })
+            }
+            else {
+                alert("Die Email ist ungültig.")
+            }
+        }
+    }
+}
+// Exportieren der Klasse ChangeuserdataComponent
+module.exports = ChangeuserdataComponent
+},{"../Model/User":199,"crypto":71,"validator":241}],188:[function(require,module,exports){
 const Game = require("../Model/Game")
 class GameComponent {
     constructor() {
         window.spielZug = this.spielZug.bind(this)
         window.zeigeSteinSpalte = this.zeigeSteinSpalte.bind(this)
         window.blendeSteinAus = this.blendeSteinAus.bind(this)
+        window.beendeSpiel = this.beendeSpiel.bind(this)
 
         socket.on("GameStart", (player1, player2) => {
-
             this.game = new Game(player1, player2, 6, 7)
-
             this.user = appstatus.loginUser
             router.gotoView("game")
         })
 
+        socket.on("matchResolve", (playerName) => {
+            console.log("hello")
+            if (!this.game.gewinnStatus) {
+                document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
+                document.getElementById("WinnerMessage").innerHTML = "Gewonnen, der Gegener hat das Spiel verlassen! Herzlichen Glückwunsch. "
+                this.game.gewinnStatus = this.user.username
+            }
+        })
 
-        this.game = Game
-        this.user = appstatus.loginUser
+
+
 
         socket.on("zuggegner", (user, data) => {
             this.game.move(user, data)
@@ -26386,7 +26592,7 @@ class GameComponent {
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
                     if (this.game.gewinnStatus == this.user.username) {
-                        document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
+                        document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch. "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
@@ -26394,16 +26600,11 @@ class GameComponent {
                     }
 
                 }
+            } else {
+                document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
             }
-            document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
-
-        }
-
-
-
-        )
-
+        })
     }
 
     getHTML() {
@@ -26414,9 +26615,10 @@ class GameComponent {
         `
 
         if (this.user.username == this.game.user1) {
-            body += /*html*/`<p id="gegner"><b>Spieler:</b> ${this.game.user2}</p>`
+
+            body += /*html*/`<p id="gegner"><b>Gegner:</b> ${this.game.user2}</p>`
         } else {
-            body += /*html*/`<p id="gegner"><b>Gegener: </b> ${this.game.user1}</p>`
+            body += /*html*/`<p id="gegner"><b>Gegner: </b> ${this.game.user1}</p>`
         }
 
         body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
@@ -26433,7 +26635,17 @@ class GameComponent {
 
         body += this.erzeugeSpielfeld()
         body += /*html*/`</div>`
-        body += /*html*/`<h2 id="WinnerMessage"> </h2>`
+        console.log(this.game.gewinnStatus)
+        if (!this.game.gewinnStatus) {
+            body += /*html*/`<h2 id="WinnerMessage"> </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+        } else if (this.game.gewinnStatus == this.user.username) {
+            body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch. </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+        } else if (this.game.gewinnStatus == "unentschieden") {
+            body += /*html*/`<h2 id="WinnerMessage"> Unentschieden, keep trying! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+        } else {
+            body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+        }
+
         return body
     }
 
@@ -26455,7 +26667,7 @@ class GameComponent {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
-                        document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
+                        document.getElementById("WinnerMessage").innerHTML = "Du hast verloren! "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }
                 }
@@ -26527,15 +26739,22 @@ class GameComponent {
                     break
                 }
             }
-        }
+        } 2
     }
 
-
+    beendeSpiel() { 
+        if(this.user.username == this.game.user1) {
+            socket.emit('matchtResolveToServer', this.user.username, this.game.user2)
+        } else {
+            socket.emit('matchtResolveToServer', this.user.username, this.game.user1)
+        }
+        delete(this.game)
+    }
 
 }
 
 module.exports = GameComponent
-},{"../Model/Game":193}],188:[function(require,module,exports){
+},{"../Model/Game":198}],189:[function(require,module,exports){
 class ImpressumComponent {
 
     //View
@@ -26590,71 +26809,160 @@ class ImpressumComponent {
 
 module.exports = ImpressumComponent
 
-},{}],189:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
+const crypto = require('crypto')
+
+
+
+class WelcomeLogIn {
+
+    constructor() {
+        window.login = this.login.bind(this)
+        window.logout = this.logout.bind(this) // Für FUnktionszugriff0
+    }
+
+
+    logout() {
+        alert("Du bist ausgeloggt")
+        appstatus.loginUser = null;
+        router.gotoView("welcome", "","welcome")
+
+    }
+
+    getHTML() {
+        var text = /*html*/`
+            <div class="login-page">
+                <div class="forms-window">
+                    <h2 class="Headline_Forms"> Login </h2>
+
+
+                   <div class="forms_field">
+                        <input type="text" placeholder="Benutzername" id="username" class="forms_field-input" required><br>
+                   </div>
+
+                   <div class="forms_field">
+                        <input type="password" placeholder="Passwort" id="password" class="forms_field-input" required><br>
+                   </div>
+                   
+                   <div class="forms_buttons">
+                            <button class="forms_button-forgot">Passwort vergessen?</button>
+                            <button class="forms_button-action" onclick="login()" >Login</button>
+                   </div>
+                 </div>
+            </div>     
+                
+                `
+        return (text);
+    }
+
+    login() {
+        console.log("login")
+        let username = document.getElementById("username").value
+        let password = document.getElementById("password").value
+
+        var hash = crypto.createHash('sha256')
+        hash.update(password)
+        let pwHash = hash.digest('hex')
+
+
+        socket.emit("login", pwHash, username)
+        socket.on("loginValide", (loginValid, userExists, user) => {
+            if (loginValid && userExists) {
+                message("Login", "erfolgreich")
+                appstatus.loginUser = user
+                //spielstarten() //--> falls direkt Waitinglist
+                router.gotoView("spielregeln", "logedin", "spielregeln")
+            }
+
+        })
+
+        socket.on("loginUnvalide", (loginValid, userExists) => {
+            if (!loginValid && userExists) {
+                alert("Passwort oder Benutzername ist Falsch!")
+                //Soll login "refreshen"
+                router.gotoView("registrierung")
+                router.gotoView("login", "", "login")
+            } else if (!userExists) {
+                alert("Nicht registriert")
+                router.gotoView("registrierung", "", "registrierung")
+            }
+
+        })
+    }
+}
+module.exports = WelcomeLogIn
+},{"crypto":71}],191:[function(require,module,exports){
 class SpielregelnComponent {
 
     //View
     getHTML() {
         var text = /*html*/`
-    <style>
-        h1 {
-            text-align: center;
-         
-            }
-        .p1 {
-            hyphens: auto; 
-            text-align: center;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-            margin: 1em auto; 
-            width: 20%;
-            }    
-    </style>
+            <div class="spielregeln">
+                <div class="spielregeln-window">
+                     <div class="Headline_Spielregeln">
+                         <h1>Spielregeln</h1>
+                     </div>
+                     <div class="spielregelnContent">
+                         <div class="links">
+                            <div class="introduction">
+                                <h1>Ein Spiel für zwei Spieler</h1>
+                                    <div class="intro">
+                                           <p class="p1">
+                                               Mach Dich bereit für geistiges Kräftemessen,
+                                               bei dem Sieg oder Niederlage ganz dicht beieinander liegen!
+                                               Du brauchst nur vier Chips in eine Reihe zu bringen,
+                                               horizontal, vertikal oder diagonal.
+                                       	</p>
+                                    </div>
+                            </div>
+                             
+                            <div class="introduction2">
+                                 <h1>Hört sich einfach an</h1>
+                                 <div class="intro">
+                                     <p class="p1">
+                                         ist es aber nicht! Du brauchst Dein ganzes taktisches Geschick,
+                                         um vorauszuplanen - und gleichzeitig eine gute Defensivstrategie,
+                                         um Deinen Gegenspieler in Schach zu halten!
+                                     </p> 
+                                </div>
+                            </div>
+                            
+                         </div>
+                         <div class="mitte">
+                             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Connect4_Wins.PNG" >
+                         </div>
+                         <div class="rechts">
+                         <div class="introduction3">
+                                <h1>Ziel des Spiels</h1>
+                                <div class="intro">
+                                    <p class="p1">
+                                     Ziel bei „Vier gewinnt“ ist es, die Steine der eigenen Farbe 
+                                     so zu platzieren, dass 4 Steine diagonal, waagerecht oder 
+                                     senkrecht in einer Reihe zum liegen kommen. 
+                                     Der Spieler, dem das zuerst gelingt, der erhält einen Punkt oder hat gewonnen. 
+                                  </p>
+                                </div>            
+                            </div>
+                             <div class="introduction2">
+                                <h1>SPIELABLAUF</h1>
+                                <div class="spielablauf">
+                                    <p class="p1">
+                                     Entscheidet, wer das Spiel beginnt. <br>
+                                     Wenn Du an der Reihe bist, wirfst Du EINEN Chip in IRGENDEINEN
+                                     der Einwurfschlitze an der Oberseite des Gitters. <br>
+                                     Jeder wirft der Reihe nach seinen Chip ein, bis einer von Euch vier seiner Chips
+                                     in einer Reihe positioniert hat. <br> Die vier in einer Reihe können 
+                                     horizontal, vertikal oder diagonal sein. Siehe die Beispiele auf Seite 4. <br>
+                                     Wer als erster vier in einer Reihe hat, gewinnt. <br>
+                                 </p>
+                                </div>    
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+                
 
-<h1>Spielregeln</h1>
-<div class="SpielregelnContent">
-    <div id="links">
-        <h1>Ein Spiel für zwei Spieler</h1>
-            <p class="p1">
-                Mach Dich bereit für geistiges Kräftemessen,
-                bei dem Sieg oder Niederlage ganz dicht beieinander liegen!
-                Du brauchst nur vier Chips in eine Reihe zu bringen,
-                horizontal, vertikal oder diagonal.<br><br> 
-            </p>
-        <h1>Hört sich einfach an</h1>
-        <p class="p1">
-            ist es aber nicht! Du brauchst Dein ganzes taktisches Geschick,
-            um vorauszuplanen - und gleichzeitig eine gute Defensivstrategie,
-            um Deinen Gegenspieler in Schach zu halten!<br><br>
-        </p> 
-    </div>
-    <div id="mitte">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Connect4_Wins.PNG" >
-    </div>
-    <div id="rechts">
-        <h1>Ziel des Spiels</h1>
-             <p class="p1">
-                Ziel bei „Vier gewinnt“ ist es, die Steine der eigenen Farbe 
-                so zu platzieren, dass 4 Steine diagonal, waagerecht oder 
-                senkrecht in einer Reihe zum liegen kommen. 
-                Der Spieler, dem das zuerst gelingt, der erhält einen Punkt oder hat gewonnen. 
-             </p>
-            <br>
-        <h1>SPIELABLAUF</h1>
-            <p class="p1">
-                Entscheidet, wer das Spiel beginnt. <br>
-                Wenn Du an der Reihe bist, wirfst Du EINEN Chip in IRGENDEINEN <br>
-                der Einwurfschlitze an der Oberseite des Gitters. <br>
-                Jeder wirft der Reihe nach seinen Chip ein, bis einer von Euch vier seiner Chips <br>
-                in einer Reihe positioniert hat. Die vier in einer Reihe können <br>
-                horizontal, vertikal oder diagonal sein. Siehe die Beispiele auf Seite 4. <br>
-                Wer als erster vier in einer Reihe hat, gewinnt. <br>
-                Um den Rahmen zu entleeren, muß man nur den Riegel auf der Unterseite zur Seite ziehen,<br>
-                damit die Chips herausfallen. Dann wird der Riegel wieder zurückgestellt, <br>
-                die Chips werden sortiert und das nächste Spiel kann beginnen!<br>
-            </p>
-    </div>
-</div>
         `
         return (text);
     }
@@ -26662,7 +26970,50 @@ class SpielregelnComponent {
 
 module.exports = SpielregelnComponent
 
-},{}],190:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
+
+class WaitlistDisplayComponent{
+    constructor(){
+        socket.on("NewWList",(wlist)=>{
+            this.waitinglist = wlist
+            router.refresh()
+        }
+        ) 
+        window.spielstarten = this.spielstarten.bind(this)
+        window.startGame = this.startGame.bind(this)
+        
+    }
+
+    spielstarten(){
+        socket.emit("Newplayer",appstatus.loginUser.username)
+        router.gotoView('waitlist', 'logedin', "waitlist")
+    }
+    
+    getHTML(){ let text = /*html*/`
+    <br>
+        <h2 id="Waiting">Waitingslist</h2>
+    `
+    this.waitinglist.forEach(element => {
+        if(element==appstatus.loginUser.username){
+            text += element
+        } 
+        else{
+            text+= "<a href='javascript:startGame(\""+element+"\")'>" + element + "</a>"
+        }
+        text+= /*html*/`
+            <br>
+        `
+    });
+       
+    return text
+    }
+    startGame(opponent){
+        socket.emit("startNewGame",appstatus.loginUser.username,opponent)
+    }
+
+}
+module.exports = WaitlistDisplayComponent
+},{}],193:[function(require,module,exports){
 
 class WelcomeComponent {
 
@@ -26689,24 +27040,8 @@ class WelcomeComponent {
 
 
     var text = /*html*/`
-    <style>
-      h1 {
-        text-align: center;
-        font-size: 40px;
-        }
-
-        h2 {
-        text-align: center;
-        font-size: 20px;
-        }
-      
-        p {
-        text-align: center;
-        font-size: 30px;
-        }
-    </style>
-
-
+    
+    <div class="welcome-page">
       <!-- <h2> Willkommen zur Projektwoche </h2> -->
       <br><br><br><br>
       <h1><u> Willkommen zum 4 Gewinnt Spiel </u> <h1>
@@ -26714,7 +27049,8 @@ class WelcomeComponent {
       <!-- <button onclick=alertyear() > Ok</button> -->
       <p>Wir wünschen euch beim Spielen viel Spaß!!! <br>
         Möge der Beste von euch Gewinnen! </p>
-           `
+    </div>     
+          `
     return (text);
   }
 }
@@ -26723,7 +27059,63 @@ module.exports = WelcomeComponent
 
 
 
-},{}],191:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
+//Create Chat Event Handlers:
+//You need to create event handlers for chat-related events. These events include a user connecting to the chat, a user sending a message, and a user disconnecting from the chat.
+class chat {
+    constructor() {
+        socket.on('NewMessageList',(messageList)=>{
+            document.getElementById('chatfenster').innerHTML = ""
+            for(let i=0; i<messageList.length; i++){                    
+                document.getElementById('chatfenster').innerHTML += messageList[i]
+            }
+        })
+        window.sendMessage = this.sendMessage.bind(this)
+     }
+
+    sendMessage() {
+
+        let msg = document.getElementById("message").value
+
+        if(appstatus.loginUser != null){
+            socket.emit("NewMessage", msg, appstatus.loginUser.username)
+        } else{
+            socket.emit("NewMessage",msg,"Guest")
+        }
+    }
+}
+
+module.exports = chat
+},{}],195:[function(require,module,exports){
+module.exports = class MessageComponent{
+
+    constructor(){
+        window.message = this.info.bind(this)
+    }
+
+    info(ueberschrift, Nachricht, type){
+
+        
+        let messagediv = document.getElementById('message') 
+        messagediv.style.display='block'
+
+
+        if (type == "fehler") messagediv.style.background = "red"
+
+        messagediv.innerHTML = `<h2>${ueberschrift}  </h2> ${Nachricht}`
+        messagediv.style.opacity = 1
+       setTimeout(()=>{
+        setInterval(() => {
+            messagediv.style.opacity = messagediv.style.opacity -0.01
+            if (messagediv.style.opacity==0) messagediv.style.display='none'
+        }, 10)
+       },5000) 
+        
+        
+    }
+
+}
+},{}],196:[function(require,module,exports){
 const crypto = require("crypto")
 const User = require("../Model/User")
 const val = require(`validator`)
@@ -26734,23 +27126,57 @@ class RegistrationComponent {
 
     constructor() {
         window.register = this.register.bind(this)
+        window.reset = this.reset.bind(this)
     }
 
     getHTML() {
         var text = /*html*/`
-    <h2> Registrierung </h2>
-    Username:<input type="text" id="username" required><br>
-    Password:<input type="password" id="password" required><br>
-    Password again:<input type="password" id="password2" required><br>
-    First Name:<input type="text" id="firstname"><br>
-    Surname:<input type="text" id="surname"><br>
-    E-mail:<input type="email" id="email"><br>
-
-    
-    <button onclick="register()" >Registrieren</button>
+    <div class="registrierung-page">
+                <div class="forms-window register-window">
+                   <h2 class="Headline_Forms Headline_Register"> Registrierung </h2>
+                   <form id="form">
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="Vorname" id="firstname" class=forms_field-input value="" required><br>
+                    	</div>
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="Nachname" id="surname" class=forms_field-input value="" required><br>
+                    	</div> 
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="Benutzername" id="username" class=forms_field-input value="" required><br>
+                    	</div>
+                    	<div class="forms_field">
+                    	     <input type="text" placeholder="E-Mail" id="email" class=forms_field-input value="" required><br>
+                    	</div>
+                    	<div class="forms_field">
+                    	     <input type="password" placeholder="Passwort" id="password" class=forms_field-input value="" required><br>
+                    	</div>
+                    	<div class="forms_field">
+                    	     <input type="password" placeholder="Passwort wiederholen" id="password2" class=forms_field-input value="" required><br>
+                    	</div>
+                   </form>
+                   <div class="forms_buttons register_buttons">
+                            <button class="forms_button-forgot" onclick="reset()">Clear</button>
+                            <button class="forms_button-action" onclick="register()" >Registrieren</button>
+                   </div>
+                 </div>
+            </div>     
     `
 
         return (text)
+    }
+
+    reset(){
+        // Das Formular-Element abrufen
+        const form = document.getElementById("form");
+
+        // Alle Input-Elemente im Formular zurücksetzen
+        const inputElements = form.querySelectorAll("input");
+        inputElements.forEach((input) => {
+          if (input.type === "text" || input.type === "password") {
+            // Nur Text- und Passwort-Felder zurücksetzen
+            input.value = "";
+          }
+        });
     }
 
     register() {
@@ -26780,7 +27206,7 @@ class RegistrationComponent {
                         alert("Registration fehlgeschlagen")
                     } else {
                         alert("User wurde angelegt")
-                        router.gotoView("login","", "login")
+                        router.gotoView("login"," ", "login")
                     }
                 })
 
@@ -26798,7 +27224,7 @@ class RegistrationComponent {
 }
 
 module.exports = RegistrationComponent
-},{"../Model/User":194,"crypto":71,"validator":236}],192:[function(require,module,exports){
+},{"../Model/User":199,"crypto":71,"validator":241}],197:[function(require,module,exports){
 module.exports = class Router {
 
     constructor () {
@@ -26822,25 +27248,25 @@ module.exports = class Router {
                 document.getElementById("spielregelnLogin").classList.remove('active')
                 document.getElementById("lobby").classList.add('active')
 
-                document.getElementById("appcontent").classList.add('lobby-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
-                document.getElementById("appcontent").classList.remove('nutzerdaten-page')
+                // document.getElementById("appcontent").classList.add('lobby-page')
+                // document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
+                // document.getElementById("appcontent").classList.remove('nutzerdaten-page')
             } else if (setActive == "nutzerdaten") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.add('active')
                 document.getElementById("spielregelnLogin").classList.remove('active')
 
-                document.getElementById("appcontent").classList.remove('lobby-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
-                document.getElementById("appcontent").classList.add('nutzerdaten-page')
+                // document.getElementById("appcontent").classList.remove('lobby-page')
+                // document.getElementById("appcontent").classList.remove('spielregelnLogin-page')
+                // document.getElementById("appcontent").classList.add('nutzerdaten-page')
             } else if (setActive == "spielregeln") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.remove('active')
                 document.getElementById("spielregelnLogin").classList.add('active')
 
-                document.getElementById("appcontent").classList.remove('lobby-page')
-                document.getElementById("appcontent").classList.add('spielregelnLogin-page')
-                document.getElementById("appcontent").classList.remove('nutzerdaten-page')
+                // document.getElementById("appcontent").classList.remove('lobby-page')
+                // document.getElementById("appcontent").classList.add('spielregelnLogin-page')
+                // document.getElementById("appcontent").classList.remove('nutzerdaten-page')
             }
         } else {
 
@@ -26853,40 +27279,41 @@ module.exports = class Router {
                 document.getElementById("registrierung").classList.remove('active')
                 document.getElementById("spielregelnLogout").classList.remove('active')
 
-                document.getElementById("appcontent").classList.add('welcome-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
-                document.getElementById("appcontent").classList.remove('registrierung-page')
-                document.getElementById("appcontent").classList.remove('login-page')
+                // document.getElementById("appcontent").classList.add('welcome-page') 
+                // console.log("welcome-page")
+                // document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                // document.getElementById("appcontent").classList.remove('registrierung-page')
+                // document.getElementById("appcontent").classList.remove('login-page')
             } else if (setActive == "login") {
                 document.getElementById("welcome").classList.remove('active')
                 document.getElementById("login").classList.add('active')
                 document.getElementById("registrierung").classList.remove('active')
                 document.getElementById("spielregelnLogout").classList.remove('active')
 
-                document.getElementById("appcontent").classList.remove('welcome-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
-                document.getElementById("appcontent").classList.remove('registrierung-page')
-                document.getElementById("appcontent").classList.add('login-page')
+                // document.getElementById("appcontent").classList.remove('welcome-page')
+                // document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                // document.getElementById("appcontent").classList.remove('registrierung-page')
+                // document.getElementById("appcontent").classList.add('login-page')
             } else if (setActive == "registrierung") {
                 document.getElementById("welcome").classList.remove('active')
                 document.getElementById("login").classList.remove('active')
                 document.getElementById("registrierung").classList.add('active')
                 document.getElementById("spielregelnLogout").classList.remove('active')
 
-                document.getElementById("appcontent").classList.remove('welcome-page')
-                document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
-                document.getElementById("appcontent").classList.add('registrierung-page')
-                document.getElementById("appcontent").classList.remove('login-page')
+                // document.getElementById("appcontent").classList.remove('welcome-page')
+                // document.getElementById("appcontent").classList.remove('spielregelnLogout-page')
+                // document.getElementById("appcontent").classList.add('registrierung-page')
+                // document.getElementById("appcontent").classList.remove('login-page')
             } else if (setActive == "spielregeln") {
                 document.getElementById("welcome").classList.remove('active')
                 document.getElementById("login").classList.remove('active')
                 document.getElementById("registrierung").classList.remove('active')
                 document.getElementById("spielregelnLogout").classList.add('active')
 
-                document.getElementById("appcontent").classList.remove('welcome-page')
-                document.getElementById("appcontent").classList.add('spielregelnLogout-page')
-                document.getElementById("appcontent").classList.remove('registrierung-page')
-                document.getElementById("appcontent").classList.remove('login-page')
+                // document.getElementById("appcontent").classList.remove('welcome-page')
+                // document.getElementById("appcontent").classList.add('spielregelnLogout-page')
+                // document.getElementById("appcontent").classList.remove('registrierung-page')
+                // document.getElementById("appcontent").classList.remove('login-page')
             }
 
         }
@@ -26909,7 +27336,7 @@ module.exports = class Router {
 
 };
 
-},{}],193:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 // Exportieren der Klasse "Game".
 module.exports = class Game {
 
@@ -27081,7 +27508,7 @@ module.exports = class Game {
       return true;
   }
 }
-},{}],194:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 class User {
 
     password;
@@ -27126,7 +27553,7 @@ module.exports = User
 
 
 
-},{}],195:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 // 
 
 module.exports = class AppStatus {
@@ -27136,9 +27563,9 @@ module.exports = class AppStatus {
     }
 
 }
-},{}],196:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
+
 var Router = require('./Components/router')
-var game = require('./Model/Game')
 window.router = new Router()
 // Router ist global bekannt und kann überall genutzt werden
 
@@ -27156,28 +27583,32 @@ var WelcomeComponent = require('./Components/WelcomeComponent')
 var welcomeComponent = new WelcomeComponent(2023)
 router.addView('welcome', welcomeComponent);
 
+var WelcomeLogin = require('./Components/LogIn.js')
+var welcomeLogin = new WelcomeLogin(2023)
+router.addView('login', welcomeLogin);
+
 var registrationComponent = require("./Components/registrationComponent")
 var registrationcomponent = new registrationComponent()
 router.addView("registrierung", registrationcomponent)
 
-var User = require("./Model/User")
-let user = new User('Lukas', '123456', 'firstname', 'surname', 'emai@outlook.com')
-appstatus.loginUser = user
-socket.emit('create', user.username);
-
-let match = new game('daniel', user.username, 6, 7)
-
-var gameComponent = require("./Components/GameComponent")
-var gamecomponent = new gameComponent(match)
-router.addView("game", gamecomponent)
+var GameComponent = require("./Components/GameComponent")
+var gameComp = new GameComponent()
+router.addView("game",gameComp)
 //Startsteite
 
+var Message = require("./Components/message")
+var message = new Message()
 
+var WaitlistDisplayComponent = require("./Components/WaitlistDisplayComponent")
+var WLComponent = new WaitlistDisplayComponent()
+router.addView("waitlist",WLComponent)
 
+var Chat = require("./Components/chat")
+var chat = new Chat()
 
-// Test Comment to be deleted
-//hi
-//hallo wie geht es dir
+var ChangeuserdataComponent = require("./Components/ChangeuserdataComponent")
+var changeuserdataComponent = new ChangeuserdataComponent()
+router.addView("nutzerdaten_aendern", changeuserdataComponent)
 
 var SpielregelnComponent = require('./Components/SpielregelnComponent')
 var spielregelnComponent = new SpielregelnComponent()
@@ -27187,11 +27618,13 @@ var ImpressumComponent = require('./Components/ImpressumComponent')
 var impressumComponent = new ImpressumComponent()
 router.addView('impressum', impressumComponent)
 
-router.gotoView('game');
+router.gotoView('waitlist');
+
+router.gotoView('welcome');
 console.log("Willkommen zur Projektwoche 2023!")
 
 
-},{"./Components/GameComponent":187,"./Components/ImpressumComponent":188,"./Components/SpielregelnComponent":189,"./Components/WelcomeComponent":190,"./Components/registrationComponent":191,"./Components/router":192,"./Model/Game":193,"./Model/User":194,"./Model/appstatus":195,"socket.io-client":222}],197:[function(require,module,exports){
+},{"./Components/ChangeuserdataComponent":187,"./Components/GameComponent":188,"./Components/ImpressumComponent":189,"./Components/LogIn.js":190,"./Components/SpielregelnComponent":191,"./Components/WaitlistDisplayComponent":192,"./Components/WelcomeComponent":193,"./Components/chat":194,"./Components/message":195,"./Components/registrationComponent":196,"./Components/router":197,"./Model/appstatus":200,"socket.io-client":227}],202:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -27369,7 +27802,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],198:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasCORS = void 0;
@@ -27385,7 +27818,7 @@ catch (err) {
 }
 exports.hasCORS = value;
 
-},{}],199:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 "use strict";
 // imported from https://github.com/galkn/querystring
 /**
@@ -27426,7 +27859,7 @@ function decode(qs) {
 }
 exports.decode = decode;
 
-},{}],200:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parse = void 0;
@@ -27493,7 +27926,7 @@ function queryKey(uri, query) {
     return data;
 }
 
-},{}],201:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 // imported from https://github.com/unshiftio/yeast
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -27550,7 +27983,7 @@ exports.yeast = yeast;
 for (; i < length; i++)
     map[alphabet[i]] = i;
 
-},{}],202:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.globalThisShim = void 0;
@@ -27566,7 +27999,7 @@ exports.globalThisShim = (() => {
     }
 })();
 
-},{}],203:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.nextTick = exports.parse = exports.installTimerFunctions = exports.transports = exports.Transport = exports.protocol = exports.Socket = void 0;
@@ -27584,7 +28017,7 @@ Object.defineProperty(exports, "parse", { enumerable: true, get: function () { r
 var websocket_constructor_js_1 = require("./transports/websocket-constructor.js");
 Object.defineProperty(exports, "nextTick", { enumerable: true, get: function () { return websocket_constructor_js_1.nextTick; } });
 
-},{"./contrib/parseuri.js":200,"./socket.js":204,"./transport.js":205,"./transports/index.js":206,"./transports/websocket-constructor.js":208,"./util.js":212}],204:[function(require,module,exports){
+},{"./contrib/parseuri.js":205,"./socket.js":209,"./transport.js":210,"./transports/index.js":211,"./transports/websocket-constructor.js":213,"./util.js":217}],209:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -27598,6 +28031,7 @@ const parseuri_js_1 = require("./contrib/parseuri.js");
 const debug_1 = __importDefault(require("debug")); // debug()
 const component_emitter_1 = require("@socket.io/component-emitter");
 const engine_io_parser_1 = require("engine.io-parser");
+const websocket_constructor_js_1 = require("./transports/websocket-constructor.js");
 const debug = (0, debug_1.default)("engine.io-client:socket"); // debug()
 class Socket extends component_emitter_1.Emitter {
     /**
@@ -27608,6 +28042,7 @@ class Socket extends component_emitter_1.Emitter {
      */
     constructor(uri, opts = {}) {
         super();
+        this.binaryType = websocket_constructor_js_1.defaultBinaryType;
         this.writeBuffer = [];
         if (uri && "object" === typeof uri) {
             opts = uri;
@@ -27930,12 +28365,12 @@ class Socket extends component_emitter_1.Emitter {
             this.emitReserved("packet", packet);
             // Socket is live - any packet counts
             this.emitReserved("heartbeat");
+            this.resetPingTimeout();
             switch (packet.type) {
                 case "open":
                     this.onHandshake(JSON.parse(packet.data));
                     break;
                 case "ping":
-                    this.resetPingTimeout();
                     this.sendPacket("pong");
                     this.emitReserved("ping");
                     this.emitReserved("pong");
@@ -28210,7 +28645,7 @@ class Socket extends component_emitter_1.Emitter {
 exports.Socket = Socket;
 Socket.protocol = engine_io_parser_1.protocol;
 
-},{"./contrib/parseqs.js":199,"./contrib/parseuri.js":200,"./transports/index.js":206,"./util.js":212,"@socket.io/component-emitter":197,"debug":213,"engine.io-parser":220}],205:[function(require,module,exports){
+},{"./contrib/parseqs.js":204,"./contrib/parseuri.js":205,"./transports/index.js":211,"./transports/websocket-constructor.js":213,"./util.js":217,"@socket.io/component-emitter":202,"debug":218,"engine.io-parser":225}],210:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -28363,7 +28798,7 @@ class Transport extends component_emitter_1.Emitter {
 }
 exports.Transport = Transport;
 
-},{"./contrib/parseqs.js":199,"./util.js":212,"@socket.io/component-emitter":197,"debug":213,"engine.io-parser":220}],206:[function(require,module,exports){
+},{"./contrib/parseqs.js":204,"./util.js":217,"@socket.io/component-emitter":202,"debug":218,"engine.io-parser":225}],211:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.transports = void 0;
@@ -28376,7 +28811,7 @@ exports.transports = {
     polling: polling_js_1.Polling,
 };
 
-},{"./polling.js":207,"./websocket.js":209,"./webtransport.js":210}],207:[function(require,module,exports){
+},{"./polling.js":212,"./websocket.js":214,"./webtransport.js":215}],212:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -28792,7 +29227,7 @@ function unloadHandler() {
     }
 }
 
-},{"../contrib/yeast.js":201,"../globalThis.js":202,"../transport.js":205,"../util.js":212,"./xmlhttprequest.js":211,"@socket.io/component-emitter":197,"debug":213,"engine.io-parser":220}],208:[function(require,module,exports){
+},{"../contrib/yeast.js":206,"../globalThis.js":207,"../transport.js":210,"../util.js":217,"./xmlhttprequest.js":216,"@socket.io/component-emitter":202,"debug":218,"engine.io-parser":225}],213:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultBinaryType = exports.usingBrowserWebSocket = exports.WebSocket = exports.nextTick = void 0;
@@ -28810,7 +29245,7 @@ exports.WebSocket = globalThis_js_1.globalThisShim.WebSocket || globalThis_js_1.
 exports.usingBrowserWebSocket = true;
 exports.defaultBinaryType = "arraybuffer";
 
-},{"../globalThis.js":202}],209:[function(require,module,exports){
+},{"../globalThis.js":207}],214:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
@@ -28868,7 +29303,7 @@ class WS extends transport_js_1.Transport {
         catch (err) {
             return this.emitReserved("error", err);
         }
-        this.ws.binaryType = this.socket.binaryType || websocket_constructor_js_1.defaultBinaryType;
+        this.ws.binaryType = this.socket.binaryType;
         this.addEventListeners();
     }
     /**
@@ -28976,7 +29411,7 @@ class WS extends transport_js_1.Transport {
 exports.WS = WS;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../contrib/yeast.js":201,"../transport.js":205,"../util.js":212,"./websocket-constructor.js":208,"buffer":63,"debug":213,"engine.io-parser":220}],210:[function(require,module,exports){
+},{"../contrib/yeast.js":206,"../transport.js":210,"../util.js":217,"./websocket-constructor.js":213,"buffer":63,"debug":218,"engine.io-parser":225}],215:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -28988,14 +29423,6 @@ const websocket_constructor_js_1 = require("./websocket-constructor.js");
 const engine_io_parser_1 = require("engine.io-parser");
 const debug_1 = __importDefault(require("debug")); // debug()
 const debug = (0, debug_1.default)("engine.io-client:webtransport"); // debug()
-function shouldIncludeBinaryHeader(packet, encoded) {
-    // 48 === "0".charCodeAt(0) (OPEN packet type)
-    // 54 === "6".charCodeAt(0) (NOOP packet type)
-    return (packet.type === "message" &&
-        typeof packet.data !== "string" &&
-        encoded[0] >= 48 &&
-        encoded[0] <= 54);
-}
 class WT extends transport_js_1.Transport {
     get name() {
         return "webtransport";
@@ -29019,9 +29446,11 @@ class WT extends transport_js_1.Transport {
         // note: we could have used async/await, but that would require some additional polyfills
         this.transport.ready.then(() => {
             this.transport.createBidirectionalStream().then((stream) => {
-                const reader = stream.readable.getReader();
-                this.writer = stream.writable.getWriter();
-                let binaryFlag;
+                const decoderStream = (0, engine_io_parser_1.createPacketDecoderStream)(Number.MAX_SAFE_INTEGER, this.socket.binaryType);
+                const reader = stream.readable.pipeThrough(decoderStream).getReader();
+                const encoderStream = (0, engine_io_parser_1.createPacketEncoderStream)();
+                encoderStream.readable.pipeTo(stream.writable);
+                this.writer = encoderStream.writable.getWriter();
                 const read = () => {
                     reader
                         .read()
@@ -29031,14 +29460,7 @@ class WT extends transport_js_1.Transport {
                             return;
                         }
                         debug("received chunk: %o", value);
-                        if (!binaryFlag && value.byteLength === 1 && value[0] === 54) {
-                            binaryFlag = true;
-                        }
-                        else {
-                            // TODO expose binarytype
-                            this.onPacket((0, engine_io_parser_1.decodePacketFromBinary)(value, binaryFlag, "arraybuffer"));
-                            binaryFlag = false;
-                        }
+                        this.onPacket(value);
                         read();
                     })
                         .catch((err) => {
@@ -29046,10 +29468,11 @@ class WT extends transport_js_1.Transport {
                     });
                 };
                 read();
-                const handshake = this.query.sid ? `0{"sid":"${this.query.sid}"}` : "0";
-                this.writer
-                    .write(new TextEncoder().encode(handshake))
-                    .then(() => this.onOpen());
+                const packet = { type: "open" };
+                if (this.query.sid) {
+                    packet.data = `{"sid":"${this.query.sid}"}`;
+                }
+                this.writer.write(packet).then(() => this.onOpen());
             });
         });
     }
@@ -29058,20 +29481,13 @@ class WT extends transport_js_1.Transport {
         for (let i = 0; i < packets.length; i++) {
             const packet = packets[i];
             const lastPacket = i === packets.length - 1;
-            (0, engine_io_parser_1.encodePacketToBinary)(packet, (data) => {
-                if (shouldIncludeBinaryHeader(packet, data)) {
-                    debug("writing binary header");
-                    this.writer.write(Uint8Array.of(54));
+            this.writer.write(packet).then(() => {
+                if (lastPacket) {
+                    (0, websocket_constructor_js_1.nextTick)(() => {
+                        this.writable = true;
+                        this.emitReserved("drain");
+                    }, this.setTimeoutFn);
                 }
-                debug("writing chunk: %o", data);
-                this.writer.write(data).then(() => {
-                    if (lastPacket) {
-                        (0, websocket_constructor_js_1.nextTick)(() => {
-                            this.writable = true;
-                            this.emitReserved("drain");
-                        }, this.setTimeoutFn);
-                    }
-                });
             });
         }
     }
@@ -29082,7 +29498,7 @@ class WT extends transport_js_1.Transport {
 }
 exports.WT = WT;
 
-},{"../transport.js":205,"./websocket-constructor.js":208,"debug":213,"engine.io-parser":220}],211:[function(require,module,exports){
+},{"../transport.js":210,"./websocket-constructor.js":213,"debug":218,"engine.io-parser":225}],216:[function(require,module,exports){
 "use strict";
 // browser shim for xmlhttprequest module
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -29109,7 +29525,7 @@ exports.XHR = XHR;
 function createCookieJar() { }
 exports.createCookieJar = createCookieJar;
 
-},{"../contrib/has-cors.js":198,"../globalThis.js":202}],212:[function(require,module,exports){
+},{"../contrib/has-cors.js":203,"../globalThis.js":207}],217:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.byteLength = exports.installTimerFunctions = exports.pick = void 0;
@@ -29169,7 +29585,7 @@ function utf8Length(str) {
     return length;
 }
 
-},{"./globalThis.js":202}],213:[function(require,module,exports){
+},{"./globalThis.js":207}],218:[function(require,module,exports){
 (function (process){(function (){
 /* eslint-env browser */
 
@@ -29442,7 +29858,7 @@ formatters.j = function (v) {
 };
 
 }).call(this)}).call(this,require('_process'))
-},{"./common":214,"_process":149}],214:[function(require,module,exports){
+},{"./common":219,"_process":149}],219:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -29718,7 +30134,7 @@ function setup(env) {
 
 module.exports = setup;
 
-},{"ms":215}],215:[function(require,module,exports){
+},{"ms":220}],220:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -29882,7 +30298,7 @@ function plural(ms, msAbs, n, name) {
   return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
 }
 
-},{}],216:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ERROR_PACKET = exports.PACKET_TYPES_REVERSE = exports.PACKET_TYPES = void 0;
@@ -29903,7 +30319,7 @@ Object.keys(PACKET_TYPES).forEach(key => {
 const ERROR_PACKET = { type: "error", data: "parser error" };
 exports.ERROR_PACKET = ERROR_PACKET;
 
-},{}],217:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.decode = exports.encode = void 0;
@@ -29953,7 +30369,7 @@ const decode = (base64) => {
 };
 exports.decode = decode;
 
-},{}],218:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.decodePacket = void 0;
@@ -30021,7 +30437,7 @@ const mapBinary = (data, binaryType) => {
     }
 };
 
-},{"./commons.js":216,"./contrib/base64-arraybuffer.js":217}],219:[function(require,module,exports){
+},{"./commons.js":221,"./contrib/base64-arraybuffer.js":222}],224:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.encodePacket = exports.encodePacketToBinary = void 0;
@@ -30098,15 +30514,15 @@ function encodePacketToBinary(packet, callback) {
 }
 exports.encodePacketToBinary = encodePacketToBinary;
 
-},{"./commons.js":216}],220:[function(require,module,exports){
+},{"./commons.js":221}],225:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.decodePayload = exports.decodePacket = exports.encodePayload = exports.encodePacketToBinary = exports.encodePacket = exports.protocol = exports.decodePacketFromBinary = void 0;
+exports.decodePayload = exports.decodePacket = exports.encodePayload = exports.encodePacket = exports.protocol = exports.createPacketDecoderStream = exports.createPacketEncoderStream = void 0;
 const encodePacket_js_1 = require("./encodePacket.js");
 Object.defineProperty(exports, "encodePacket", { enumerable: true, get: function () { return encodePacket_js_1.encodePacket; } });
-Object.defineProperty(exports, "encodePacketToBinary", { enumerable: true, get: function () { return encodePacket_js_1.encodePacketToBinary; } });
 const decodePacket_js_1 = require("./decodePacket.js");
 Object.defineProperty(exports, "decodePacket", { enumerable: true, get: function () { return decodePacket_js_1.decodePacket; } });
+const commons_js_1 = require("./commons.js");
 const SEPARATOR = String.fromCharCode(30); // see https://en.wikipedia.org/wiki/Delimiter#ASCII_delimited_text
 const encodePayload = (packets, callback) => {
     // some packets may be added to the array while encoding, so the initial length must be saved
@@ -30137,21 +30553,134 @@ const decodePayload = (encodedPayload, binaryType) => {
     return packets;
 };
 exports.decodePayload = decodePayload;
+function createPacketEncoderStream() {
+    return new TransformStream({
+        transform(packet, controller) {
+            (0, encodePacket_js_1.encodePacketToBinary)(packet, encodedPacket => {
+                const payloadLength = encodedPacket.length;
+                let header;
+                // inspired by the WebSocket format: https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#decoding_payload_length
+                if (payloadLength < 126) {
+                    header = new Uint8Array(1);
+                    new DataView(header.buffer).setUint8(0, payloadLength);
+                }
+                else if (payloadLength < 65536) {
+                    header = new Uint8Array(3);
+                    const view = new DataView(header.buffer);
+                    view.setUint8(0, 126);
+                    view.setUint16(1, payloadLength);
+                }
+                else {
+                    header = new Uint8Array(9);
+                    const view = new DataView(header.buffer);
+                    view.setUint8(0, 127);
+                    view.setBigUint64(1, BigInt(payloadLength));
+                }
+                // first bit indicates whether the payload is plain text (0) or binary (1)
+                if (packet.data && typeof packet.data !== "string") {
+                    header[0] |= 0x80;
+                }
+                controller.enqueue(header);
+                controller.enqueue(encodedPacket);
+            });
+        }
+    });
+}
+exports.createPacketEncoderStream = createPacketEncoderStream;
 let TEXT_DECODER;
-function decodePacketFromBinary(data, isBinary, binaryType) {
+function totalLength(chunks) {
+    return chunks.reduce((acc, chunk) => acc + chunk.length, 0);
+}
+function concatChunks(chunks, size) {
+    if (chunks[0].length === size) {
+        return chunks.shift();
+    }
+    const buffer = new Uint8Array(size);
+    let j = 0;
+    for (let i = 0; i < size; i++) {
+        buffer[i] = chunks[0][j++];
+        if (j === chunks[0].length) {
+            chunks.shift();
+            j = 0;
+        }
+    }
+    if (chunks.length && j < chunks[0].length) {
+        chunks[0] = chunks[0].slice(j);
+    }
+    return buffer;
+}
+function createPacketDecoderStream(maxPayload, binaryType) {
     if (!TEXT_DECODER) {
-        // lazily created for compatibility with old browser platforms
         TEXT_DECODER = new TextDecoder();
     }
-    // 48 === "0".charCodeAt(0) (OPEN packet type)
-    // 54 === "6".charCodeAt(0) (NOOP packet type)
-    const isPlainBinary = isBinary || data[0] < 48 || data[0] > 54;
-    return (0, decodePacket_js_1.decodePacket)(isPlainBinary ? data : TEXT_DECODER.decode(data), binaryType);
+    const chunks = [];
+    let state = 0 /* READ_HEADER */;
+    let expectedLength = -1;
+    let isBinary = false;
+    return new TransformStream({
+        transform(chunk, controller) {
+            chunks.push(chunk);
+            while (true) {
+                if (state === 0 /* READ_HEADER */) {
+                    if (totalLength(chunks) < 1) {
+                        break;
+                    }
+                    const header = concatChunks(chunks, 1);
+                    isBinary = (header[0] & 0x80) === 0x80;
+                    expectedLength = header[0] & 0x7f;
+                    if (expectedLength < 126) {
+                        state = 3 /* READ_PAYLOAD */;
+                    }
+                    else if (expectedLength === 126) {
+                        state = 1 /* READ_EXTENDED_LENGTH_16 */;
+                    }
+                    else {
+                        state = 2 /* READ_EXTENDED_LENGTH_64 */;
+                    }
+                }
+                else if (state === 1 /* READ_EXTENDED_LENGTH_16 */) {
+                    if (totalLength(chunks) < 2) {
+                        break;
+                    }
+                    const headerArray = concatChunks(chunks, 2);
+                    expectedLength = new DataView(headerArray.buffer, headerArray.byteOffset, headerArray.length).getUint16(0);
+                    state = 3 /* READ_PAYLOAD */;
+                }
+                else if (state === 2 /* READ_EXTENDED_LENGTH_64 */) {
+                    if (totalLength(chunks) < 8) {
+                        break;
+                    }
+                    const headerArray = concatChunks(chunks, 8);
+                    const view = new DataView(headerArray.buffer, headerArray.byteOffset, headerArray.length);
+                    const n = view.getUint32(0);
+                    if (n > Math.pow(2, 53 - 32) - 1) {
+                        // the maximum safe integer in JavaScript is 2^53 - 1
+                        controller.enqueue(commons_js_1.ERROR_PACKET);
+                        break;
+                    }
+                    expectedLength = n * Math.pow(2, 32) + view.getUint32(4);
+                    state = 3 /* READ_PAYLOAD */;
+                }
+                else {
+                    if (totalLength(chunks) < expectedLength) {
+                        break;
+                    }
+                    const data = concatChunks(chunks, expectedLength);
+                    controller.enqueue((0, decodePacket_js_1.decodePacket)(isBinary ? data : TEXT_DECODER.decode(data), binaryType));
+                    state = 0 /* READ_HEADER */;
+                }
+                if (expectedLength === 0 || expectedLength > maxPayload) {
+                    controller.enqueue(commons_js_1.ERROR_PACKET);
+                    break;
+                }
+            }
+        }
+    });
 }
-exports.decodePacketFromBinary = decodePacketFromBinary;
+exports.createPacketDecoderStream = createPacketDecoderStream;
 exports.protocol = 4;
 
-},{"./decodePacket.js":218,"./encodePacket.js":219}],221:[function(require,module,exports){
+},{"./commons.js":221,"./decodePacket.js":223,"./encodePacket.js":224}],226:[function(require,module,exports){
 "use strict";
 /**
  * Initialize backoff timer with `opts`.
@@ -30223,7 +30752,7 @@ Backoff.prototype.setJitter = function (jitter) {
     this.jitter = jitter;
 };
 
-},{}],222:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -30294,7 +30823,7 @@ Object.defineProperty(exports, "protocol", { enumerable: true, get: function () 
 
 module.exports = lookup;
 
-},{"./manager.js":223,"./socket.js":225,"./url.js":226,"debug":227,"socket.io-parser":231}],223:[function(require,module,exports){
+},{"./manager.js":228,"./socket.js":230,"./url.js":231,"debug":232,"socket.io-parser":236}],228:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -30699,7 +31228,7 @@ class Manager extends component_emitter_1.Emitter {
 }
 exports.Manager = Manager;
 
-},{"./contrib/backo2.js":221,"./on.js":224,"./socket.js":225,"@socket.io/component-emitter":197,"debug":227,"engine.io-client":203,"socket.io-parser":231}],224:[function(require,module,exports){
+},{"./contrib/backo2.js":226,"./on.js":229,"./socket.js":230,"@socket.io/component-emitter":202,"debug":232,"engine.io-client":208,"socket.io-parser":236}],229:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.on = void 0;
@@ -30711,7 +31240,7 @@ function on(obj, ev, fn) {
 }
 exports.on = on;
 
-},{}],225:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -31579,7 +32108,7 @@ class Socket extends component_emitter_1.Emitter {
 }
 exports.Socket = Socket;
 
-},{"./on.js":224,"@socket.io/component-emitter":197,"debug":227,"socket.io-parser":231}],226:[function(require,module,exports){
+},{"./on.js":229,"@socket.io/component-emitter":202,"debug":232,"socket.io-parser":236}],231:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -31651,13 +32180,13 @@ function url(uri, path = "", loc) {
 }
 exports.url = url;
 
-},{"debug":227,"engine.io-client":203}],227:[function(require,module,exports){
-arguments[4][213][0].apply(exports,arguments)
-},{"./common":228,"_process":149,"dup":213}],228:[function(require,module,exports){
-arguments[4][214][0].apply(exports,arguments)
-},{"dup":214,"ms":229}],229:[function(require,module,exports){
-arguments[4][215][0].apply(exports,arguments)
-},{"dup":215}],230:[function(require,module,exports){
+},{"debug":232,"engine.io-client":208}],232:[function(require,module,exports){
+arguments[4][218][0].apply(exports,arguments)
+},{"./common":233,"_process":149,"dup":218}],233:[function(require,module,exports){
+arguments[4][219][0].apply(exports,arguments)
+},{"dup":219,"ms":234}],234:[function(require,module,exports){
+arguments[4][220][0].apply(exports,arguments)
+},{"dup":220}],235:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reconstructPacket = exports.deconstructPacket = void 0;
@@ -31747,7 +32276,7 @@ function _reconstructPacket(data, buffers) {
     return data;
 }
 
-},{"./is-binary.js":232}],231:[function(require,module,exports){
+},{"./is-binary.js":237}],236:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Decoder = exports.Encoder = exports.PacketType = exports.protocol = void 0;
@@ -32070,7 +32599,7 @@ class BinaryReconstructor {
     }
 }
 
-},{"./binary.js":230,"./is-binary.js":232,"@socket.io/component-emitter":197,"debug":233}],232:[function(require,module,exports){
+},{"./binary.js":235,"./is-binary.js":237,"@socket.io/component-emitter":202,"debug":238}],237:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasBinary = exports.isBinary = void 0;
@@ -32127,13 +32656,13 @@ function hasBinary(obj, toJSON) {
 }
 exports.hasBinary = hasBinary;
 
-},{}],233:[function(require,module,exports){
-arguments[4][213][0].apply(exports,arguments)
-},{"./common":234,"_process":149,"dup":213}],234:[function(require,module,exports){
-arguments[4][214][0].apply(exports,arguments)
-},{"dup":214,"ms":235}],235:[function(require,module,exports){
-arguments[4][215][0].apply(exports,arguments)
-},{"dup":215}],236:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
+arguments[4][218][0].apply(exports,arguments)
+},{"./common":239,"_process":149,"dup":218}],239:[function(require,module,exports){
+arguments[4][219][0].apply(exports,arguments)
+},{"dup":219,"ms":240}],240:[function(require,module,exports){
+arguments[4][220][0].apply(exports,arguments)
+},{"dup":220}],241:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -32452,7 +32981,7 @@ var _default = validator;
 exports.default = _default;
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./lib/blacklist":238,"./lib/contains":239,"./lib/equals":240,"./lib/escape":241,"./lib/isAfter":242,"./lib/isAlpha":243,"./lib/isAlphanumeric":244,"./lib/isAscii":245,"./lib/isBIC":246,"./lib/isBase32":247,"./lib/isBase58":248,"./lib/isBase64":249,"./lib/isBefore":250,"./lib/isBoolean":251,"./lib/isBtcAddress":252,"./lib/isByteLength":253,"./lib/isCreditCard":254,"./lib/isCurrency":255,"./lib/isDataURI":256,"./lib/isDate":257,"./lib/isDecimal":258,"./lib/isDivisibleBy":259,"./lib/isEAN":260,"./lib/isEmail":261,"./lib/isEmpty":262,"./lib/isEthereumAddress":263,"./lib/isFQDN":264,"./lib/isFloat":265,"./lib/isFullWidth":266,"./lib/isHSL":267,"./lib/isHalfWidth":268,"./lib/isHash":269,"./lib/isHexColor":270,"./lib/isHexadecimal":271,"./lib/isIBAN":272,"./lib/isIMEI":273,"./lib/isIP":274,"./lib/isIPRange":275,"./lib/isISBN":276,"./lib/isISIN":277,"./lib/isISO31661Alpha2":278,"./lib/isISO31661Alpha3":279,"./lib/isISO4217":280,"./lib/isISO6391":281,"./lib/isISO8601":282,"./lib/isISRC":283,"./lib/isISSN":284,"./lib/isIdentityCard":285,"./lib/isIn":286,"./lib/isInt":287,"./lib/isJSON":288,"./lib/isJWT":289,"./lib/isLatLong":290,"./lib/isLength":291,"./lib/isLicensePlate":292,"./lib/isLocale":293,"./lib/isLowercase":294,"./lib/isLuhnNumber":295,"./lib/isMACAddress":296,"./lib/isMD5":297,"./lib/isMagnetURI":298,"./lib/isMimeType":299,"./lib/isMobilePhone":300,"./lib/isMongoId":301,"./lib/isMultibyte":302,"./lib/isNumeric":303,"./lib/isOctal":304,"./lib/isPassportNumber":305,"./lib/isPort":306,"./lib/isPostalCode":307,"./lib/isRFC3339":308,"./lib/isRgbColor":309,"./lib/isSemVer":310,"./lib/isSlug":311,"./lib/isStrongPassword":312,"./lib/isSurrogatePair":313,"./lib/isTaxID":314,"./lib/isTime":315,"./lib/isURL":316,"./lib/isUUID":317,"./lib/isUppercase":318,"./lib/isVAT":319,"./lib/isVariableWidth":320,"./lib/isWhitelisted":321,"./lib/ltrim":322,"./lib/matches":323,"./lib/normalizeEmail":324,"./lib/rtrim":325,"./lib/stripLow":326,"./lib/toBoolean":327,"./lib/toDate":328,"./lib/toFloat":329,"./lib/toInt":330,"./lib/trim":331,"./lib/unescape":332,"./lib/whitelist":339}],237:[function(require,module,exports){
+},{"./lib/blacklist":243,"./lib/contains":244,"./lib/equals":245,"./lib/escape":246,"./lib/isAfter":247,"./lib/isAlpha":248,"./lib/isAlphanumeric":249,"./lib/isAscii":250,"./lib/isBIC":251,"./lib/isBase32":252,"./lib/isBase58":253,"./lib/isBase64":254,"./lib/isBefore":255,"./lib/isBoolean":256,"./lib/isBtcAddress":257,"./lib/isByteLength":258,"./lib/isCreditCard":259,"./lib/isCurrency":260,"./lib/isDataURI":261,"./lib/isDate":262,"./lib/isDecimal":263,"./lib/isDivisibleBy":264,"./lib/isEAN":265,"./lib/isEmail":266,"./lib/isEmpty":267,"./lib/isEthereumAddress":268,"./lib/isFQDN":269,"./lib/isFloat":270,"./lib/isFullWidth":271,"./lib/isHSL":272,"./lib/isHalfWidth":273,"./lib/isHash":274,"./lib/isHexColor":275,"./lib/isHexadecimal":276,"./lib/isIBAN":277,"./lib/isIMEI":278,"./lib/isIP":279,"./lib/isIPRange":280,"./lib/isISBN":281,"./lib/isISIN":282,"./lib/isISO31661Alpha2":283,"./lib/isISO31661Alpha3":284,"./lib/isISO4217":285,"./lib/isISO6391":286,"./lib/isISO8601":287,"./lib/isISRC":288,"./lib/isISSN":289,"./lib/isIdentityCard":290,"./lib/isIn":291,"./lib/isInt":292,"./lib/isJSON":293,"./lib/isJWT":294,"./lib/isLatLong":295,"./lib/isLength":296,"./lib/isLicensePlate":297,"./lib/isLocale":298,"./lib/isLowercase":299,"./lib/isLuhnNumber":300,"./lib/isMACAddress":301,"./lib/isMD5":302,"./lib/isMagnetURI":303,"./lib/isMimeType":304,"./lib/isMobilePhone":305,"./lib/isMongoId":306,"./lib/isMultibyte":307,"./lib/isNumeric":308,"./lib/isOctal":309,"./lib/isPassportNumber":310,"./lib/isPort":311,"./lib/isPostalCode":312,"./lib/isRFC3339":313,"./lib/isRgbColor":314,"./lib/isSemVer":315,"./lib/isSlug":316,"./lib/isStrongPassword":317,"./lib/isSurrogatePair":318,"./lib/isTaxID":319,"./lib/isTime":320,"./lib/isURL":321,"./lib/isUUID":322,"./lib/isUppercase":323,"./lib/isVAT":324,"./lib/isVariableWidth":325,"./lib/isWhitelisted":326,"./lib/ltrim":327,"./lib/matches":328,"./lib/normalizeEmail":329,"./lib/rtrim":330,"./lib/stripLow":331,"./lib/toBoolean":332,"./lib/toDate":333,"./lib/toFloat":334,"./lib/toInt":335,"./lib/trim":336,"./lib/unescape":337,"./lib/whitelist":344}],242:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32608,7 +33137,7 @@ alphanumeric['pl-Pl'] = alphanumeric['pl-PL'];
 decimal['pl-Pl'] = decimal['pl-PL']; // see #1455
 
 alpha['fa-AF'] = alpha.fa;
-},{}],238:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32627,7 +33156,7 @@ function blacklist(str, chars) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],239:[function(require,module,exports){
+},{"./util/assertString":339}],244:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32661,7 +33190,7 @@ function contains(str, elem, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336,"./util/toString":338}],240:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341,"./util/toString":343}],245:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32680,7 +33209,7 @@ function equals(str, comparison) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],241:[function(require,module,exports){
+},{"./util/assertString":339}],246:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32699,7 +33228,7 @@ function escape(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],242:[function(require,module,exports){
+},{"./util/assertString":339}],247:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32722,7 +33251,7 @@ function isAfter(date, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./toDate":328}],243:[function(require,module,exports){
+},{"./toDate":333}],248:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32763,7 +33292,7 @@ function isAlpha(_str) {
 
 var locales = Object.keys(_alpha.alpha);
 exports.locales = locales;
-},{"./alpha":237,"./util/assertString":334}],244:[function(require,module,exports){
+},{"./alpha":242,"./util/assertString":339}],249:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32804,7 +33333,7 @@ function isAlphanumeric(_str) {
 
 var locales = Object.keys(_alpha.alphanumeric);
 exports.locales = locales;
-},{"./alpha":237,"./util/assertString":334}],245:[function(require,module,exports){
+},{"./alpha":242,"./util/assertString":339}],250:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32827,7 +33356,7 @@ function isAscii(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],246:[function(require,module,exports){
+},{"./util/assertString":339}],251:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32859,7 +33388,7 @@ function isBIC(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isISO31661Alpha2":278,"./util/assertString":334}],247:[function(require,module,exports){
+},{"./isISO31661Alpha2":283,"./util/assertString":339}],252:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32898,7 +33427,7 @@ function isBase32(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336}],248:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341}],253:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32925,7 +33454,7 @@ function isBase58(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],249:[function(require,module,exports){
+},{"./util/assertString":339}],254:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32964,7 +33493,7 @@ function isBase64(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336}],250:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341}],255:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32988,7 +33517,7 @@ function isBefore(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./toDate":328,"./util/assertString":334}],251:[function(require,module,exports){
+},{"./toDate":333,"./util/assertString":339}],256:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33019,7 +33548,7 @@ function isBoolean(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],252:[function(require,module,exports){
+},{"./util/assertString":339}],257:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33041,7 +33570,7 @@ function isBtcAddress(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],253:[function(require,module,exports){
+},{"./util/assertString":339}],258:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33076,7 +33605,7 @@ function isByteLength(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],254:[function(require,module,exports){
+},{"./util/assertString":339}],259:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33129,7 +33658,7 @@ function isCreditCard(card) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isLuhnNumber":295,"./util/assertString":334}],255:[function(require,module,exports){
+},{"./isLuhnNumber":300,"./util/assertString":339}],260:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33221,7 +33750,7 @@ function isCurrency(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336}],256:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341}],261:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33275,7 +33804,7 @@ function isDataURI(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],257:[function(require,module,exports){
+},{"./util/assertString":339}],262:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33375,7 +33904,7 @@ function isDate(input, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/merge":336}],258:[function(require,module,exports){
+},{"./util/merge":341}],263:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33418,7 +33947,7 @@ function isDecimal(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./alpha":237,"./util/assertString":334,"./util/includes":335,"./util/merge":336}],259:[function(require,module,exports){
+},{"./alpha":242,"./util/assertString":339,"./util/includes":340,"./util/merge":341}],264:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33439,7 +33968,7 @@ function isDivisibleBy(str, num) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./toFloat":329,"./util/assertString":334}],260:[function(require,module,exports){
+},{"./toFloat":334,"./util/assertString":339}],265:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33525,7 +34054,7 @@ function isEAN(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],261:[function(require,module,exports){
+},{"./util/assertString":339}],266:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33729,7 +34258,7 @@ function isEmail(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isByteLength":253,"./isFQDN":264,"./isIP":274,"./util/assertString":334,"./util/merge":336}],262:[function(require,module,exports){
+},{"./isByteLength":258,"./isFQDN":269,"./isIP":279,"./util/assertString":339,"./util/merge":341}],267:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33755,7 +34284,7 @@ function isEmpty(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336}],263:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341}],268:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33776,7 +34305,7 @@ function isEthereumAddress(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],264:[function(require,module,exports){
+},{"./util/assertString":339}],269:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33867,7 +34396,7 @@ function isFQDN(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336}],265:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341}],270:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33897,7 +34426,7 @@ function isFloat(str, options) {
 
 var locales = Object.keys(_alpha.decimal);
 exports.locales = locales;
-},{"./alpha":237,"./util/assertString":334}],266:[function(require,module,exports){
+},{"./alpha":242,"./util/assertString":339}],271:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33917,7 +34446,7 @@ function isFullWidth(str) {
   (0, _assertString.default)(str);
   return fullWidth.test(str);
 }
-},{"./util/assertString":334}],267:[function(require,module,exports){
+},{"./util/assertString":339}],272:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33946,7 +34475,7 @@ function isHSL(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],268:[function(require,module,exports){
+},{"./util/assertString":339}],273:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33966,7 +34495,7 @@ function isHalfWidth(str) {
   (0, _assertString.default)(str);
   return halfWidth.test(str);
 }
-},{"./util/assertString":334}],269:[function(require,module,exports){
+},{"./util/assertString":339}],274:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34002,7 +34531,7 @@ function isHash(str, algorithm) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],270:[function(require,module,exports){
+},{"./util/assertString":339}],275:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34023,7 +34552,7 @@ function isHexColor(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],271:[function(require,module,exports){
+},{"./util/assertString":339}],276:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34044,7 +34573,7 @@ function isHexadecimal(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],272:[function(require,module,exports){
+},{"./util/assertString":339}],277:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34195,7 +34724,7 @@ function isIBAN(str) {
 
 var locales = Object.keys(ibanRegexThroughCountryCode);
 exports.locales = locales;
-},{"./util/assertString":334}],273:[function(require,module,exports){
+},{"./util/assertString":339}],278:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34257,7 +34786,7 @@ function isIMEI(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],274:[function(require,module,exports){
+},{"./util/assertString":339}],279:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34326,7 +34855,7 @@ function isIP(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],275:[function(require,module,exports){
+},{"./util/assertString":339}],280:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34389,7 +34918,7 @@ function isIPRange(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isIP":274,"./util/assertString":334}],276:[function(require,module,exports){
+},{"./isIP":279,"./util/assertString":339}],281:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34459,7 +34988,7 @@ function isISBN(isbn, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],277:[function(require,module,exports){
+},{"./util/assertString":339}],282:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34533,7 +35062,7 @@ function isISIN(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],278:[function(require,module,exports){
+},{"./util/assertString":339}],283:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34556,7 +35085,7 @@ function isISO31661Alpha2(str) {
 
 var CountryCodes = validISO31661Alpha2CountriesCodes;
 exports.CountryCodes = CountryCodes;
-},{"./util/assertString":334}],279:[function(require,module,exports){
+},{"./util/assertString":339}],284:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34578,7 +35107,7 @@ function isISO31661Alpha3(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],280:[function(require,module,exports){
+},{"./util/assertString":339}],285:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34601,7 +35130,7 @@ function isISO4217(str) {
 
 var CurrencyCodes = validISO4217CurrencyCodes;
 exports.CurrencyCodes = CurrencyCodes;
-},{"./util/assertString":334}],281:[function(require,module,exports){
+},{"./util/assertString":339}],286:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34622,7 +35151,7 @@ function isISO6391(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],282:[function(require,module,exports){
+},{"./util/assertString":339}],287:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34682,7 +35211,7 @@ function isISO8601(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],283:[function(require,module,exports){
+},{"./util/assertString":339}],288:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34704,7 +35233,7 @@ function isISRC(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],284:[function(require,module,exports){
+},{"./util/assertString":339}],289:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34742,7 +35271,7 @@ function isISSN(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],285:[function(require,module,exports){
+},{"./util/assertString":339}],290:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35153,7 +35682,7 @@ function isIdentityCard(str, locale) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isInt":287,"./util/assertString":334}],286:[function(require,module,exports){
+},{"./isInt":292,"./util/assertString":339}],291:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35196,7 +35725,7 @@ function isIn(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/toString":338}],287:[function(require,module,exports){
+},{"./util/assertString":339,"./util/toString":343}],292:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35227,7 +35756,7 @@ function isInt(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],288:[function(require,module,exports){
+},{"./util/assertString":339}],293:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35269,7 +35798,7 @@ function isJSON(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336}],289:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341}],294:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35301,7 +35830,7 @@ function isJWT(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isBase64":249,"./util/assertString":334}],290:[function(require,module,exports){
+},{"./isBase64":254,"./util/assertString":339}],295:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35339,7 +35868,7 @@ function isLatLong(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336}],291:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341}],296:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35376,7 +35905,7 @@ function isLength(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],292:[function(require,module,exports){
+},{"./util/assertString":339}],297:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35447,7 +35976,7 @@ function isLicensePlate(str, locale) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],293:[function(require,module,exports){
+},{"./util/assertString":339}],298:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35473,7 +36002,7 @@ function isLocale(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],294:[function(require,module,exports){
+},{"./util/assertString":339}],299:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35492,7 +36021,7 @@ function isLowercase(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],295:[function(require,module,exports){
+},{"./util/assertString":339}],300:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35536,7 +36065,7 @@ function isLuhnNumber(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],296:[function(require,module,exports){
+},{"./util/assertString":339}],301:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35595,7 +36124,7 @@ function isMACAddress(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],297:[function(require,module,exports){
+},{"./util/assertString":339}],302:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35616,7 +36145,7 @@ function isMD5(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],298:[function(require,module,exports){
+},{"./util/assertString":339}],303:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35642,7 +36171,7 @@ function isMagnetURI(url) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],299:[function(require,module,exports){
+},{"./util/assertString":339}],304:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35694,7 +36223,7 @@ function isMimeType(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],300:[function(require,module,exports){
+},{"./util/assertString":339}],305:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35917,7 +36446,7 @@ function isMobilePhone(str, locale, options) {
 
 var locales = Object.keys(phones);
 exports.locales = locales;
-},{"./util/assertString":334}],301:[function(require,module,exports){
+},{"./util/assertString":339}],306:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35938,7 +36467,7 @@ function isMongoId(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isHexadecimal":271,"./util/assertString":334}],302:[function(require,module,exports){
+},{"./isHexadecimal":276,"./util/assertString":339}],307:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35961,7 +36490,7 @@ function isMultibyte(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],303:[function(require,module,exports){
+},{"./util/assertString":339}],308:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35989,7 +36518,7 @@ function isNumeric(str, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./alpha":237,"./util/assertString":334}],304:[function(require,module,exports){
+},{"./alpha":242,"./util/assertString":339}],309:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36010,7 +36539,7 @@ function isOctal(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],305:[function(require,module,exports){
+},{"./util/assertString":339}],310:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36167,7 +36696,7 @@ function isPassportNumber(str, countryCode) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],306:[function(require,module,exports){
+},{"./util/assertString":339}],311:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36188,7 +36717,7 @@ function isPort(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isInt":287}],307:[function(require,module,exports){
+},{"./isInt":292}],312:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36300,7 +36829,7 @@ function isPostalCode(str, locale) {
 
   throw new Error("Invalid locale '".concat(locale, "'"));
 }
-},{"./util/assertString":334}],308:[function(require,module,exports){
+},{"./util/assertString":339}],313:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36334,7 +36863,7 @@ function isRFC3339(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],309:[function(require,module,exports){
+},{"./util/assertString":339}],314:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36364,7 +36893,7 @@ function isRgbColor(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],310:[function(require,module,exports){
+},{"./util/assertString":339}],315:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36393,7 +36922,7 @@ function isSemVer(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/multilineRegex":337}],311:[function(require,module,exports){
+},{"./util/assertString":339,"./util/multilineRegex":342}],316:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36414,7 +36943,7 @@ function isSlug(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],312:[function(require,module,exports){
+},{"./util/assertString":339}],317:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36530,7 +37059,7 @@ function isStrongPassword(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334,"./util/merge":336}],313:[function(require,module,exports){
+},{"./util/assertString":339,"./util/merge":341}],318:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36551,7 +37080,7 @@ function isSurrogatePair(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],314:[function(require,module,exports){
+},{"./util/assertString":339}],319:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -38115,7 +38644,7 @@ function isTaxID(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isDate":257,"./util/algorithms":333,"./util/assertString":334}],315:[function(require,module,exports){
+},{"./isDate":262,"./util/algorithms":338,"./util/assertString":339}],320:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38150,7 +38679,7 @@ function isTime(input, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/merge":336}],316:[function(require,module,exports){
+},{"./util/merge":341}],321:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38363,7 +38892,7 @@ function isURL(url, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isFQDN":264,"./isIP":274,"./util/assertString":334,"./util/merge":336}],317:[function(require,module,exports){
+},{"./isFQDN":269,"./isIP":279,"./util/assertString":339,"./util/merge":341}],322:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38392,7 +38921,7 @@ function isUUID(str, version) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],318:[function(require,module,exports){
+},{"./util/assertString":339}],323:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38411,7 +38940,7 @@ function isUppercase(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],319:[function(require,module,exports){
+},{"./util/assertString":339}],324:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -38678,7 +39207,7 @@ function isVAT(str, countryCode) {
 
   throw new Error("Invalid country code: '".concat(countryCode, "'"));
 }
-},{"./util/algorithms":333,"./util/assertString":334}],320:[function(require,module,exports){
+},{"./util/algorithms":338,"./util/assertString":339}],325:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38701,7 +39230,7 @@ function isVariableWidth(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isFullWidth":266,"./isHalfWidth":268,"./util/assertString":334}],321:[function(require,module,exports){
+},{"./isFullWidth":271,"./isHalfWidth":273,"./util/assertString":339}],326:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38727,7 +39256,7 @@ function isWhitelisted(str, chars) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],322:[function(require,module,exports){
+},{"./util/assertString":339}],327:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38748,7 +39277,7 @@ function ltrim(str, chars) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],323:[function(require,module,exports){
+},{"./util/assertString":339}],328:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38772,7 +39301,7 @@ function matches(str, pattern, modifiers) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],324:[function(require,module,exports){
+},{"./util/assertString":339}],329:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38924,7 +39453,7 @@ function normalizeEmail(email, options) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/merge":336}],325:[function(require,module,exports){
+},{"./util/merge":341}],330:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38957,7 +39486,7 @@ function rtrim(str, chars) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],326:[function(require,module,exports){
+},{"./util/assertString":339}],331:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38979,7 +39508,7 @@ function stripLow(str, keep_new_lines) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./blacklist":238,"./util/assertString":334}],327:[function(require,module,exports){
+},{"./blacklist":243,"./util/assertString":339}],332:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39003,7 +39532,7 @@ function toBoolean(str, strict) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],328:[function(require,module,exports){
+},{"./util/assertString":339}],333:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39023,7 +39552,7 @@ function toDate(date) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],329:[function(require,module,exports){
+},{"./util/assertString":339}],334:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39042,7 +39571,7 @@ function toFloat(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./isFloat":265}],330:[function(require,module,exports){
+},{"./isFloat":270}],335:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39061,7 +39590,7 @@ function toInt(str, radix) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],331:[function(require,module,exports){
+},{"./util/assertString":339}],336:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39081,7 +39610,7 @@ function trim(str, chars) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./ltrim":322,"./rtrim":325}],332:[function(require,module,exports){
+},{"./ltrim":327,"./rtrim":330}],337:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39102,7 +39631,7 @@ function unescape(str) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}],333:[function(require,module,exports){
+},{"./util/assertString":339}],338:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39204,7 +39733,7 @@ function verhoeffCheck(str) {
 
   return checksum === 0;
 }
-},{}],334:[function(require,module,exports){
+},{}],339:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39227,7 +39756,7 @@ function assertString(input) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{}],335:[function(require,module,exports){
+},{}],340:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39245,7 +39774,7 @@ var _default = includes;
 exports.default = _default;
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{}],336:[function(require,module,exports){
+},{}],341:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39268,7 +39797,7 @@ function merge() {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{}],337:[function(require,module,exports){
+},{}],342:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39291,7 +39820,7 @@ function multilineRegexp(parts, flags) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{}],338:[function(require,module,exports){
+},{}],343:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39317,7 +39846,7 @@ function toString(input) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{}],339:[function(require,module,exports){
+},{}],344:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39336,4 +39865,4 @@ function whitelist(str, chars) {
 
 module.exports = exports.default;
 module.exports.default = exports.default;
-},{"./util/assertString":334}]},{},[196]);
+},{"./util/assertString":339}]},{},[201]);
