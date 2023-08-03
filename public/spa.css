@@ -97,26 +97,58 @@ header a img {
 
 
 #appcontent {
-
     display: flex;
     min-height: 100vh;
     flex-direction: column;
     margin: 0;
     padding: 0;
-    
-
 }
 
+/* chatfenster */
 #chatbox {
-    position: absolute;
+    position: fixed;
+    top: 4rem;
     right: 0px;
+    width: 300px;
     margin-top: 5px;
     margin-right: 5px;
-    
+    margin-bottom: 5px;
+    z-index: 1;
+    border-radius: 4px;
 }
 
-#chatfenster{
+#chatfenster {
     background-color: aliceblue;
+    padding: 10px;
+    word-wrap: break-word;
+    border-radius: 4px;
+    height: calc(20em); /* Set the height to 15 lines */
+    overflow-y: auto; /* Make it scrollable */
+}
+
+#chatbtn {
+    background-color: #e8716d; 
+    border: none;
+    border-color: #333;
+    border-radius: 4px;
+    color: white;
+    padding: 3px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#chatbtn:hover {
+    background-color: #45a049;
+}
+
+#chatbtn:active {
+    background-color: red;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 /* welcome-page */
@@ -208,6 +240,18 @@ header a img {
     color: #e8716d;
     letter-spacing: 0.1rem;
     margin-top: 0;
+}
+
+.Headline_Game{
+
+    margin-bottom: 70px;
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1em;
+    color: #e8716d;
+    letter-spacing: 0.3rem;
+    margin-top: 0;
+    text-align: center;
 }
 
 
@@ -362,21 +406,25 @@ header a img {
 
 .spielregeln-window {
     background: white;
-    min-height: 75vh;
+    min-height: 50vh;
     width: 95%;
     background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
     border-radius: 2rem;
     backdrop-filter: blur(2rem);
     display: flex;
     flex-direction: column;
-    padding-top: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
 }
 
 .Headline_Spielregeln h1 {
     text-align: center;
     font-size: 40px;
     color: white;
-    margin-bottom: 1.7rem;
+    margin-bottom: 2.5rem;
 }
 
 .spielregelnContent {
@@ -390,6 +438,7 @@ header a img {
     flex-direction: column;
     justify-content: center;
     padding-left: 30px;
+    padding-right: 10px;
     padding-bottom: 20px;
 }
 
@@ -452,6 +501,379 @@ header a img {
     text-align: justify;
     padding-left: 10px;
     line-height: 1.4em;
+}
+
+
+/* profil-page */
+
+.profil-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.profil-page h1 {
+    color: #426696;
+    font-weight: 600;
+    font-size: 3rem;
+    opacity: 0.8;
+}
+
+.profil-page h2,
+.profil-page p {
+    color: #658ec6;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.profil-page p {
+    font-size: 20px;
+    padding-top: 2px;
+    padding-bottom: 7px;
+}
+
+.profil-page h2 {
+    font-size: 30px;
+}
+
+.profil-page h3 {
+    color: #426696;
+    font-weight: 600;
+    font-size: 28px;
+    opacity: 0.8;
+    margin-top: .5rem;
+}
+
+
+.profil-page .glass {
+    margin-top: 1.4rem;
+    background: white;
+    min-height: 83vh;
+    width: 80%;
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    border-radius: 2rem;
+    z-index: 2;
+    backdrop-filter: blur(2rem);
+    display: flex;
+}
+
+.profil-page .circle1, 
+.profil-page .circle2 {
+    background: white;
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+    height: 20rem;
+    width: 20rem;
+    position: absolute;
+    border-radius: 50%;
+    z-index: -99;
+}
+
+.profil-page .circle1 {
+    top: 5%;
+    right: 5%;
+}
+
+.profil-page .circle2 {
+    bottom: 2%;
+    left: 5%;
+}
+
+.profil-page .dashboard {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    border-radius: 2rem;
+}
+
+.profil-page .dashboard .user img {
+    margin-top: 2rem;
+    height: 7rem;
+    width: auto;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.profil-page .dashboard .links{
+    margin-top: 0.5rem;
+}
+
+.profil-page .link {
+    display: flex;
+    padding: 1rem 3rem;
+    padding-left: 0;
+    align-items: center;
+    padding-top: 0;
+}
+
+.profil-page .link h2:hover,
+.profil-page .link h2.active {
+    background: white;
+    cursor: pointer;
+}
+
+.profil-page .link h2 {
+    width: 100%;
+    padding: 8px 15px;
+    font-size: 24px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.profil-page .profil-view {
+    flex: 2;
+}
+
+/*Profil-view*/
+.profil-page .status {
+    margin-top: 1rem;
+}
+
+.profil-page .status h1 {
+    position: relative;
+    top: 0rem;
+}
+
+.profil-page .status input {
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    border: none;
+    width: 80%;
+    height: 15px;
+    border-radius: 2rem;
+    margin-bottom: 3rem;
+}
+
+.profil-page .profil-view {
+    margin: 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.profil-page .card {
+    display: flex;
+    background: linear-gradient(to left top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.212);
+    width: 100%;
+}
+
+.profil-page .cards {
+    margin-top: -1.3rem;
+}
+
+.profil-page .card-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.profil-page .userdata_box {
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.profil-page .userdata_text {
+
+    flex: 1;
+}
+
+.profil-page .userdata_inputs {
+    width: 100%;
+    border-radius: 10px;
+    flex: 2;
+}
+
+.profil-page .userdata_field {
+    display: flex;
+    padding: 10px 15px;
+    align-items: center;
+}
+
+.profil-page .forms_field_userdata {
+    margin-bottom: 0;
+    position: relative;
+    left: 10%;
+    width: 300px;
+}
+
+.profil-page .forms_field_username {
+
+    margin-bottom: 0;
+    position: relative;
+    left: 10%;
+    width: 300px;
+    
+}
+
+.profil-page .forms_field_username input {
+
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    outline: 0;
+
+}
+
+
+.profil-page .forms_field_userdata .forms_field-input {
+    padding-right: 0;
+    width: 100%;
+}
+
+.profil-page .card-info h2 {
+    padding-bottom: 10px;
+}
+
+.profil-page .profil_buttons {
+    display: flex;
+    justify-content: end;
+    margin-top: 25px;
+}
+
+.profil_buttons .user_button-action {
+    background-color: #426696;
+}
+
+.profil_buttons .user_button-action:hover {
+    background-color: #36547b;
+}
+
+.profil-page .forms_field_userdata input {
+    background-color: white;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
+
+.profil-page .forms_field_userdata .user_field-input {
+
+    width: 100%;
+    border: 1.5px solid #ccc;
+    padding: 6px 20px 6px 6px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #858585;
+    border-radius: 10px;
+    letter-spacing: 0.1rem;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.profil-page .forms_field_username .username_field-input {
+
+    width: 100%;
+    border: none;
+    padding: 6px 20px 6px 6px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: black;
+    border-radius: 10px;
+    letter-spacing: 0.1rem;
+    transition: border-color 0.2s ease-in-out;
+    
+}
+
+
+.forms_field_userdata .user_field-input:focus {
+
+    border-color: #858585;
+}
+
+ .forms_field_userdata .user_field-input:hover {
+
+    border-color: #858585;
+}
+
+
+.disable {
+
+    pointer-events: none;
+
+}
+
+/* Lobby */
+
+.lobby-page {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+        
+}
+
+.lobby-page h2 {
+
+    position: relative;
+    top: -5rem;
+}
+
+.lobby-page .play_button {
+
+display: flex;
+align-items: center;
+justify-content: center;
+margin-top: 80px;
+
+}
+
+.play_button .forms_button-action {
+
+    background-color: #e8716d;
+    padding: 10px 80px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: background-color 0.2s ease-in-out;
+
+}
+
+.lobby_window {
+
+    align-items: center;
+    justify-content: center;
+       
+
+}
+
+.Waiting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: absolute;
+    top: 20%;
+    left: 30px;
+    color: white;
+}
+
+.Game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: absolute;
+    top: 20%;
+    left: 30px;
+    color: white;
 }
 
 

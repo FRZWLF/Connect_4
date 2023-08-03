@@ -30,7 +30,7 @@ class RegistrationComponent {
                     	     <input type="text" placeholder="E-Mail" id="email" class=forms_field-input value="" required><br>
                     	</div>
                     	<div class="forms_field">
-                    	     <input type="text" placeholder="Passwort" id="password" class=forms_field-input value="" required><br>
+                    	     <input type="password" placeholder="Passwort" id="password" class=forms_field-input value="" required><br>
                     	</div>
                     	<div class="forms_field">
                     	     <input type="password" placeholder="Passwort wiederholen" id="password2" class=forms_field-input value="" required><br>

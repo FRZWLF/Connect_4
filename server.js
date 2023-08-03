@@ -1,12 +1,12 @@
 // Importieren der benötigten Module
-const express = require('express');
-const app = express();
+const express = require('express')
+const app = express()
 const http = require('http')
 const server = http.createServer(app)
 const SocketIO = require('socket.io')
 const io = SocketIO(server)
-const UserList = require('./Model/userlist.js');
-const WaitList = require("./Model/WaitingList.js")
+const UserList = require('./Model/userlist.js')
+const WaitList = require('./Model/WaitingList.js')
 const User = require('./Model/User.js')
 const Chatlist = require('./Model/chatlist.js')
 
@@ -14,8 +14,6 @@ const Chatlist = require('./Model/chatlist.js')
 var port = 5555
 // Erstellen einer neuen Benutzerliste
 var userList = new UserList()
-
-
 
 // Erstellen einer neuen Warteliste
 let waitlist = new WaitList()
@@ -31,6 +29,7 @@ io.on("connection", (socket) => {
     // Bei einer Registrierungsanfrage
     socket.on("registration", (data) => {
         let answer = userList.containsUser(data.username)
+        // Wenn der Benutzer nicht existiert, wird er zur Benutzerliste hinzugefügt
         if (!answer) {
             userList.addUser(data)
         }
@@ -40,81 +39,96 @@ io.on("connection", (socket) => {
     // Bei einer Anfrage für einen neuen Spieler
     socket.on("Newplayer", (user) => {
 
-       
+        // Wenn der Benutzer nicht in der Warteliste ist, wird er hinzugefügt und dem Raum beigetreten
         if (!(waitlist.getUsers().includes(user))) {
             waitlist.addUsertoWatingList(user),
                 socket.join(user)
         }
+        // Senden der aktualisierten Warteliste an alle Clients
         io.emit("NewWList", waitlist.getUsers())
     })
 
     // Bei einer Anfrage zum Erstellen eines neuen Raums
     socket.on("create", (data) => {
+        // Der Client tritt dem angegebenen Raum bei
         socket.join(data)
     })
     //Spielstart zwischen 2 Spielern
-    socket.on("startNewGame",(player1,player2)=>{
-        console.log(player1 + " "+player2)
+    socket.on("startNewGame", (player1, player2) => {
+        console.log(player1 + " " + player2)
         waitlist.removeUserFromWaitingList(player1)
         waitlist.removeUserFromWaitingList(player2)
-        io.to(player1).emit("GameStart",player1,player2)
-        io.to(player2).emit("GameStart",player1,player2)
-        io.emit("NewWList",waitlist.getUsers())
+        io.to(player1).emit("GameStart", player1, player2)
+        io.to(player2).emit("GameStart", player1, player2)
+        io.emit("NewWList", waitlist.getUsers())
     })
-    // Bei einer Anmeldeanfrage
+    // Bei einer Anmeldeanfrage überprüfen, ob der Benutzer existiert und ob das Passwort korrekt ist
     socket.on("login", (pwHash, username) => {
         let userExists = userList.containsUser(username)
         let loginValide = false
         let user
         if (userExists) {
-
             user = userList.getUser(username) // Indikator des Objekts
             loginValide = user.checkpassword(pwHash)
-
-            if (loginValide){
-            socketuser = username
-            console.log('1',socketuser)
-            socket.emit("loginValide", loginValide, userExists, user)
+            // Wenn der Login gültig ist, wird der Benutzername gespeichert und die Antwort an den Client gesendet
+            if (loginValide) {
+                socketuser = username
+                console.log('1', socketuser)
+                socket.emit("loginValide", loginValide, userExists, user)
             } else
-            socket.emit("loginUnvalide", loginValide, userExists)    
+                // Wenn der Login ungültig ist, wird die Antwort an den Client gesendet
+                socket.emit("loginUnvalide", loginValide, userExists)
         }
-
-        socket.emit("loginUnvalide", loginValide, userExists)
+        socket.emit("loginUnvalide", loginValide, userExists) //doppelt?
     })
 
+    // Bei einer Anfrage zur Aktualisierung der Benutzerdaten
     socket.on("updateUser", (newUser, cpwhash) => {
-
+        // Überprüfen, ob das alte Passwort korrekt ist
         let oldUser = userList.getUser(newUser.username)
-        console.log(oldUser)
-
         if (oldUser && oldUser.checkpassword(cpwhash)) {
+            // Wenn das alte Passwort korrekt ist, werden die Benutzerdaten aktualisiert
             userList.addUser(newUser)
+            // Die Antwort wird an den Client gesendet
             socket.emit('updateAnswer', true);
         } else {
+            // Wenn das alte Passwort nicht korrekt ist, wird die Antwort an den Client gesendet
             socket.emit('updateAnswer', false);
         }
     })
 
     // Bei einer Anfrage für einen Spielzug
     socket.on("zug", (user, opp, data) => {
+        // Der Spielzug wird an den Gegner gesendet
         socket.to(opp).emit("zuggegner", user, data);
     })
+
+    socket.on("matchtResolveToServer", (playername, opp) => {
+        io.to(opp).emit("matchResolve", playername)
+    })
     
+
+    // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
+        // Der Benutzer wird aus der Warteliste entfernt
         waitlist.removeUserFromWaitingList(socketuser)
+        // Die aktualisierte Warteliste wird an alle Clients gesendet
         io.emit("NewWList", waitlist.getUsers())
+        // Eine Meldung wird in der Konsole ausgegeben
         console.log('Ein Nutzer hat die Verbindung getrennt')
     })
 
+
     // Bei einer neuen Nachricht
     socket.on("NewMessage", (text, username) => {
-        let message = username + ":" + text + "<br>"
+        // Die Nachricht wird zur Chatliste hinzugefügt
+        let message = "<b>"+ username + "</b>:" + text + "<br>"
         chatlist.addChatlist(message)
-        
-        if (chatlist.chatlist.length > 20) chatlist.chatlist.shift()
-        io.emit("NewMessageList", chatlist.chatlist) 
+        // Wenn die Chatliste mehr als 20 Nachrichten enthält, wird die älteste Nachricht entfernt
+        if (chatlist.chatlist.length > 100) chatlist.chatlist.shift()
+        // Die aktualisierte Chatliste wird an alle Clients gesendet
+        io.emit("NewMessageList", chatlist.chatlist)
     })
-    
 })
 
 // Server starten und auf dem festgelegten Port lauschen

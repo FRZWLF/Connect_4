@@ -25,29 +25,25 @@
         </div>
         <div id="Login" style="display: none;"><!--  Eingeloggte NavBar   -->
             <ul id="MenueContent">
-                <li><a id="lobby" href="javascript: spielstarten()" class="active"> Lobby </a></li>
-                <li><a id="nutzerdaten"
-                        href="javascript: router.gotoView('nutzerdaten_aendern', 'logedin', 'nutzerdaten')"> Nutzerdaten
-                        ändern </a></li>
-                <li><a id="spielregelnLogin"
-                        href="javascript: router.gotoView('spielregeln', 'logedin', 'spielregeln')"> Spielregeln</a>
-                </li>
-                <li><a href="javascript: logout()"> Logout </a></li>
+                    <li><a id="lobby" href="javascript: router.gotoView('lobby', 'logedin', 'lobby')" class="active" > Lobby </a></li>
+                    <li><a id="nutzerdaten" href="javascript: router.gotoView('nutzerdaten_aendern', 'logedin', 'nutzerdaten')"> Profil </a></li>
+                    <li><a id="spielregelnLogin" href="javascript: router.gotoView('spielregeln', 'logedin', 'spielregeln')"> Spielregeln</a></li>
+                    <li><a href="javascript: logout()"> Logout </a></li>
             </ul>
         </div>
     </header>
 
+    <!-- umstylen wenn nötig, eigene id für input => Änderungen in CSS-->
     <div id="chatbox">
         <div id="chatfenster">
         </div>
         <div>
             <input maxlength="55" type="text" id="message">
-            <button onclick="sendMessage()">Senden</button>
+            <button id="chatbtn" onclick="sendMessage()">Senden</button>
         </div>
     </div>
 
-    <div class="toast" id="alert" style="opacity: 1">
-        
+    <div class="toast" id="alert" style="opacity: 1"> 
     </div>
 
     <main id="appcontent"></main>
