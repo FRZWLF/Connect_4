@@ -45,6 +45,10 @@ var ChangeuserdataComponent = require("./Components/ChangeuserdataComponent")
 var changeuserdataComponent = new ChangeuserdataComponent()
 router.addView("nutzerdaten_aendern", changeuserdataComponent)
 
+var ShopComponent = require("./Components/ShopComponent")
+var shopComp = new ShopComponent()
+router.addView("GoingShopping",shopComp)
+
 var SpielregelnComponent = require('./Components/SpielregelnComponent')
 var spielregelnComponent = new SpielregelnComponent()
 router.addView('spielregeln', spielregelnComponent)
