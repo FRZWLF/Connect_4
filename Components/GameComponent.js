@@ -21,14 +21,7 @@ class GameComponent {
             }
         })
 
-        socket.on("disconnect", () => {
-            console.log("hello")
-            if(this.user.username == this.game.user1) {
-                socket.emit('matchtResolveToServer', this.user.username, this.game.user2)
-            } else {
-                socket.emit('matchtResolveToServer', this.user.username, this.game.user1)
-            }
-        })
+
 
 
         socket.on("zuggegner", (user, data) => {
