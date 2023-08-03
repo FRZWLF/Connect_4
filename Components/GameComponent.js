@@ -21,6 +21,7 @@ class GameComponent {
                 document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 document.getElementById("WinnerMessage").innerHTML = "Gewonnen, der Gegener hat das Spiel verlassen! Herzlichen Glückwunsch. "
                 this.game.gewinnStatus = this.user.username
+                
             }
         })
 
