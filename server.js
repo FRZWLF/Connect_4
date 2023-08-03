@@ -10,6 +10,7 @@ const WaitList = require('./Model/WaitingList.js')
 const User = require('./Model/User.js')
 const Chatlist = require('./Model/chatlist.js')
 
+
 // Festlegen des Ports
 var port = 5555
 // Erstellen einer neuen Benutzerliste
@@ -110,6 +111,7 @@ io.on("connection", (socket) => {
 
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
+        io.emit("matchResolve", socketuser)
         // Der Benutzer wird aus der Warteliste entfernt
         waitlist.removeUserFromWaitingList(socketuser)
         // Die aktualisierte Warteliste wird an alle Clients gesendet
