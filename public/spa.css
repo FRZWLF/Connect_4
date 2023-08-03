@@ -212,6 +212,18 @@ header a img {
     margin-top: 0;
 }
 
+.Headline_Game{
+
+    margin-bottom: 70px;
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1em;
+    color: #e8716d;
+    letter-spacing: 0.3rem;
+    margin-top: 0;
+    text-align: center;
+}
+
 
  .forms_field .forms_field-input {
 
@@ -364,21 +376,25 @@ header a img {
 
 .spielregeln-window {
     background: white;
-    min-height: 75vh;
+    min-height: 50vh;
     width: 95%;
     background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
     border-radius: 2rem;
     backdrop-filter: blur(2rem);
     display: flex;
     flex-direction: column;
-    padding-top: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
 }
 
 .Headline_Spielregeln h1 {
     text-align: center;
     font-size: 40px;
     color: white;
-    margin-bottom: 1.7rem;
+    margin-bottom: 2.5rem;
 }
 
 .spielregelnContent {
@@ -392,6 +408,7 @@ header a img {
     flex-direction: column;
     justify-content: center;
     padding-left: 30px;
+    padding-right: 10px;
     padding-bottom: 20px;
 }
 
@@ -481,7 +498,9 @@ header a img {
 }
 
 .profil-page p {
-    font-size: 16px;
+    font-size: 20px;
+    padding-top: 2px;
+    padding-bottom: 7px;
 }
 
 .profil-page h2 {
@@ -595,9 +614,9 @@ header a img {
     background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
     border: none;
     width: 80%;
-    padding: 0.3rem;
+    height: 15px;
     border-radius: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .profil-page .profil-view {
@@ -626,9 +645,22 @@ header a img {
     width: 100%;
 }
 
+.profil-page .userdata_box {
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.profil-page .userdata_text {
+
+    flex: 1;
+}
+
 .profil-page .userdata_inputs {
     width: 100%;
     border-radius: 10px;
+    flex: 2;
 }
 
 .profil-page .userdata_field {
@@ -643,6 +675,25 @@ header a img {
     left: 10%;
     width: 300px;
 }
+
+.profil-page .forms_field_username {
+
+    margin-bottom: 0;
+    position: relative;
+    left: 10%;
+    width: 300px;
+    
+}
+
+.profil-page .forms_field_username input {
+
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    outline: 0;
+
+}
+
 
 .profil-page .forms_field_userdata .forms_field-input {
     padding-right: 0;
@@ -688,6 +739,22 @@ header a img {
     transition: border-color 0.2s ease-in-out;
 }
 
+.profil-page .forms_field_username .username_field-input {
+
+    width: 100%;
+    border: none;
+    padding: 6px 20px 6px 6px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: black;
+    border-radius: 10px;
+    letter-spacing: 0.1rem;
+    transition: border-color 0.2s ease-in-out;
+    
+}
+
+
 .forms_field_userdata .user_field-input:focus {
 
     border-color: #858585;
@@ -696,6 +763,65 @@ header a img {
  .forms_field_userdata .user_field-input:hover {
 
     border-color: #858585;
+}
+
+
+.disable {
+
+    pointer-events: none;
+
+}
+
+/* Lobby */
+
+.lobby-page {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+        
+}
+
+.lobby-page h2 {
+
+    position: relative;
+    top: -5rem;
+}
+
+.lobby-page .play_button {
+
+display: flex;
+align-items: center;
+justify-content: center;
+margin-top: 80px;
+
+}
+
+.play_button .forms_button-action {
+
+    background-color: #e8716d;
+    padding: 10px 80px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: background-color 0.2s ease-in-out;
+
+}
+
+.lobby_window {
+
+    align-items: center;
+    justify-content: center;
+       
+
 }
 
 .Waiting {
