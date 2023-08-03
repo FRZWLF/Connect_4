@@ -36,10 +36,12 @@ class GameComponent {
             }
         })
 
+        this.zugzeit = 60
 
         socket.on("zuggegner", (user, data) => {
-            this.zugZeitAnzeigen()
+            
             this.game.move(user, data)
+           //try { clearInterval(this.seti) } catch { }
             if (this.game.gewinnStatus) {
                 if (this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
@@ -56,6 +58,7 @@ class GameComponent {
                 }
             } else {
                 document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
+                this.zugZeitAnzeigen()
             }
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
         })
@@ -63,7 +66,7 @@ class GameComponent {
 
     zugZeitAnzeigen() {
         try { clearInterval(this.seti) } catch { }
-        this.zugzeit = 10
+        this.zugzeit = 60
 
         //Timer Start
         this.seti = setInterval(() => {
@@ -91,13 +94,21 @@ class GameComponent {
     getHTML() {
         var body = /*html*/`
         <div class="Game">
-            <div class="spielregeln-window game-window">
-                <div class="gameContent">
-            <div class="links">
-                <div class="You_Player">
-                    <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>`
+        <h1>Spiel</h1>
+        <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
+        <p id="timer"></p>
+        `
 
-                        body += /*html*/`<p>Dein Stein:</p>`
+        if (this.user.username == this.game.user1) {
+
+            body += /*html*/`<p id="gegner"><b>Gegner:</b> ${this.game.user2}</p>`
+        } else {
+            body += /*html*/`<p id="gegner"><b>Gegner: </b> ${this.game.user1}</p>`
+        }
+        
+        body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
+
+        body += /*html*/`<p>Dein Stein:</p>`
 
                         if (this.user.username == this.game.user1) {
                             body += /*html*/`<img src="./img/1.gif">`
