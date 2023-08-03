@@ -121,6 +121,7 @@ io.on("connection", (socket) => {
     socket.on('Zeitabgelaufen', (gewinner) => {
         console.log(gewinner)
         socket.to(gewinner).emit("zeitgegner", true)
+        
 
     })
  

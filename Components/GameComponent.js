@@ -25,7 +25,7 @@ class GameComponent {
         })
 
         socket.on('zeitgegner', (response) => {
-
+          
             if (response) {
                 if (this.game.user1 == this.user.username) {
                     this.game.checkGiveUp(this.game.user2)
@@ -33,10 +33,11 @@ class GameComponent {
                     this.game.checkGiveUp(this.game.user1)
                 }
                 router.refresh()
+                document.getElementById("LoosingMessage").style.display ="flex"
             }
         })
 
-        this.zugzeit = 60
+        this.zugzeit = 10
 
         socket.on("zuggegner", (user, data) => {
             
@@ -66,7 +67,7 @@ class GameComponent {
 
     zugZeitAnzeigen() {
         try { clearInterval(this.seti) } catch { }
-        this.zugzeit = 60
+        this.zugzeit = 10
 
         //Timer Start
         this.seti = setInterval(() => {
@@ -115,7 +116,7 @@ class GameComponent {
                         } else {
                             body += /*html*/`<img src="./img/2.gif">`
                         }
-                        <p id="timer"></p>
+                        body += /*html*/`<p id="timer"></p>`
                     
                         body += /*html*/` 
                 </div>
@@ -137,6 +138,8 @@ class GameComponent {
                 } else {
                     body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
                 }
+                    body += /*html*/` <div id = "LoosingMessage" style = "display:none;"><h2>Dein Gegner hat gepennt!</h2></div>`
+
                 body += /*html*/`
             </div>
             <div class="rechts">`
