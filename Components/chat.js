@@ -19,10 +19,46 @@ class chat {
                 this.sendMessage()
             }
         })
+
         // Die Methode 'sendMessage' wird an das globale Objekt 'window' gebunden, damit sie von anderen Teilen der Anwendung aufgerufen werden kann.
         window.sendMessage = this.sendMessage.bind(this)
+        window.showchatbox = this.showchatbox.bind(this)
+        window.hidechatbox = this.hidechatbox.bind(this)
+        window.setchatbox = this.setchatbox.bind(this)
+        this.chatboxVisible = false
+        window.delchat = this.delchat.bind(this)
+        
     }
 
+    showchatbox() {
+        if (!this.chatboxVisible) {
+            document.getElementById("chatfenster").style.display = "block";
+            document.getElementById("chatfenster").style.transform = "translateY(0)";
+        }
+    }
+    
+    hidechatbox() {
+        if (!this.chatboxVisible) {
+            document.getElementById("chatfenster").style.display = "none";
+            document.getElementById("chatfenster").style.transform = "translateY(100%)";
+        }
+    }
+    
+    setchatbox() {
+        this.chatboxVisible = true;
+        if (this.chatboxVisible) {
+            document.getElementById("chatfenster").style.display = "block";
+            document.getElementById("chatfenster").style.transform = "translateY(0)";
+        }
+    }
+
+
+    delchat(e) {
+                if (e.target.id != "message" && e.target.id !="chatfenster" && e.target.id !="chatbtn") {
+                document.getElementById("chatfenster").style.display = "none"
+                this.chatboxVisible = false
+                } 
+    }
     // Die Methode 'sendMessage' sendet eine Nachricht an den Server. Die Nachricht und der Benutzername des Senders werden als Parameter übergeben.
     sendMessage() {
         // Referenz zum Nachrichtenfeld wird in der Variable "messageField" gespeichert
@@ -42,5 +78,6 @@ class chat {
         }
     }    
 }
+
 // Die Klasse 'chat' wird exportiert, damit sie in anderen Teilen der Anwendung verwendet werden kann.
 module.exports = chat
