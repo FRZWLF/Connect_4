@@ -40,7 +40,7 @@ class SpielregelnComponent {
                                 <div class="intro">
                                     <p class="p1">
                                     Versuche durch dein strategisches Denken bei dem Spiel „Vier gewinnt “deinen Gegner zu übertrumpfen. 
-                                    Schaffe es als erster, vier deiner Chips in eine Reihe, horizontal, vertikal oder diagonal zu positionieren und du gewinnst! 
+                                    Schaffe es als Erster, vier deiner Chips in eine Reihe, horizontal, vertikal oder diagonal zu positionieren und du gewinnst! 
                                   </p>
                                 </div>            
                             </div>
@@ -53,7 +53,7 @@ class SpielregelnComponent {
                                     Das Spiel ist beendet, sobald einer von den Spielern vier Chips in einer horizontalen, 
                                     vertikalen oder diagonalen Reihe positioniert hat. 
                                     Achte auf den Timer, für jeden Zug hat jeder Spieler 60 Sekunden.
-                                    Wenn die Zei ohne einen Spielzug Abläuft, hat der andere Spieler gewonnen.
+                                    Wenn die Zeit ohne einen Spielzug bei einem von euch Abläuft, hat der andere Spieler gewonnen.
                                     Wer die ersten vier Chips in der Reihe zusammen positioniert, hat gewonnen.
 
                                  </p>
