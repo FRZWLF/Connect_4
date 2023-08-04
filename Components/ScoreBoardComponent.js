@@ -17,18 +17,18 @@ class ScoreboardComponent {
         })
     }
 
-    // Methode zum Generieren des HTML-Codes für das Scoreboard
+    // Methode zum Generieren des HTML-Codes für das Scoreboard "Headline_Forms Headline_Register" "Headline_Spielregeln"
     getHTML() {
         // Erstellen des HTML-Codes für jede Zeile des Scoreboards
         // Direkter Zugriff auf die Eigenschaften der einzelnen Benutzerobjekte
         let scoreboardHTML = this.scoreboard.map(element => {
-            return `<tr><td>${element.rank}</td><td>${element.username}</td><td>${element.wins}</td></tr>`;
+            return `<tr><td> ${element.rank}</td><td>${element.username}</td><td>${element.wins}</td></tr>`;
         }).join('');
     
         var text = /*html*/`
-        <div class="login-page">
-            <h1 id="Scoreboardh1">Scoreboard</h1>
-            <div id="scoreboard-div"> 
+        <div class="login-page">           
+            <div class="spielregeln-window scoreboard-class"> 
+                <h1 class= "Headline_Forms Headline_Register" id ="Scoreboardh1">Scoreboard</h1>
                 <table class="scoreboard-table">
                     <thead>
                         <tr>
@@ -37,7 +37,7 @@ class ScoreboardComponent {
                             <th>Score</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class = "tbody">
                         ${scoreboardHTML}
                     </tbody>
                 </table>
