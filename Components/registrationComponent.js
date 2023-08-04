@@ -7,7 +7,7 @@ const val = require(`validator`)
 class RegistrationComponent {
 
     constructor() {
-        window.register = this.register.bind(this)
+        window.registering = this.register.bind(this)
         window.reset = this.reset.bind(this)
     }
 
@@ -38,7 +38,7 @@ class RegistrationComponent {
                    </form>
                    <div class="forms_buttons register_buttons">
                             <button class="forms_button-forgot" onclick="reset()">Clear</button>
-                            <button class="forms_button-action" onclick="register()" >Registrieren</button>
+                            <button class="forms_button-action" onclick="registering()" >Registrieren</button>
                    </div>
                  </div>
             </div>     
@@ -82,7 +82,7 @@ class RegistrationComponent {
                 const user = new User(username, pwHash, firstname, surname, email)
 
                 socket.emit("registration", user)
-
+                
                 socket.on("regisanswer", (answer) => {
                     if (answer) {
                         message("Achtung","Registration fehlgeschlagen","fehler")

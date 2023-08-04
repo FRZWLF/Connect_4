@@ -64,6 +64,10 @@ var Lobby = require('./Components/Lobby')
 var lobby = new Lobby()
 router.addView('lobby', lobby)
 
+var ScoreboardComponent = require('./Components/ScoreBoardComponent')
+var scoreboardComponent = new ScoreboardComponent()
+router.addView('scoreboard', scoreboardComponent)
+
 
 router.gotoView('waitlist');
 
