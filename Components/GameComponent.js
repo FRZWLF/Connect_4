@@ -32,6 +32,12 @@ class GameComponent {
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
                     if (this.game.gewinnStatus == this.user.username) {
+                        if(loginUser.username == this.game.user1){
+                            socket.emit('newWinner', this.user.username, this.game.user2)
+                        } else{
+                            socket.emit('newWinner', this.user.username, this.game.user1)
+                        }
+                        
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch. "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     } else {
