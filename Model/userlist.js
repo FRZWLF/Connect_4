@@ -9,6 +9,7 @@ class UserList {
         this.file = fs.readFileSync("./Model/userlist.json", "utf8");
         // Umwandeln des Dateiinhalts in ein JavaScript-Objekt und Speichern in der Eigenschaft "userlist"
         this.userlist = JSON.parse(this.file)
+
     }
 
     // Methode zum Hinzufügen eines Benutzers zur Benutzerliste
@@ -32,10 +33,12 @@ class UserList {
     getUser(username) {
         // Abrufen des Benutzerobjekts aus der Benutzerliste mit dem bereitgestellten Benutzernamen als Schlüssel
         let userJson = this.userlist[username]
-        // Erstellen eines neuen Benutzerobjekts mit den abgerufenen Daten
         let userObjkt = new User(userJson.username, userJson.password, userJson.firstname, userJson.surname, userJson.email)
-
-        // Rückgabe des Benutzerobjekts
+        userObjkt.wins = userJson.wins
+        userObjkt.wallet = userJson.wallet
+        userObjkt.skinEquipped = userJson.skinEquipped
+        userObjkt.primaryskin = userJson.primaryskin
+        userObjkt.secondaryskin = userJson.secondaryskin
         return userObjkt
     }
 

@@ -26609,7 +26609,7 @@ class GameComponent {
 
     getHTML() {
         var body = /*html*/`
-        
+        <div class="Game">
         <h1>Spiel</h1>
         <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
         `
@@ -26645,7 +26645,10 @@ class GameComponent {
         } else {
             body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         }
+        body += /*html*/`
 
+        </div>
+        `
         return body
     }
 
@@ -26991,7 +26994,10 @@ class WaitlistDisplayComponent{
     
     getHTML(){ let text = /*html*/`
     <br>
+    <div class="Waiting">
         <h2 id="Waiting">Waitingslist</h2>
+    
+        
     `
     this.waitinglist.forEach(element => {
         if(element==appstatus.loginUser.username){
@@ -27004,6 +27010,9 @@ class WaitlistDisplayComponent{
             <br>
         `
     });
+    text += /*html*/`
+    </div>
+    `
        
     return text
     }
@@ -27096,7 +27105,7 @@ module.exports = class MessageComponent{
     info(ueberschrift, Nachricht, type){
 
         
-        let messagediv = document.getElementById('message') 
+        let messagediv = document.getElementById('alert') 
         messagediv.style.display='block'
 
 
@@ -27108,7 +27117,7 @@ module.exports = class MessageComponent{
         setInterval(() => {
             messagediv.style.opacity = messagediv.style.opacity -0.01
             if (messagediv.style.opacity==0) messagediv.style.display='none'
-        }, 10)
+        }, 100)
        },5000) 
         
         

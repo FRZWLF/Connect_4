@@ -10,6 +10,7 @@ const WaitList = require('./Model/WaitingList.js')
 const User = require('./Model/User.js')
 const Chatlist = require('./Model/chatlist.js')
 
+
 // Festlegen des Ports
 var port = 5555
 // Erstellen einer neuen Benutzerliste
@@ -106,10 +107,29 @@ io.on("connection", (socket) => {
     socket.on("matchtResolveToServer", (playername, opp) => {
         io.to(opp).emit("matchResolve", playername)
     })
-    
-
+    //Aktualisierung des Highscores bei Spielende
+    socket.on("winTracker",(winner,loser)=>{
+        winUser = userList.getUser(winner)
+        lossUser = userList.getUser(loser)
+        winUser.wins +=1
+        if(lossUser.wins > 0){
+            lossUser.wins -= 1
+            userList.addUser(lossUser)
+        }
+        userList.addUser(winUser)
+    })
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
+        console.log("if this game2121")
+        if(this.game){
+            console.log("if this game")
+        if(!this.game.user1 == socketuser){
+            io.to(this.game.user1).emit("matchResolve", socketuser)
+        }else{
+            io.to(this.game.user2).emit("matchResolve", socketuser)
+        }
+    }
+        
         // Der Benutzer wird aus der Warteliste entfernt
         waitlist.removeUserFromWaitingList(socketuser)
         // Die aktualisierte Warteliste wird an alle Clients gesendet
@@ -118,7 +138,15 @@ io.on("connection", (socket) => {
         console.log('Ein Nutzer hat die Verbindung getrennt')
     })
 
+    socket.on('Zeitabgelaufen', (gewinner) => {
+        console.log(gewinner)
+        socket.to(gewinner).emit("zeitgegner", true)
+        
 
+    })
+ 
+
+    
     // Bei einer neuen Nachricht
     socket.on("NewMessage", (text, username) => {
         // Die Nachricht wird zur Chatliste hinzugefügt

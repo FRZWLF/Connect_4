@@ -7,7 +7,7 @@ const val = require(`validator`)
 class RegistrationComponent {
 
     constructor() {
-        window.register = this.register.bind(this)
+        window.registering = this.register.bind(this)
         window.reset = this.reset.bind(this)
     }
 
@@ -38,7 +38,7 @@ class RegistrationComponent {
                    </form>
                    <div class="forms_buttons register_buttons">
                             <button class="forms_button-forgot" onclick="reset()">Clear</button>
-                            <button class="forms_button-action" onclick="register()" >Registrieren</button>
+                            <button class="forms_button-action" onclick="registering()" >Registrieren</button>
                    </div>
                  </div>
             </div>     
@@ -71,7 +71,7 @@ class RegistrationComponent {
         let email = document.getElementById("email").value
 
         if (username == "" || password == "") {
-            alert("Username und Passwort muss angegeben werden")
+            message("Achtung","Username und Passwort muss angegeben werden","fehler")
         } else {
 
             if (password == password2 && val.isEmail(email)) {
@@ -82,12 +82,12 @@ class RegistrationComponent {
                 const user = new User(username, pwHash, firstname, surname, email)
 
                 socket.emit("registration", user)
-
+                
                 socket.on("regisanswer", (answer) => {
                     if (answer) {
-                        alert("Registration fehlgeschlagen")
+                        message("Achtung","Registration fehlgeschlagen","fehler")
                     } else {
-                        alert("User wurde angelegt")
+                        message("Registrierung","User wurde angelegt")
                         router.gotoView("login"," ", "login")
                     }
                 })
@@ -96,7 +96,7 @@ class RegistrationComponent {
 
             }
             else {
-                alert("Passwörter sind ungleich oder die Email ist ungültig!")
+                message("Achtung","Passwörter sind ungleich oder die Email ist ungültig!","fehler")
             }
 
         }

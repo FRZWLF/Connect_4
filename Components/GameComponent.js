@@ -10,21 +10,46 @@ class GameComponent {
             this.game = new Game(player1, player2, 6, 7)
             this.user = appstatus.loginUser
             router.gotoView("game")
+            if (this.game.aktiverSpieler == appstatus.loginUser.username) {
+                this.zugZeitAnzeigen()
+            }
         })
+        
 
         socket.on("matchResolve", (playerName) => {
-            console.log("hello")
-            if (!this.game.gewinnStatus) {
-                document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
-                document.getElementById("WinnerMessage").innerHTML = "Gewonnen, der Gegener hat das Spiel verlassen! Herzlichen Glückwunsch. "
-                this.game.gewinnStatus = this.user.username
+            
+            if (playerName) {
+                
+                router.refresh()
+                clearInterval(this.seti)
+
+                if (!this.game.gewinnStatus) { 
+                    console.log('dadadad')
+                    document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
+                    this.game.gewinnStatus = this.user.username
+                    this.aufgeben = true
+                }
+            }
+            
+        })
+
+        socket.on('zeitgegner', (response) => {
+            console.log(this.aufgeben)
+            if (response) {
+                if (this.game.user1 == this.user.username) {
+                    this.game.checkGiveUp(this.game.user2)
+                } else {
+                    this.game.checkGiveUp(this.game.user1)
+                }
+                router.refresh()
+                document.getElementById("LoosingMessage").style.display = "flex"
             }
         })
 
 
-
-
         socket.on("zuggegner", (user, data) => {
+
+
             this.game.move(user, data)
             if (this.game.gewinnStatus) {
                 if (this.game.gewinnStatus == "unentschieden") {
@@ -48,27 +73,52 @@ class GameComponent {
                 }
             } else {
                 document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> " + this.game.aktiverSpieler
+                this.zugZeitAnzeigen()
             }
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
         })
     }
 
+    zugZeitAnzeigen() {
+        try { clearInterval(this.seti) } catch { }
+        this.zugzeit = 10
+
+        //Timer Start
+        this.seti = setInterval(() => {
+            const timerElement = document.getElementById('timer');
+            this.zugzeit--;
+            timerElement.innerText = 'Automatischer Abbruch in:' + this.zugzeit;
+
+            if (this.zugzeit <= 0) {
+                timerElement.innerText = " ";
+                this.game.checkGiveUp(appstatus.loginUser.username)
+                router.refresh()
+                clearInterval(this.seti)
+
+
+                if (this.game.user1 == this.user.username) {
+                    socket.emit("Zeitabgelaufen", this.game.user2);
+                    router.refresh()
+                    clearInterval(this.seti)
+
+                } else {
+                    socket.emit('Zeitabgelaufen', this.game.user1);
+                    router.refresh()
+                    clearInterval(this.seti)
+                }
+                return
+            }
+        }, 1000);
+    }
+
     getHTML() {
         var body = /*html*/`
         <div class="Game">
-        <h1>Spiel</h1>
-        <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>
-        `
-
-        if (this.user.username == this.game.user1) {
-
-            body += /*html*/`<p id="gegner"><b>Gegner:</b> ${this.game.user2}</p>`
-        } else {
-            body += /*html*/`<p id="gegner"><b>Gegner: </b> ${this.game.user1}</p>`
-        }
-
-        body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
-
+            <div class="spielregeln-window game-window">
+                <div class="gameContent">
+                    <div class="links links-game">
+                        <div class="You_Player">
+                            <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>`
         body += /*html*/`<p>Dein Stein:</p>`
 
         if (this.user.username == this.game.user1) {
@@ -76,7 +126,15 @@ class GameComponent {
         } else {
             body += /*html*/`<img src="./img/2.gif">`
         }
+        body += /*html*/`<p id="timer"></p>`
 
+        body += /*html*/` 
+                        </div>
+                    </div>
+        
+            <div class="mitte Connect4">`
+
+        body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
         body += /*html*/`<div id="spielefeld">`
 
         body += this.erzeugeSpielfeld()
@@ -85,22 +143,53 @@ class GameComponent {
         if (!this.game.gewinnStatus) {
             body += /*html*/`<h2 id="WinnerMessage"> </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         } else if (this.game.gewinnStatus == this.user.username) {
-            body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch. </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+            if(appstatus.loginUser.username==this.game.user1){
+                socket.emit("winTracker",this.game.user1,this.game.user2)
+            }else{
+                socket.emit("winTracker",this.game.user2,this.game.user1)
+            }
+            body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+            if(this.aufgeben){
+            body += /*html*/` <div id = "LeavingMessage"><h2>Dein Gegner hat das Spiel verlassen!</h2></div>`
+            }
         } else if (this.game.gewinnStatus == "unentschieden") {
             body += /*html*/`<h2 id="WinnerMessage"> Unentschieden, keep trying! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         } else {
             body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         }
-        body += /*html*/`
+        body += /*html*/` <div id = "LoosingMessage" style = "display:none;"><h2>Dein Gegner hat gepennt!</h2></div>`
 
+        this.aufgeben = false
+
+        body += /*html*/`
+            </div>
+            <div class="rechts links-game">`
+
+        if (this.user.username == this.game.user1) {
+
+            body += /*html*/`<p id="gegner"><b>Gegner:</b> ${this.game.user2}</p>`
+        } else {
+            body += /*html*/`<p id="gegner"><b>Gegner: </b> ${this.game.user1}</p>`
+        }
+
+        body += /*html*/` 
+            </div>`
+        body += /*html*/`
+        </div>
+        </div>
         </div>
         `
+
+
         return body
     }
 
     spielZug(spalte) {
 
         if (this.game.moveGueltig(this.user.username, spalte)) {
+
+            try { clearInterval(this.seti) } catch { }
+            document.getElementById('timer').innerHTML = ""
 
             this.game.move(this.user.username, spalte)
             for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
@@ -191,13 +280,13 @@ class GameComponent {
         } 2
     }
 
-    beendeSpiel() { 
-        if(this.user.username == this.game.user1) {
+    beendeSpiel() {
+        if (this.user.username == this.game.user1) {
             socket.emit('matchtResolveToServer', this.user.username, this.game.user2)
         } else {
             socket.emit('matchtResolveToServer', this.user.username, this.game.user1)
         }
-        delete(this.game)
+        delete (this.game)
     }
 
 }
