@@ -107,8 +107,17 @@ io.on("connection", (socket) => {
     socket.on("matchtResolveToServer", (playername, opp) => {
         io.to(opp).emit("matchResolve", playername)
     })
-    
-
+    //Aktualisierung des Highscores bei Spielende
+    socket.on("winTracker",(winner,loser)=>{
+        winUser = userList.getUser(winner)
+        lossUser = userList.getUser(loser)
+        winUser.wins +=1
+        if(lossUser.wins > 0){
+            lossUser.wins -= 1
+            userList.addUser(lossUser)
+        }
+        userList.addUser(winUser)
+    })
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
         console.log("if this game2121")
