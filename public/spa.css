@@ -443,7 +443,6 @@ header a img {
     padding-left: 30px;
     padding-right: 10px;
     padding-bottom: 20px;
-    height: 100%;
 }
 
 .links h1 {
@@ -474,7 +473,6 @@ header a img {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
 }
 
 .mitte img {
@@ -490,7 +488,6 @@ header a img {
     padding-right: 40px;
     padding-bottom: 20px;
     justify-content: center;
-    height: 100%;
 }
 
 .rechts h1 {
@@ -860,28 +857,6 @@ margin-top: 80px;
 
 }
 
-/* .pulse {
-
-    animation-name: pulse;
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
-}
-
-@keyframes pulse {
-
-    0% {
-        text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
-    }
-    50% {
-        text-shadow: 0 0 10px rgba(0, 0, 0 0.6);
-    }
-    100% {
-        text-shadow: 0 0 0 rgba(0, 0, 0 0.3);
-    }
-} */
-
 .Waiting {
     display: flex;
     align-items: center;
@@ -1020,7 +995,6 @@ margin-top: 80px;
     display: flex;
     flex-direction: row;
     height: 100%;
-    
 }
 
 .Connect4 {

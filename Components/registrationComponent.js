@@ -7,7 +7,7 @@ const val = require(`validator`)
 class RegistrationComponent {
 
     constructor() {
-        window.register = this.register.bind(this)
+        window.registering = this.register.bind(this)
         window.reset = this.reset.bind(this)
     }
 
@@ -38,7 +38,7 @@ class RegistrationComponent {
                    </form>
                    <div class="forms_buttons register_buttons">
                             <button class="forms_button-forgot" onclick="reset()">Clear</button>
-                            <button class="forms_button-action" onclick="register()" >Registrieren</button>
+                            <button class="forms_button-action" onclick="registering()" >Registrieren</button>
                    </div>
                  </div>
             </div>     
@@ -62,7 +62,7 @@ class RegistrationComponent {
     }
 
     register() {
-
+        console.log("regi")
         let username = document.getElementById("username").value
         let password = document.getElementById("password").value
         let password2 = document.getElementById("password2").value
