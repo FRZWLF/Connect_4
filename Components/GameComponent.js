@@ -135,17 +135,16 @@ class GameComponent {
                             <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>`
         body += /*html*/`<p>Dein Stein:</p>`
 
-        if (this.user.username == this.game.user1) {
-            body += /*html*/`<img src="./img/1.gif">`
-        } else {
-            body += /*html*/`<img src="./img/2.gif">`
-        }
-        body += /*html*/`<p id="timer"></p>`
-
-        body += /*html*/` 
-                        </div>
-                    </div>
-        
+                        if (this.user.username == this.game.user1) {
+                            body += /*html*/`<img src="./img/1.gif">`
+                        } else {
+                            body += /*html*/`<img src="./img/2.gif">`
+                        }
+                        body += /*html*/`<p id="timer"></p>`
+                    
+                        body += /*html*/` 
+                </div>
+            </div>
             <div class="mitte Connect4">`
 
         body += /*html*/`<p id="amzug"><b>Am Zug: </b> ${this.game.aktiverSpieler}</p>`
