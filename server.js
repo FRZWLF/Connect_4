@@ -80,7 +80,7 @@ io.on("connection", (socket) => {
                 // Wenn der Login ungültig ist, wird die Antwort an den Client gesendet
                 socket.emit("loginUnvalide", loginValide, userExists)
         }
-        socket.emit("loginUnvalide", loginValide, userExists) //doppelt?
+        socket.emit("loginUnvalide", loginValide, userExists) // war doppelt?!?
     })
 
     // Bei einer Anfrage zur Aktualisierung der Benutzerdaten
@@ -158,6 +158,15 @@ io.on("connection", (socket) => {
         // Die aktualisierte Chatliste wird an alle Clients gesendet
         io.emit("NewMessageList", chatlist.chatlist)
     })
+
+    socket.on("highscore", () => {     
+        socket.emit("newBoard", userList.getSortedList())
+    })
+
+    // Bei einer Anfrage für die Chatliste
+    socket.on("newWinner", (winner, looser) => {
+        socket.emit("newBoard", winner, looser)
+})
 })
 
 // Server starten und auf dem festgelegten Port lauschen
