@@ -9,7 +9,7 @@ class ScoreboardComponent {
     highscore() {
         socket.emit("highscore", true)
         if(appstatus.loginUser) router.gotoView("scoreboard", 'logedin', 'scoreboard')
-        else router.gotoView("scoreboard", 'scoreboard')        
+        else router.gotoView("scoreboard", ' ', 'scoreboard')        
         socket.on("newBoard", (liste) => {
             // empfangene Liste direkt this.scoreboard zuweisen 
             this.scoreboard = liste;
