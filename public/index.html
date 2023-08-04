@@ -11,7 +11,7 @@
 
 <body>
     <header>
-        <a href="javascript: router.gotoView('welcome')"><img src="./img/connect4_logo.png" alt="connect4_logo"></a>
+        <a href="javascript: router.gotoView('welcome')"><img src="./img/pngwing.com.png" alt="connect4_logo"></a>
         <div id="Logout"> <!--  Standard NavBar  -->
             <ul id="MenueContent">
                 <li><a id="welcome" href="javascript: router.gotoView('welcome', ' ', 'welcome')" class="active">
@@ -38,14 +38,14 @@
     </header>
 
     <!-- umstylen wenn nötig, eigene id für input => Änderungen in CSS-->
-    <div id="chatbox">
-        <div id="chatfenster">
-        </div>
-        <div>
-            <input maxlength="55" type="text" id="message">
+    <div id="chatbox" onmouseout="hidechatbox()" onmouseover="showchatbox()">
+        <div id="chatfenster"></div>
+        <div id="Chat">
+            <input maxlength="55" type="text" id="message" onclick="setchatbox()">
             <button id="chatbtn" onclick="sendMessage()">Senden</button>
         </div>
     </div>
+    
 
     <div class="toast" id="alert" style="opacity: 1"> 
     </div>
