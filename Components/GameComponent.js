@@ -115,7 +115,7 @@ class GameComponent {
                         } else {
                             body += /*html*/`<img src="./img/2.gif">`
                         }
-                        <p id="timer"></p>
+                        body += /*html*/`<p id="timer"></p>`
                     
                         body += /*html*/` 
                 </div>
