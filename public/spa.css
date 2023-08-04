@@ -38,8 +38,8 @@ header a img {
     height: 3.5rem;
     width: auto;
 }
-
-#Scoreboardh1 {
+/*
+.scoreboard-class #Scoreboardh1 {
     position: absolute;
     top: 5rem;
     padding-top: 1rem;
@@ -47,14 +47,21 @@ header a img {
     text-align: center;
     color: white;
     font-size: 3rem;
+}*/
+
+#Scoreboardh1, .Headline_Forms, .Headline_Register {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0px;
+    text-align: center;
 }
 
 .scoreboard-table {
     margin: auto;
-    width: 300%; 
+    width: 100%; 
     border-collapse: collapse;
     font-size: 1.5em;
-    height: 40rem; 
+    max-height: 40rem; 
     overflow-y: scroll;
     background-color: white;
 }
@@ -63,12 +70,8 @@ header a img {
     border: 1px solid black;
 }
 
-
 .scoreboard-table th, .scoreboard-table td {
     padding: 10px;
-}
-
-.scoreboard-table th, .scoreboard-table td {
     text-align: center;
 }
 
@@ -141,7 +144,7 @@ header a img {
 /* chatfenster */
 #chatbox {
     position: fixed;
-    top: 4rem;
+    bottom: 3rem;
     right: 0px;
     width: 300px;
     margin-top: 5px;
@@ -151,13 +154,17 @@ header a img {
     border-radius: 4px;
 }
 
+
 #chatfenster {
+    display: none;
     background-color: aliceblue;
     padding: 10px;
     word-wrap: break-word;
     border-radius: 4px;
     height: calc(20em); /* Set the height to 15 lines */
     overflow-y: auto; /* Make it scrollable */
+    transform: translateY(100%);
+    transition: transform 2s;
 }
 
 #chatbtn {
@@ -175,7 +182,7 @@ header a img {
     cursor: pointer;
 }
 
-#chatbtn:hover {
+#chatbtn:hover{
     background-color: #45a049;
 }
 
@@ -957,7 +964,20 @@ margin-top: 80px;
     
 }
 
-.Waiting .Waiting_list .Waiting_Player #Player_Link {
+.Waiting .Waiting_list .Waiting_Self {
+
+    padding: 10px 35px;
+    background-color: #e99f9d;
+    color: white;
+    border-radius: 10px;
+    font-size: 24px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    width: 100%;
+    
+}
+
+.Waiting .Waiting_list #Player_Link {
 
     text-decoration: none;
     color: white;
@@ -965,7 +985,8 @@ margin-top: 80px;
 }
 
 .Waiting .Waiting_list .Waiting_Player:hover {
-    
+    background-color: #c58684;
+    cursor: pointer;
 
 }
 
@@ -1049,7 +1070,10 @@ margin-top: 80px;
 
 .game-window {
 
+    margin-top: 1rem;
     min-height: 83vh;
+    padding-top: 2rem;
+    padding-bottom: 0;
         
 }
 
@@ -1067,6 +1091,7 @@ margin-top: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 83vh;
 }
 
 .links-game {
@@ -1075,7 +1100,254 @@ margin-top: 80px;
 }
 
 
+/* Game Player */
 
+.You_Player {
+
+    background-color: #fff;
+    min-height: 150px;
+    min-width: 150px;
+    border-radius: 20px;
+    box-shadow: 5px 0 15px black;
+    padding: 40px 60px;
+}
+
+.Opp_Player {
+
+    background-color: #fff;
+    min-height: 150px;
+    min-width: 150px;
+    border-radius: 20px;
+    box-shadow: 5px 0 15px black;
+    padding: 40px 60px;
+    margin-left: 10px;
+}
+
+.Player-font {
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1em;
+    color: #e8716d;
+    letter-spacing: 0.3rem;
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.Game-Username {
+
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1em;
+    color: Black;
+    letter-spacing: 0.3rem;
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.Player-Stone {
+
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1em;
+    color: black;
+    letter-spacing: 0.3rem;
+    margin-top: 0;
+    text-align: center;
+}
+
+#Player-Stone {
+
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+           
+}
+
+#amzug {
+
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1em;
+    color: white;
+    letter-spacing: 0.3rem;
+    margin-top: 1rem;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #e99f9d;
+    border-radius: 10px;
+}
+
+.Game_TextBox {
+
+    position: absolute;
+    top: 40%;
+    left: 32%;
+    padding: 30px 35px;
+    background-color: #e99f9d;
+    color: white;
+    border-radius: 10px;
+    font-size: 24px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    z-index: 5;
+}
+
+.Winbox {
+    display: none;
+}
+
+.Game_Leave {
+    position: absolute;
+    top: 38%;
+    left: 32%;
+    padding: 30px 35px;
+    padding-top: 95px;
+    background-color: #e99f9d;
+    color: white;
+    border-radius: 10px;
+    font-size: 24px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    z-index: 4;
+}
+
+#timer {
+
+    display: none;
+    padding: 10px 15px;
+    background-color: #e99f9d;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+
+.Zugzeit {
+
+    padding-left: 10px;
+}
+
+#WinnerMessage {
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1em;
+    color: black;
+    letter-spacing: 0.3rem;
+    text-align: center;
+
+}
+
+#LoosingMessage {
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1em;
+    color: black;
+    letter-spacing: 0.3rem;
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#LeavingMessage {
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1em;
+    color: black;
+    letter-spacing: 0.3rem;
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 1rem;
+
+}
+
+
+.Lobby-button {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.Lobby-button .forms_button-action {
+
+    background-color: #e8716d;
+    padding: 10px 35px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 1rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: background-color 0.2s ease-in-out;
+
+}
+
+
+
+
+#spielefeld {
+
+    height: 540px;
+    width: 580px;
+    background-color: blue;
+    border: 10px solid navy;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0;
+}
+
+.tile {
+
+    height: 70px;
+    width: 70px;
+    background-color: white;
+    border-radius: 50%;
+    margin: 5px;
+    border: 5px solid navy;
+}
+
+.red-piece {
+
+    background-color: red;
+}
+
+.yellow-piece {
+
+    background-color: yellow;
+}
+
+.red-piece-trans {
+
+    background-color: red;
+    opacity: 0.8;
+}
+
+.yellow-piece-trans {
+
+    background-color: yellow;
+    opacity: 0.8;
+}
 /* Footer */
 footer {
     position: fixed;
@@ -1112,8 +1384,8 @@ footer a {
     border-radius: 20px;
     background-color: rgba(38, 255, 0, 0.63);
     position: fixed;
-    bottom: 50px;
-    right: 30px;
+    top: 4.5rem;
+    right: 5px;
     width: 300px;
     padding: 10px;
     color: lightgrey;
