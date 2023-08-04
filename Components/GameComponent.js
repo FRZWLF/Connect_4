@@ -14,15 +14,26 @@ class GameComponent {
             if (this.game.aktiverSpieler == appstatus.loginUser.username) {
                 this.zugZeitAnzeigen()
             }
+            
+        })
+
+        socket.on("playerdisconnect", (socketuser) => {
+            console.log(socketuser,"test")
+            if(this.user.username == socketuser){
+                clearInterval(this.seti)
+                this.game.checkGiveUp(socketuser)
+            }else{
+                clearInterval(this.seti)
+                this.game.checkGiveUp(socketuser)
+            }
+
         })
         
-
         socket.on("matchResolve", (playerName) => {
             
             if (playerName) {
-                
                 clearInterval(this.seti)
-
+                
                 if (!this.game.gewinnStatus) { 
                     this.game.gewinnStatus = this.user.username
                     document.getElementById("LeavingMessage").style.display = "flex"
@@ -32,11 +43,13 @@ class GameComponent {
             
         })
 
+
         socket.on('zeitgegner', (response) => {
-            console.log(this.aufgeben)
+
             if (response) {
                 if (this.game.user1 == this.user.username) {
                     this.game.checkGiveUp(this.game.user2)
+                    
                 } else {
                     this.game.checkGiveUp(this.game.user1)
                 }
