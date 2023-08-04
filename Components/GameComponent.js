@@ -110,7 +110,7 @@ class GameComponent {
         <div class="Game">
             <div class="spielregeln-window game-window">
                 <div class="gameContent">
-                    <div class="links">
+                    <div class="links links-game">
                         <div class="You_Player">
                             <p id="spieler"><b>Spieler:</b> ${this.user.username}</p>`
         body += /*html*/`<p>Dein Stein:</p>`
@@ -157,7 +157,7 @@ class GameComponent {
 
         body += /*html*/`
             </div>
-            <div class="rechts">`
+            <div class="rechts links-game">`
 
         if (this.user.username == this.game.user1) {
 

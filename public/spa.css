@@ -1012,14 +1012,14 @@ margin-top: 80px;
 .game-window {
 
     min-height: 83vh;
-    
+        
 }
 
 .gameContent {
 
     display: flex;
     flex-direction: row;
-    height: 100%;
+    min-height: 83vh;
     
 }
 
@@ -1030,6 +1030,13 @@ margin-top: 80px;
     justify-content: center;
     align-items: center;
 }
+
+.links-game {
+
+    justify-content: flex-start;
+}
+
+
 
 /* Footer */
 footer {
