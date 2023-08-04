@@ -8,6 +8,17 @@ class User {
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
+        this.wallet = 0;
+        this.skinEquipped = 0
+        this.primaryskin =["../public/img/1.gif"] 
+        this.secondaryskin=["../public/img/2.gif"]
+        this.wins = 0
+        
+    }
+
+    addSkin(skinpath_p1,skinpath_p2){
+        this.primaryskin.push(skinpath_p1)
+        this.secondaryskin.push(skinpath_p2)
     }
 
     setpassword(password, oldpassword) {
@@ -23,8 +34,7 @@ class User {
 
     }
 
-    checkpassword(password){
-        
+    checkpassword(password){     
 
         return password == this.password
 

@@ -202,7 +202,13 @@ class ChangeuserdataComponent {
                 // Erzeugung eines neuen Benutzerobjekts mit den aktualisierten Daten
                 let oldUser = appstatus.loginUser
                 let newUser = new User(oldUser.username, pwHash, firstname, surname, email)
-
+                newUser.wallet = oldUser.wallet;
+                newUser.skinEquipped = oldUser.skinEquipped
+                newUser.primaryskin = oldUser.primaryskin
+                newUser.secondaryskin = oldUser.secondaryskin
+                newUser.gamesPlayed = oldUser.gamesPlayed
+                newUser.wins = oldUser.wins
+    
                 // Senden des neuen Benutzerobjekts an den Server zur Aktualisierung
                 socket.emit('updateUser', newUser, cpwhash)
 

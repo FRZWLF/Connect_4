@@ -44,6 +44,10 @@ var ChangeuserdataComponent = require("./Components/ChangeuserdataComponent")
 var changeuserdataComponent = new ChangeuserdataComponent()
 router.addView("nutzerdaten_aendern", changeuserdataComponent)
 
+var ShopComponent = require("./Components/ShopComponent")
+var shopComp = new ShopComponent()
+router.addView("GoingShopping",shopComp)
+
 var SpielregelnComponent = require('./Components/SpielregelnComponent')
 var spielregelnComponent = new SpielregelnComponent()
 router.addView('spielregeln', spielregelnComponent)
@@ -55,6 +59,10 @@ router.addView('impressum', impressumComponent)
 var Lobby = require('./Components/Lobby')
 var lobby = new Lobby()
 router.addView('lobby', lobby)
+
+var ScoreboardComponent = require('./Components/ScoreBoardComponent')
+var scoreboardComponent = new ScoreboardComponent()
+router.addView('scoreboard', scoreboardComponent)
 
 
 router.gotoView('waitlist');

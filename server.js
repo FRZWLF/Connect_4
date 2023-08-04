@@ -10,6 +10,7 @@ const WaitList = require('./Model/WaitingList.js')
 const User = require('./Model/User.js')
 const Chatlist = require('./Model/chatlist.js')
 
+
 // Festlegen des Ports
 var port = 5555
 // Erstellen einer neuen Benutzerliste
@@ -79,7 +80,7 @@ io.on("connection", (socket) => {
                 // Wenn der Login ungültig ist, wird die Antwort an den Client gesendet
                 socket.emit("loginUnvalide", loginValide, userExists)
         }
-        socket.emit("loginUnvalide", loginValide, userExists) //doppelt?
+        socket.emit("loginUnvalide", loginValide, userExists) // war doppelt?!?
     })
 
     // Bei einer Anfrage zur Aktualisierung der Benutzerdaten
@@ -106,10 +107,30 @@ io.on("connection", (socket) => {
     socket.on("matchtResolveToServer", (playername, opp) => {
         io.to(opp).emit("matchResolve", playername)
     })
-    
-
+    //Aktualisierung des Highscores bei Spielende
+    socket.on("winTracker",(winner,loser)=>{
+        winUser = userList.getUser(winner)
+        lossUser = userList.getUser(loser)
+        winUser.wins +=1
+        if(lossUser.wins > 0){
+            lossUser.wins -= 1
+            userList.addUser(lossUser)
+        }
+        userList.addUser(winUser)
+        console.log("Users changed!")
+    })
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
+        console.log("if this game2121")
+        if(this.game){
+            console.log("if this game")
+        if(!this.game.user1 == socketuser){
+            io.to(this.game.user1).emit("matchResolve", socketuser)
+        }else{
+            io.to(this.game.user2).emit("matchResolve", socketuser)
+        }
+    }
+        
         // Der Benutzer wird aus der Warteliste entfernt
         waitlist.removeUserFromWaitingList(socketuser)
         // Die aktualisierte Warteliste wird an alle Clients gesendet
@@ -121,6 +142,7 @@ io.on("connection", (socket) => {
     socket.on('Zeitabgelaufen', (gewinner) => {
         console.log(gewinner)
         socket.to(gewinner).emit("zeitgegner", true)
+        
 
     })
  
@@ -136,6 +158,15 @@ io.on("connection", (socket) => {
         // Die aktualisierte Chatliste wird an alle Clients gesendet
         io.emit("NewMessageList", chatlist.chatlist)
     })
+
+    socket.on("highscore", () => {     
+        socket.emit("newBoard", userList.getSortedList())
+    })
+
+    // Bei einer Anfrage für die Chatliste
+    socket.on("newWinner", (winner, looser) => {
+        socket.emit("newBoard", winner, looser)
+})
 })
 
 // Server starten und auf dem festgelegten Port lauschen

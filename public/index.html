@@ -17,10 +17,9 @@
                 <li><a id="welcome" href="javascript: router.gotoView('welcome', ' ', 'welcome')" class="active">
                         Startseite </a></li>
                 <li><a id="login" href="javascript: router.gotoView('login', ' ', 'login')"> Login </a></li>
-                <li><a id="registrierung" href="javascript: router.gotoView('registrierung', ' ', 'registrierung')">
-                        Registrierung </a></li>
-                <li><a id="spielregelnLogout" href="javascript: router.gotoView('spielregeln', ' ', 'spielregeln')">
-                        Spielregeln</a></li>
+                <li><a id="registrierung" href="javascript: router.gotoView('registrierung', ' ', 'registrierung')"> Registrierung </a></li>
+                <li><a id="spielregelnLogout" href="javascript: router.gotoView('spielregeln', ' ', 'spielregeln')"> Spielregeln</a></li>
+                <li><a id="scoreboard" href="javascript: highscore()"> Scoreboard</a></li> <!-- Problem: Scoreboard für zur LOGIN Ansicht -->
             </ul>
         </div>
         <div id="Login" style="display: none;"><!--  Eingeloggte NavBar   -->
@@ -28,7 +27,10 @@
                     <li><a id="lobby" href="javascript: router.gotoView('lobby', 'logedin', 'lobby')" class="active" > Lobby </a></li>
                     <li><a id="nutzerdaten" href="javascript: router.gotoView('nutzerdaten_aendern', 'logedin', 'nutzerdaten')"> Profil </a></li>
                     <li><a id="spielregelnLogin" href="javascript: router.gotoView('spielregeln', 'logedin', 'spielregeln')"> Spielregeln</a></li>
+                    <li><a id="ShoppingTime" a href="javascript: router.gotoView('GoingShopping','logedin','GoingShopping')">Shop</a></li>
                     <li><a href="javascript: logout()"> Logout </a></li>
+                    <!-- Scoreboard hinzufügen -->
+                    <li><a id="scoreboard" href="javascript: highscore()"> Scoreboard</a></li>
             </ul>
         </div>
     </header>
