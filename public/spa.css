@@ -65,6 +65,42 @@ header a img {
     text-align: center;
 }
 
+
+.impressum-window {
+    background: rgb(212, 180, 180);
+    min-height: 30vh;
+    width: 80%;
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    border-radius: 2rem;
+    backdrop-filter: blur(2rem);
+    display: inline-block;
+    flex-direction: column;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    justify-content: center;
+
+    position: absolute;
+    top:6%;
+    left: 10%;
+    margin-top: -10px;
+    margin-left: -10px;
+    
+    
+}
+
+.table-impressum {
+        width: 100%;
+        border: none;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        text-align: left;
+        margin: 1em auto; 
+        width: 80%;
+}
+
 #MenueContent {
    
     width: 100%;

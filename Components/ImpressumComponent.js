@@ -51,32 +51,31 @@ class ImpressumComponent {
          <h2> Verantwortliche für die Entwicklung dieser Webseite </h2> 
          <p >
          <table class= "table-impressum">  
-         <tr>
-            <td> Rico Richter    </td>
-            <td> Alexander Muratov   </td>
-            </tr>
-            
             <tr>
-                <td>Philipp Rabsilber </td>
-                <td>Simona Schefner </td>
-        </tr>
-        <tr>
-            <td>Marvin Fiedler  </td>
-            <td>Lukas Kreuch   </td>
-        </tr>  
-        <tr>
-            <td>Idriss Rhadbane  </td>
-            <td>René Ernst   </td>
-        </tr> 
-        <tr>
-            <td>Alexander Schilling  </td>
-            <td>Daniel Krause   </td>
-        </tr> 
-        <tr>
-            <td>Marcel Scmidtke  </td>
-            <td>   </td>
-        </tr> 
-        </table> 
+                <td> Rico Richter    </td>
+                <td> Alexander Muratov   </td>
+                </tr>
+                <tr>
+                    <td>Philipp Rabsilber </td>
+                    <td>Simona Schefner </td>
+                </tr>
+                <tr>
+                    <td>Marvin Fiedler  </td>
+                    <td>Lukas Kreuch   </td>
+                </tr>  
+                <tr>
+                    <td>Idriss Rhadbane  </td>
+                    <td>René Ernst   </td>
+                </tr> 
+                <tr>
+                    <td>Alexander Schilling  </td>
+                    <td>Daniel Krause   </td>
+                </tr> 
+                <tr>
+                    <td>Marcel Schmidtke  </td>
+                    <td>   </td>
+                </tr> 
+            </table> 
 
 
      <h2>Verantwortlicher Professor   </h2>
