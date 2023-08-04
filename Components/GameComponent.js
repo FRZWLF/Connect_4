@@ -35,6 +35,7 @@ class GameComponent {
 
         socket.on('zeitgegner', (response) => {
             console.log(this.aufgeben)
+            this.zeitabgelaufen = true
             if (response) {
                 if (this.game.user1 == this.user.username) {
                     this.game.checkGiveUp(this.game.user2)
@@ -42,7 +43,9 @@ class GameComponent {
                     this.game.checkGiveUp(this.game.user1)
                 }
                 this.sendHighscore()
+                router.refresh()
                 document.getElementById("LoosingMessage").style.display = "flex"
+                console.log("bin da")
             }
         })
 
@@ -134,6 +137,7 @@ class GameComponent {
     }
 
     getHTML() {
+        console.log("bin in gethtml")
         var body = /*html*/`
         <div class="Game">
             <div class="spielregeln-window game-window">
@@ -170,7 +174,7 @@ class GameComponent {
 
             this.sendHighscore()
             
-            body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
+            body += /*html*/`<div class="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
             if(this.aufgeben){
             body += /*html*/` <div class="Game_Leave"><h2 id = "LeavingMessage">Dein Gegner hat das Spiel verlassen!</h2></div>`
             }
@@ -179,7 +183,8 @@ class GameComponent {
         } else {
             body += /*html*/`<div class="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
         }
-        body += /*html*/` <div class="Game_Leave" style = "display:none;"><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
+        if(this.zeitabgelaufen)
+        body += /*html*/` <div class="Game_Leave" ><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
 
         this.aufgeben = false
 
