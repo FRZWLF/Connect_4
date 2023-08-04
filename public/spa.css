@@ -1007,7 +1007,8 @@ margin-top: 80px;
 }
 
 .Waiting .Waiting_list .Waiting_Player:hover {
-    
+    background-color: #c58684;
+    cursor: pointer;
 
 }
 
