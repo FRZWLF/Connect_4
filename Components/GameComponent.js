@@ -136,9 +136,9 @@ class GameComponent {
         body += /*html*/`<p>Dein Stein:</p>`
 
                         if (this.user.username == this.game.user1) {
-                            body += /*html*/`<img src="./img/1.gif">`
+                            body += /*html*/`<img src="./img/Dollar.gif">`
                         } else {
-                            body += /*html*/`<img src="./img/2.gif">`
+                            body += /*html*/`<img src="./img/Cent.gif">`
                         }
                         body += /*html*/`<p id="timer"></p>`
                     
@@ -257,9 +257,9 @@ class GameComponent {
 
             for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
                 if (this.game.spielfeld[zeile][spalte] == 1) {
-                    spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/1.gif">`
+                    spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/Dollar.gif">`
                 } else if (this.game.spielfeld[zeile][spalte] == 2) {
-                    spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}"  onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/2.gif">`
+                    spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}"  onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/Cent.gif">`
                 } else {
                     spielefeld += /*html*/`<img id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" src="./img/0.gif">`
                 }
