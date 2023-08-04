@@ -1,1 +1,131 @@
-{"dude":{"password":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","username":"dude","firstname":"1","surname":"1","email":"gut@gut.de","wallet":0,"skins":["../public/img/1.gif","../public/img/2.gif"],"primaryskin":"","gamesPlayed":0,"wins":9},"marv":{"password":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","username":"marv","firstname":"1","surname":"1","email":"1@wer.de","wallet":0,"skins":["../public/img/1.gif","../public/img/2.gif"],"primaryskin":"","gamesPlayed":0,"wins":13},"marvmarv":{"password":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","username":"marvmarv","firstname":"1","surname":"1","email":"zut@jfi.de","wallet":0,"skins":["../public/img/1.gif","../public/img/2.gif"],"primaryskin":"","gamesPlayed":0,"wins":6},"test10":{"password":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","username":"test10","firstname":"dfd","surname":"sfsf","email":"efe@gf.de","wallet":0,"skins":["../public/img/1.gif","../public/img/2.gif"],"primaryskin":"","gamesPlayed":0,"wins":3},"Test11":{"password":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","username":"Test11","firstname":"efdef","surname":"sdfsdf","email":"fdf@gh.de","wallet":0,"skins":["../public/img/1.gif","../public/img/2.gif"],"primaryskin":"","gamesPlayed":0,"wins":20},"Test12":{"password":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","username":"Test12","firstname":"sdsdf","surname":"sdsd","email":"sds@fgd.de","wallet":0,"skins":["../public/img/1.gif","../public/img/2.gif"],"primaryskin":"","gamesPlayed":0,"wins":5},"MR":{"password":"6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","username":"MR","firstname":"M","surname":"R","email":"m@r.de"}}
+{
+    "dude": {
+        "password": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "dude",
+        "firstname": "1",
+        "surname": "1",
+        "email": "gut@gut.de",
+        "wallet": 0,
+        "skins": [
+            "../public/img/1.gif",
+            "../public/img/2.gif"
+        ],
+        "primaryskin": "",
+        "gamesPlayed": 0,
+        "wins": 9
+    },
+    "marv": {
+        "password": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "marv",
+        "firstname": "1",
+        "surname": "1",
+        "email": "1@wer.de",
+        "wallet": 0,
+        "skins": [
+            "../public/img/1.gif",
+            "../public/img/2.gif"
+        ],
+        "primaryskin": "",
+        "gamesPlayed": 0,
+        "wins": 13
+    },
+    "marvmarv": {
+        "password": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "marvmarv",
+        "firstname": "1",
+        "surname": "1",
+        "email": "zut@jfi.de",
+        "wallet": 0,
+        "skins": [
+            "../public/img/1.gif",
+            "../public/img/2.gif"
+        ],
+        "primaryskin": "",
+        "gamesPlayed": 0,
+        "wins": 6
+    },
+    "test10": {
+        "password": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "test10",
+        "firstname": "dfd",
+        "surname": "sfsf",
+        "email": "efe@gf.de",
+        "wallet": 0,
+        "skins": [
+            "../public/img/1.gif",
+            "../public/img/2.gif"
+        ],
+        "primaryskin": "",
+        "gamesPlayed": 0,
+        "wins": 3
+    },
+    "Test11": {
+        "password": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "Test11",
+        "firstname": "efdef",
+        "surname": "sdfsdf",
+        "email": "fdf@gh.de",
+        "wallet": 0,
+        "skins": [
+            "../public/img/1.gif",
+            "../public/img/2.gif"
+        ],
+        "primaryskin": "",
+        "gamesPlayed": 0,
+        "wins": 20
+    },
+    "Test12": {
+        "password": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "Test12",
+        "firstname": "sdsdf",
+        "surname": "sdsd",
+        "email": "sds@fgd.de",
+        "wallet": 0,
+        "skins": [
+            "../public/img/1.gif",
+            "../public/img/2.gif"
+        ],
+        "primaryskin": "",
+        "gamesPlayed": 0,
+        "wins": 5
+    },
+    "MR": {
+        "password": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "MR",
+        "firstname": "M",
+        "surname": "R",
+        "email": "m@r.de"
+    },
+    "Marvin2": {
+        "password": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+        "username": "Marvin2",
+        "firstname": "1",
+        "surname": "1",
+        "email": "aagf@DWD.de",
+        "wallet": 0,
+        "skinEquipped": 0,
+        "primaryskin": [
+            "../public/img/1.gif"
+        ],
+        "secondaryskin": [
+            "../public/img/2.gif"
+        ],
+        "wins": 0
+    },
+    "Marvin1": {
+        "password": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "username": "Marvin1",
+        "firstname": "2",
+        "surname": "2",
+        "email": "db@qwg.de",
+        "wallet": 0,
+        "skinEquipped": 0,
+        "primaryskin": [
+            "../public/img/1.gif"
+        ],
+        "secondaryskin": [
+            "../public/img/2.gif"
+        ],
+        "wins": 0
+    }
+}
