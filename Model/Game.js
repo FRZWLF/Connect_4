@@ -5,6 +5,7 @@ module.exports = class Game {
   // Konstruktor der Klasse, der beim Erzeugen eines neuen Spielobjekts aufgerufen wird.
   constructor(user1, user2, maxZeile, maxSpalte) {
     // Initialisieren der Spieler, der maximalen Zeilen und Spalten und des Spielfelds.
+    this.syncWins = true
     this.user1 = user1
     this.user2 = user2
     this.maxZeile = maxZeile

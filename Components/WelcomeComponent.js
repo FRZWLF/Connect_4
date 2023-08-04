@@ -27,11 +27,13 @@ class WelcomeComponent {
     
     <div class="welcome-page">
       <!-- <h2> Willkommen zur Projektwoche </h2> -->
-      <br><br><br><br>
-      <h1><u> Willkommen zum 4 Gewinnt Spiel </u> <h1>
-      <h2><i> aus Sommersemester `+ this.getYear() + /*html*/`</i> </h2>
+      <br><br><br><br> <br><br><br> <br><br><br><br><br><br><br><br><br><br> <br><br><br><br> <br> <br><br><br><br>
+      <h1 style="font-family:verdana">Willkommen zum 4 Gewinnt Spiel <h1>
+      <h2> </h2>
+      <br>
+      <br>
       <!-- <button onclick=alertyear() > Ok</button> -->
-      <p>Wir wünschen euch beim Spielen viel Spaß!!! <br>
+      <p>Wir wünschen euch viel Spaß beim Spielen ! <br>
         Möge der Beste von euch Gewinnen! </p>
     </div>     
           `
