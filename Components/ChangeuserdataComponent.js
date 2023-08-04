@@ -192,7 +192,7 @@ class ChangeuserdataComponent {
 
         // Überprüfung, ob das aktuelle Passwort eingegeben wurde
         if (current_password == "") {
-            alert("Aktuelles Passwort muss angegeben werden")
+            message("Achtung","Aktuelles Passwort muss angegeben werden","fehler")
         } else {
             // Überprüfung, ob die E-Mail gültig ist
             if (val.isEmail(email)) {
@@ -217,14 +217,14 @@ class ChangeuserdataComponent {
                     if (answer) {
                         // Aktualisierung des eingeloggten Benutzers im Frontend
                         appstatus.loginUser = newUser
-                        alert("Update erfolgt!")
+                        message("Update erfolgt!","Nutzerdaten wurden geändert")
                     } else {
-                        alert("Update gescheitert.")
+                        message("Achtung","Update gescheitert.","fehler")
                     }
                 })
             }
             else {
-                alert("Die Email ist ungültig.")
+                message("Achtung","Die Email ist ungültig.","fehler")
             }
         }
     }

@@ -117,6 +117,7 @@ io.on("connection", (socket) => {
             userList.addUser(lossUser)
         }
         userList.addUser(winUser)
+        console.log("Users changed!")
     })
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
