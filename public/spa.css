@@ -207,6 +207,7 @@ header a img {
     text-align: center;
     font-size: 50px;
     color: white;
+    text-shadow: 15px 10px 8px rgb(170, 33, 33);
    
     
     }
@@ -221,8 +222,9 @@ header a img {
     text-align: center;
     font-size: 30px;
     color: white;
+    text-shadow: 4px 3px 8px rgb(228, 215, 215), 0 0 25px rgb(243, 51, 37), 0 0 5px rgb(139, 21, 0);
     }
-
+    
 /* login-page */
 
 .login-page {
