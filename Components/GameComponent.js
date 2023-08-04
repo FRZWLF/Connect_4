@@ -29,13 +29,9 @@ class GameComponent {
 
         })
         
-
-
         socket.on("matchResolve", (playerName) => {
-
             if (playerName) {
-                clearInterval(this.seti)
-                
+                clearInterval(this.seti)               
                 if (!this.game.gewinnStatus) { 
                     this.game.gewinnStatus = this.user.username
                     document.getElementById("LeavingMessage").style.display = "flex"
@@ -43,18 +39,14 @@ class GameComponent {
                     this.sendHighscore()
                 }
             }
-
         })
 
-
         socket.on('zeitgegner', (response) => {
-
             console.log(this.aufgeben)
             this.zeitabgelaufen = true
             if (response) {
                 if (this.game.user1 == this.user.username) {
-                    this.game.checkGiveUp(this.game.user2)
-                    
+                    this.game.checkGiveUp(this.game.user2)                   
                 } else {
                     this.game.checkGiveUp(this.game.user1)
                 }
@@ -65,10 +57,7 @@ class GameComponent {
             }
         })
 
-
         socket.on("zuggegner", (user, data) => {
-
-
             this.game.move(user, data)
             if (this.game.gewinnStatus) {
                 //router.refresh()
@@ -89,7 +78,6 @@ class GameComponent {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch. "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                         this.sendHighscore()
-
                     } else {
                         document.getElementById("Winbox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
@@ -106,17 +94,15 @@ class GameComponent {
     }
 
     sendHighscore(){
-        if(this.game.gewinnStatus==this.user.username)
-            if (this.game.syncWins)
-                {
-                    this.game.syncWins = false
-                    if (appstatus.loginUser.username == this.game.user1) socket.emit("winTracker", this.game.user1, this.game.user2)          
-                    if (appstatus.loginUser.username == this.game.user2) socket.emit("winTracker", this.game.user2, this.game.user1)
-
-                } 
+        if(this.game.gewinnStatus==this.user.username) {
+            if (this.game.syncWins) {
+                this.game.syncWins = false
+                if (appstatus.loginUser.username == this.game.user1) socket.emit("winTracker", this.game.user1, this.game.user2)          
+                if (appstatus.loginUser.username == this.game.user2) socket.emit("winTracker", this.game.user2, this.game.user1)
+            }
+        }
     }   
     
-
     zugZeitAnzeigen() {
         try { clearInterval(this.seti) } catch { }
         this.zugzeit = 10
