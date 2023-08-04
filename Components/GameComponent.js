@@ -54,6 +54,8 @@ class GameComponent {
             if (this.game.gewinnStatus) {
                 //router.refresh()
                 if (this.game.gewinnStatus == "unentschieden") {
+                    document.getElementById("Winbox").style.display = "flex"
+                    console.log("ghj")
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
@@ -63,12 +65,14 @@ class GameComponent {
                         } else{
                             socket.emit('newWinner', this.user.username, this.game.user1)
                         }
-                        
+                        document.getElementById("Winbox").style.display = "flex"
+                        console.log("lhg")
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch. "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                         this.sendHighscore()
 
                     } else {
+                        document.getElementById("Winbox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }
@@ -161,7 +165,7 @@ class GameComponent {
         body += /*html*/`</div>`
         console.log("Gewinnstatus: " + this.game.gewinnStatus)
         if (!this.game.gewinnStatus) {
-            body += /*html*/`<div class="Game_Textbox Winbox"><h2 id="WinnerMessage"> </h2><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            body += /*html*/`<div class="Game_Textbox Winbox"><h2 id="WinnerMessage"> </h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
         } else if (this.game.gewinnStatus == this.user.username) {
 
             this.sendHighscore()
@@ -218,15 +222,18 @@ class GameComponent {
             if (this.game.gewinnStatus) {
                 //router.refresh()
                 if (this.game.gewinnStatus == "unentschieden") {
+                    document.getElementById("Winbox").style.display = "flex"
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
                     
                     if (this.game.gewinnStatus == this.user.username) {
+                        document.getElementById("Winbox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                         this.sendHighscore()
                     } else {
+                        document.getElementById("Winbox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren! "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }

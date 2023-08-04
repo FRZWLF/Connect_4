@@ -1195,6 +1195,10 @@ margin-top: 80px;
     z-index: 5;
 }
 
+.Winbox {
+    display: none;
+}
+
 .Game_Leave {
     position: absolute;
     top: 38%;
