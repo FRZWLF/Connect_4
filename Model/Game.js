@@ -10,7 +10,6 @@ module.exports = class Game {
     this.user2 = user2
     this.maxZeile = maxZeile
     this.gewinnStatus = null
-    this.aufgeben = false
     this.aktiverSpieler = user1 // Der Anfangsspieler ist user1.
     this.maxSpalte = maxSpalte
     // Erstellen eines zweidimensionalen Arrays für das Spielfeld.
