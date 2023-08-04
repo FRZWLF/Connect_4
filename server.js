@@ -80,7 +80,7 @@ io.on("connection", (socket) => {
                 // Wenn der Login ungültig ist, wird die Antwort an den Client gesendet
                 socket.emit("loginUnvalide", loginValide, userExists)
         }
-        socket.emit("loginUnvalide", loginValide, userExists) //doppelt?
+        socket.emit("loginUnvalide", loginValide, userExists) // war doppelt?!?
     })
 
     // Bei einer Anfrage zur Aktualisierung der Benutzerdaten
@@ -107,8 +107,17 @@ io.on("connection", (socket) => {
     socket.on("matchtResolveToServer", (playername, opp) => {
         io.to(opp).emit("matchResolve", playername)
     })
-    
-
+    //Aktualisierung des Highscores bei Spielende
+    socket.on("winTracker",(winner,loser)=>{
+        winUser = userList.getUser(winner)
+        lossUser = userList.getUser(loser)
+        winUser.wins +=1
+        if(lossUser.wins > 0){
+            lossUser.wins -= 1
+            userList.addUser(lossUser)
+        }
+        userList.addUser(winUser)
+    })
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
         console.log("if this game2121")
@@ -148,6 +157,15 @@ io.on("connection", (socket) => {
         // Die aktualisierte Chatliste wird an alle Clients gesendet
         io.emit("NewMessageList", chatlist.chatlist)
     })
+
+    socket.on("highscore", () => {     
+        socket.emit("newBoard", userList.getSortedList())
+    })
+
+    // Bei einer Anfrage für die Chatliste
+    socket.on("newWinner", (winner, looser) => {
+        socket.emit("newBoard", winner, looser)
+})
 })
 
 // Server starten und auf dem festgelegten Port lauschen
