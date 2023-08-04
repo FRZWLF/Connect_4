@@ -7,6 +7,7 @@ class GameComponent {
         window.beendeSpiel = this.beendeSpiel.bind(this)
 
         socket.on("GameStart", (player1, player2) => {
+            appstatus.state = "inGame"
             this.game = new Game(player1, player2, 6, 7)
             this.user = appstatus.loginUser
             router.gotoView("game")
@@ -20,14 +21,12 @@ class GameComponent {
             
             if (playerName) {
                 
-                router.refresh()
                 clearInterval(this.seti)
 
                 if (!this.game.gewinnStatus) { 
-                    console.log('dadadad')
-                    document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     this.game.gewinnStatus = this.user.username
-                    this.aufgeben = true
+                    document.getElementById("LeavingMessage").style.display = "flex"
+                    console.log(this.game.gewinnStatus)
                 }
             }
             
@@ -41,7 +40,6 @@ class GameComponent {
                 } else {
                     this.game.checkGiveUp(this.game.user1)
                 }
-                router.refresh()
                 document.getElementById("LoosingMessage").style.display = "flex"
             }
         })
@@ -138,15 +136,13 @@ class GameComponent {
             body += /*html*/`<h2 id="WinnerMessage"> </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         } else if (this.game.gewinnStatus == this.user.username) {
             body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
-            if(this.aufgeben){
-            body += /*html*/` <div id = "LeavingMessage"><h2>Dein Gegner hat das Spiel verlassen!</h2></div>`
-            }
         } else if (this.game.gewinnStatus == "unentschieden") {
             body += /*html*/`<h2 id="WinnerMessage"> Unentschieden, keep trying! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         } else {
             body += /*html*/`<h2 id="WinnerMessage"> Du hast verloren! </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         }
-        body += /*html*/` <div id = "LoosingMessage" style = "display:none;"><h2>Dein Gegner hat gepennt!</h2></div>`
+        body += /*html*/` <div id = "LoosingMessage" style = "display:none;"><h2>Gewonnen! Herzlichen Glückwunsch.<br>Dein Gegner hat gepennt!</h2></div>`
+        body += /*html*/` <div id = "LeavingMessage" style = "display:none;"><h2>Gewonnen! Herzlichen Glückwunsch.<br>Dein Gegner hat das Spiel verlassen!</h2></div>`
 
         this.aufgeben = false
 
