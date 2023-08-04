@@ -36,14 +36,14 @@
     </header>
 
     <!-- umstylen wenn nötig, eigene id für input => Änderungen in CSS-->
-    <div id="chatbox">
-        <div id="chatfenster">
-        </div>
-        <div>
-            <input maxlength="55" type="text" id="message">
+    <div id="chatbox" onmouseout="hidechatbox()" onmouseover="showchatbox()">
+        <div id="chatfenster"></div>
+        <div id="Chat">
+            <input maxlength="55" type="text" id="message" onclick="setchatbox()">
             <button id="chatbtn" onclick="sendMessage()">Senden</button>
         </div>
     </div>
+    
 
     <div class="toast" id="alert" style="opacity: 1"> 
     </div>

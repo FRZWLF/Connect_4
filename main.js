@@ -70,3 +70,6 @@ router.gotoView('waitlist');
 router.gotoView('welcome');
 console.log("Willkommen zur Projektwoche 2023!")
 
+window.onclick = () => {
+    delchat(event)
+}
