@@ -44,6 +44,10 @@ var ChangeuserdataComponent = require("./Components/ChangeuserdataComponent")
 var changeuserdataComponent = new ChangeuserdataComponent()
 router.addView("nutzerdaten_aendern", changeuserdataComponent)
 
+var GameComponentAI = require("./Components/GameComponentAI")
+var gamecomponentai = new GameComponentAI()
+router.addView("gameAI", gamecomponentai)
+
 var ShopComponent = require("./Components/ShopComponent")
 var shopComp = new ShopComponent()
 router.addView("GoingShopping",shopComp)
