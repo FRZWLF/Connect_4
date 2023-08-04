@@ -38,6 +38,46 @@ header a img {
     height: 3.5rem;
     width: auto;
 }
+/*
+.scoreboard-class #Scoreboardh1 {
+    position: absolute;
+    top: 5rem;
+    padding-top: 1rem;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+}*/
+
+#Scoreboardh1, .Headline_Forms, .Headline_Register {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.scoreboard-table {
+    margin: auto;
+    width: 100%; 
+    border-collapse: collapse;
+    font-size: 1.5em;
+    max-height: 40rem; 
+    overflow-y: scroll;
+    background-color: white;
+}
+
+.scoreboard-table, .scoreboard-table th, .scoreboard-table td {
+    border: 1px solid black;
+}
+
+.scoreboard-table th, .scoreboard-table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.scoreboard-table th {
+    background-color: #f2f2f2; /* Change this value to change the background color of the table header */
+}
 
 #MenueContent {
    
@@ -92,9 +132,6 @@ header a img {
 #MenueContent a.active {
     background-color: #998e8e;
 }
-
-
-
 
 #appcontent {
     display: flex;
@@ -164,8 +201,10 @@ header a img {
 
 .welcome-page h1 {
     text-align: center;
-    font-size: 40px;
+    font-size: 50px;
     color: white;
+   
+    
     }
 
     .welcome-page  h2 {
@@ -1357,4 +1396,39 @@ footer a {
 #close:hover{
     background-color: #998e8e;
 
+}
+
+.impressum-window {
+    background: rgb(212, 180, 180);
+    min-height: 30vh;
+    width: 80%;
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    border-radius: 2rem;
+    backdrop-filter: blur(2rem);
+    display: inline-block;
+    flex-direction: column;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    justify-content: center;
+
+    position: absolute;
+    top:6%;
+    left: 10%;
+    margin-top: -10px;
+    margin-left: -10px;
+    
+    
+}
+
+.table-impressum {
+        width: 100%;
+        border: none;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        text-align: left;
+        margin: 1em auto; 
+        width: 80%;
 }

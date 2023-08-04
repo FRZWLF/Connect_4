@@ -7,6 +7,7 @@ class GameComponent {
         window.beendeSpiel = this.beendeSpiel.bind(this)
 
         socket.on("GameStart", (player1, player2) => {
+            appstatus.state = "inGame"
             this.game = new Game(player1, player2, 6, 7)
             this.user = appstatus.loginUser
             router.gotoView("game")
@@ -14,23 +15,22 @@ class GameComponent {
                 this.zugZeitAnzeigen()
             }
         })
-        
+
 
         socket.on("matchResolve", (playerName) => {
-            
+
             if (playerName) {
                 
-                router.refresh()
                 clearInterval(this.seti)
 
                 if (!this.game.gewinnStatus) { 
-                    console.log('dadadad')
-                    document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     this.game.gewinnStatus = this.user.username
-                    this.aufgeben = true
+                    document.getElementById("LeavingMessage").style.display = "flex"
+                    console.log(this.game.gewinnStatus)
+                    this.sendHighscore()
                 }
             }
-            
+
         })
 
         socket.on('zeitgegner', (response) => {
@@ -41,7 +41,7 @@ class GameComponent {
                 } else {
                     this.game.checkGiveUp(this.game.user1)
                 }
-                router.refresh()
+                this.sendHighscore()
                 document.getElementById("LoosingMessage").style.display = "flex"
             }
         })
@@ -58,8 +58,16 @@ class GameComponent {
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                 } else {
                     if (this.game.gewinnStatus == this.user.username) {
-                        document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
+                        if(loginUser.username == this.game.user1){
+                            socket.emit('newWinner', this.user.username, this.game.user2)
+                        } else{
+                            socket.emit('newWinner', this.user.username, this.game.user1)
+                        }
+                        
+                        document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch. "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
+                        this.sendHighscore()
+
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
@@ -73,6 +81,18 @@ class GameComponent {
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
         })
     }
+
+    sendHighscore(){
+        if(this.game.gewinnStatus==this.user.username)
+            if (this.game.syncWins)
+                {
+                    this.game.syncWins = false
+                    if (appstatus.loginUser.username == this.game.user1) socket.emit("winTracker", this.game.user1, this.game.user2)          
+                    if (appstatus.loginUser.username == this.game.user2) socket.emit("winTracker", this.game.user2, this.game.user1)
+
+                } 
+    }   
+    
 
     zugZeitAnzeigen() {
         try { clearInterval(this.seti) } catch { }
@@ -139,11 +159,14 @@ class GameComponent {
 
         body += this.erzeugeSpielfeld()
         body += /*html*/`</div>`
-        console.log(this.game.gewinnStatus)
+        console.log("Gewinnstatus: " + this.game.gewinnStatus)
         if (!this.game.gewinnStatus) {
             body += /*html*/`<div class="Game_Textbox Winbox"><h2 id="WinnerMessage"> </h2><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
         } else if (this.game.gewinnStatus == this.user.username) {
-            body += /*html*/`<div class="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+
+            this.sendHighscore()
+            
+            body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
             if(this.aufgeben){
             body += /*html*/` <div class="Game_Leave"><h2 id = "LeavingMessage">Dein Gegner hat das Spiel verlassen!</h2></div>`
             }
@@ -202,6 +225,7 @@ class GameComponent {
                     if (this.game.gewinnStatus == this.user.username) {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
+                        this.sendHighscore()
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren! "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
