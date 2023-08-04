@@ -27,6 +27,8 @@
                     <li><a id="lobby" href="javascript: router.gotoView('lobby', 'logedin', 'lobby')" class="active" > Lobby </a></li>
                     <li><a id="nutzerdaten" href="javascript: router.gotoView('nutzerdaten_aendern', 'logedin', 'nutzerdaten')"> Profil </a></li>
                     <li><a id="spielregelnLogin" href="javascript: router.gotoView('spielregeln', 'logedin', 'spielregeln')"> Spielregeln</a></li>
+                    <li><a id="ShoppingTime" a href="javascript: router.gotoView('GoingShopping','logedin','GoingShopping')">Shop</a></li>
+                    <li><a id="gameAI" a href="javascript: spielKIStarten()">Singleplayer</a></li>
                     <!-- <li><a id="ShoppingTime" a href="javascript: router.gotoView('GoingShopping','logedin','GoingShopping')">Shop</a></li> -->
                     <li><a href="javascript: logout()"> Logout </a></li>
                     <!-- Scoreboard hinzufügen -->
@@ -36,14 +38,14 @@
     </header>
 
     <!-- umstylen wenn nötig, eigene id für input => Änderungen in CSS-->
-    <div id="chatbox">
-        <div id="chatfenster">
-        </div>
-        <div>
-            <input maxlength="55" type="text" id="message">
+    <div id="chatbox" onmouseout="hidechatbox()" onmouseover="showchatbox()">
+        <div id="chatfenster"></div>
+        <div id="Chat">
+            <input maxlength="55" type="text" id="message" onclick="setchatbox()">
             <button id="chatbtn" onclick="sendMessage()">Senden</button>
         </div>
     </div>
+    
 
     <div class="toast" id="alert" style="opacity: 1"> 
     </div>
