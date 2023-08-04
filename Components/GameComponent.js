@@ -27,6 +27,7 @@ class GameComponent {
                     this.game.gewinnStatus = this.user.username
                     document.getElementById("LeavingMessage").style.display = "flex"
                     console.log(this.game.gewinnStatus)
+                    this.sendHighscore()
                 }
             }
 
@@ -40,6 +41,7 @@ class GameComponent {
                 } else {
                     this.game.checkGiveUp(this.game.user1)
                 }
+                this.sendHighscore()
                 document.getElementById("LoosingMessage").style.display = "flex"
             }
         })
@@ -63,13 +65,7 @@ class GameComponent {
                         
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch. "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
-                        if ((appstatus.loginUser.username == this.game.user1) && this.game.syncWins) {
-                            this.game.syncWins = false
-                            socket.emit("winTracker", this.game.user1, this.game.user2)
-                        } else {
-                            this.game.syncWins = false
-                            socket.emit("winTracker", this.game.user2, this.game.user1)
-                        }
+                        this.sendHighscore()
 
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
@@ -84,6 +80,18 @@ class GameComponent {
             document.getElementById("spielefeld").innerHTML = this.erzeugeSpielfeld()
         })
     }
+
+    sendHighscore(){
+        if(this.game.gewinnStatus==this.user.username)
+            if (this.game.syncWins)
+                {
+                    this.game.syncWins = false
+                    if (appstatus.loginUser.username == this.game.user1) socket.emit("winTracker", this.game.user1, this.game.user2)          
+                    if (appstatus.loginUser.username == this.game.user2) socket.emit("winTracker", this.game.user2, this.game.user1)
+
+                } 
+    }   
+    
 
     zugZeitAnzeigen() {
         try { clearInterval(this.seti) } catch { }
@@ -148,13 +156,9 @@ class GameComponent {
         if (!this.game.gewinnStatus) {
             body += /*html*/`<h2 id="WinnerMessage"> </h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
         } else if (this.game.gewinnStatus == this.user.username) {
-            if ((appstatus.loginUser.username == this.game.user1) && this.game.syncWins) {
-                this.game.syncWins = false
-                socket.emit("winTracker", this.game.user1, this.game.user2)
-            } else {
-                this.game.syncWins = false
-                socket.emit("winTracker", this.game.user2, this.game.user1)
-            }
+
+            this.sendHighscore()
+            
             body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2><br> <button onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button>`
             if(this.aufgeben){
             body += /*html*/` <div id = "LeavingMessage"><h2>Dein Gegner hat das Spiel verlassen!</h2></div>`
@@ -216,13 +220,7 @@ class GameComponent {
                     if (this.game.gewinnStatus == this.user.username) {
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
-                        if ((appstatus.loginUser.username == this.game.user1) && this.game.syncWins) {
-                            this.game.syncWins = false
-                            socket.emit("winTracker", this.game.user1, this.game.user2)
-                        } else {
-                            this.game.syncWins = false
-                            socket.emit("winTracker", this.game.user2, this.game.user1)
-                        }
+                        this.sendHighscore()
                     } else {
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren! "
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
