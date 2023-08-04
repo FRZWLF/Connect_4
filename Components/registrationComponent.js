@@ -85,7 +85,7 @@ class RegistrationComponent {
 
                 socket.on("regisanswer", (answer) => {
                     if (answer) {
-                        alert("Registration fehlgeschlagen")
+                        message("Achtung","Registration fehlgeschlagen","fehler")
                     } else {
                         message("Registrierung","User wurde angelegt")
                         router.gotoView("login"," ", "login")
