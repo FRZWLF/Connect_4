@@ -16,7 +16,7 @@ module.exports = class MessageComponent {
         try { clearInterval(this.setI) } catch { }
         try { clearTimeout(this.setT) } catch { }
         let messagediv = document.getElementById('alert')
-        messagediv.style.display = 'block'
+        messagediv.style.display = 'flex'
 
 
         if (type == "fehler") messagediv.style.background = "red"
@@ -25,7 +25,7 @@ module.exports = class MessageComponent {
             else
                 messagediv.style.background = "rgba(38, 255, 0, 0.63)"
     
-        messagediv.innerHTML = `<h2>${ueberschrift} <button onclick="closemessage()" id="close" >X</button> </h2>  ${Nachricht}`
+        messagediv.innerHTML = `<h2 class="alertheadline">${ueberschrift} <button onclick="closemessage()" id="close" >X</button> </h2>  ${Nachricht}`
 
         messagediv.style.opacity = 1
         this.setT = setTimeout(() => {

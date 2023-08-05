@@ -56,7 +56,7 @@ class WelcomeLogIn {
         socket.emit("login", pwHash, username)
         socket.on("loginValide", (loginValid, userExists, user) => {
             if (loginValid && userExists) {
-                message("Login", "erfolgreich")
+                message("Login erfolgreich", "")
                 appstatus.loginUser = user
                 //spielstarten() //--> falls direkt Waitinglist
                 router.gotoView("lobby", "logedin", "lobby")
@@ -67,11 +67,11 @@ class WelcomeLogIn {
         socket.on("loginUnvalide", (loginValid, userExists, accVerified) => {
             if(userExists && !accVerified){
                 message("Achtung", "Bestätige deinen Account in der E-Mail", "fehler")
+                router.refresh()
             } else if (!loginValid && userExists) {
                 message("Achtung","Passwort oder Benutzername ist Falsch!", "fehler")
                 //Soll login "refreshen"
-                router.gotoView("registrierung")
-                router.gotoView("login", "", "login")
+                router.refresh()
             } 
             else if (!userExists) {
                 message("Achtung","Nicht registriert","fehler")

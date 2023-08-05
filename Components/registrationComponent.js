@@ -47,17 +47,17 @@ class RegistrationComponent {
         return (text)
     }
 
-    reset(){
+    reset() {
         // Das Formular-Element abrufen
         const form = document.getElementById("form");
 
         // Alle Input-Elemente im Formular zurücksetzen
         const inputElements = form.querySelectorAll("input");
         inputElements.forEach((input) => {
-          if (input.type === "text" || input.type === "password") {
-            // Nur Text- und Passwort-Felder zurücksetzen
-            input.value = "";
-          }
+            if (input.type === "text" || input.type === "password") {
+                // Nur Text- und Passwort-Felder zurücksetzen
+                input.value = "";
+            }
         });
     }
 
@@ -70,35 +70,51 @@ class RegistrationComponent {
         let email = document.getElementById("email").value
 
         if (username == "" || password == "") {
-            message("Achtung","Username und Passwort muss angegeben werden","fehler")
-        } else {
-
-            if (password == password2 && val.isEmail(email)) {
-                var hash = crypto.createHash('sha256')
-                hash.update(password)
-                let pwHash = hash.digest('hex')
-
-                const user = new User(username, pwHash, firstname, surname, email)
-
-                socket.emit("registration", user)
-                
-                socket.on("regisanswer", (answer) => {
-                    if (answer) {
-                        message("Achtung","Registration fehlgeschlagen","fehler")
-                    } else {
-                        message("Registrierung","Bestätige deinen Account in der Email")
-                        router.gotoView("login"," ", "login")
-                    }
-                })
+            message("Achtung", "Username und Passwort muss angegeben werden", "fehler")
+        } else if (password != "") {
+            const missingRequirements = [];
+            if (!password || password.length < 8) {
+                missingRequirements.push("min 8 Zeichen")
             }
-            else {
-                message("Achtung","Passwörter sind ungleich oder die Email ist ungültig!","fehler")
+            if (!/[a-z]/.test(password)) {
+                missingRequirements.push("min einem Kleinbuchstaben");
             }
+            if (!/[A-Z]/.test(password)) {
+                missingRequirements.push("min einem Großbuchstaben");
+            }
+            if (!/\d/.test(password)) {
+                missingRequirements.push("min einer Zahl");
+            }
+            if (!/[!#$%^&*()+\=\[\]{};':"\\|,<>\/?_\-]/.test(password)) {
+                missingRequirements.push("min einem Sonderzeichen");
+            }
+            if (missingRequirements.length > 0) {
+                message("Achtung", `Passwort braucht noch:<br>${missingRequirements.map(requirement => `&nbsp;&nbsp; - ${requirement}`).join('<br>')}`, "fehler");
 
+            } else
+                if (password == password2 && val.isEmail(email)) {
+                    var hash = crypto.createHash('sha256')
+                    hash.update(password)
+                    let pwHash = hash.digest('hex')
+
+                    const user = new User(username, pwHash, firstname, surname, email)
+
+                    socket.emit("registration", user)
+
+                    socket.on("regisanswer", (answer) => {
+                        if (answer) {
+                            message("Achtung", "Registration fehlgeschlagen", "fehler")
+                        } else {
+                            message("Registrierung", "Bestätige deinen Account in der Email")
+                            router.gotoView("login", " ", "login")
+                        }
+                    })
+                } else {
+                    message("Achtung", "Passwörter sind ungleich oder die Email ist ungültig!", "fehler")
+                }
         }
-
-
     }
 }
+
 
 module.exports = RegistrationComponent
