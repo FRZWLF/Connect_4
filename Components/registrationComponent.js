@@ -62,7 +62,6 @@ class RegistrationComponent {
     }
 
     register() {
-        console.log("regi")
         let username = document.getElementById("username").value
         let password = document.getElementById("password").value
         let password2 = document.getElementById("password2").value
@@ -87,13 +86,10 @@ class RegistrationComponent {
                     if (answer) {
                         message("Achtung","Registration fehlgeschlagen","fehler")
                     } else {
-                        message("Registrierung","User wurde angelegt")
+                        message("Registrierung","Bestätige deinen Account in der Email")
                         router.gotoView("login"," ", "login")
                     }
                 })
-
-
-
             }
             else {
                 message("Achtung","Passwörter sind ungleich oder die Email ist ungültig!","fehler")

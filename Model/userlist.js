@@ -39,6 +39,7 @@ class UserList {
         userObjkt.skinEquipped = userJson.skinEquipped
         userObjkt.primaryskin = userJson.primaryskin
         userObjkt.secondaryskin = userJson.secondaryskin
+        userObjkt.verified = userJson.verified
         return userObjkt
     }
 

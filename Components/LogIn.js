@@ -64,13 +64,16 @@ class WelcomeLogIn {
 
         })
 
-        socket.on("loginUnvalide", (loginValid, userExists) => {
+        socket.on("loginUnvalide", (loginValid, userExists, accVerified) => {
             if (!loginValid && userExists) {
-                message("Achtung","Passwort oder Benutzername ist Falsch!")
+                message("Achtung","Passwort oder Benutzername ist Falsch!", "fehler")
                 //Soll login "refreshen"
                 router.gotoView("registrierung")
                 router.gotoView("login", "", "login")
-            } else if (!userExists) {
+            } else if(userExists && !accVerified){
+                message("Achtung", "Bestätige deinen Account in der E-Mail", "fehler")
+            }
+            else if (!userExists) {
                 message("Achtung","Nicht registriert","fehler")
                 router.gotoView("registrierung", "", "registrierung")
             }
