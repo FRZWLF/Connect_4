@@ -44,6 +44,10 @@ var ChangeuserdataComponent = require("./Components/ChangeuserdataComponent")
 var changeuserdataComponent = new ChangeuserdataComponent()
 router.addView("nutzerdaten_aendern", changeuserdataComponent)
 
+var GameComponentAI = require("./Components/GameComponentAI")
+var gamecomponentai = new GameComponentAI()
+router.addView("gameAI", gamecomponentai)
+
 var ShopComponent = require("./Components/ShopComponent")
 var shopComp = new ShopComponent()
 router.addView("GoingShopping",shopComp)
@@ -60,9 +64,16 @@ var Lobby = require('./Components/Lobby')
 var lobby = new Lobby()
 router.addView('lobby', lobby)
 
+var ScoreboardComponent = require('./Components/ScoreBoardComponent')
+var scoreboardComponent = new ScoreboardComponent()
+router.addView('scoreboard', scoreboardComponent)
+
 
 router.gotoView('waitlist');
 
 router.gotoView('welcome');
 console.log("Willkommen zur Projektwoche 2023!")
 
+window.onclick = () => {
+    delchat(event)
+}

@@ -82,10 +82,10 @@ class RegistrationComponent {
                 const user = new User(username, pwHash, firstname, surname, email)
 
                 socket.emit("registration", user)
-
+                
                 socket.on("regisanswer", (answer) => {
                     if (answer) {
-                        alert("Registration fehlgeschlagen")
+                        message("Achtung","Registration fehlgeschlagen","fehler")
                     } else {
                         message("Registrierung","User wurde angelegt")
                         router.gotoView("login"," ", "login")

@@ -1,9 +1,11 @@
-
 class WaitlistDisplayComponent{
     constructor(){
         socket.on("NewWList",(wlist)=>{
             this.waitinglist = wlist
-            router.refresh()
+            if(appstatus.state == "waiting"){
+                router.refresh()
+            }
+
         }
         ) 
         window.spielstarten = this.spielstarten.bind(this)
@@ -12,6 +14,7 @@ class WaitlistDisplayComponent{
     }
 
     spielstarten(){
+        appstatus.state = 'waiting'
         socket.emit("Newplayer",appstatus.loginUser.username)
         router.gotoView('waitlist', 'logedin', "waitlist")
     }
@@ -26,10 +29,10 @@ class WaitlistDisplayComponent{
     `
     this.waitinglist.forEach(element => {
         if(element==appstatus.loginUser.username){
-            text += "<div class='Waiting_Player'>"+element+"</div>"
+            text += "<div class='Waiting_Self'>"+element+"</div>"
         } 
         else{
-            text+= "<div class='Waiting_Player'><a id='Player_Link' href='javascript:startGame(\""+element+"\")'>" + element + "</a></div>"
+            text+= "<a id='Player_Link' href='javascript:startGame(\""+element+"\")'><div class='Waiting_Player'>" + element + "</div></a>"
         }
         text+= /*html*/`
             <br>
@@ -53,6 +56,8 @@ class WaitlistDisplayComponent{
     return text
     }
     startGame(opponent){
+        
+
         socket.emit("startNewGame",appstatus.loginUser.username,opponent)
     }
 

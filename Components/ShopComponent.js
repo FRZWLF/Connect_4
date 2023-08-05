@@ -24,14 +24,12 @@ class ShopComponent {
         } else {
             text += /*html*/`
             <br>
-            <button onclick="buyPoker()" id="Pokey">Kaufen für 50 G</button>`
+            <button onclick="buyPoker()">Kaufen für 50 G</button>`
         }
         return (text)
     }
 
     buyPoker() {
-        const Poker = document.getElementById('Pokey');
-        Poker.style.display = 'none'
         appstatus.loginUser.wallet -= 50
         appstatus.loginUser.addSkin("./img/Poker_1.gif", "./img/Poker_2.gif")
         socket.emit("userUpdated",appstatus.loginUser)
