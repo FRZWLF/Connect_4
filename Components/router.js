@@ -40,6 +40,11 @@ module.exports = class Router {
                 document.getElementById("spielregelnLogin").classList.remove('active')
                 document.getElementById("scoreboardlnLogin").classList.add('active')
 
+            } else {
+                document.getElementById("lobby").classList.remove('active')
+                document.getElementById("nutzerdaten").classList.remove('active')
+                document.getElementById("spielregelnLogin").classList.remove('active')
+                document.getElementById("scoreboardlnLogin").classList.remove('active')
             }
         } else {
 

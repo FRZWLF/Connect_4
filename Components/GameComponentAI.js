@@ -3,9 +3,9 @@ class GameComponentAI {
     constructor() {
         window.spielKIStarten = this.spielKIStarten.bind(this)
         window.restartSpiel = this.restartSpiel.bind(this)
-        window.spielZug = this.spielZug.bind(this)
-        window.zeigeSteinSpalte = this.zeigeSteinSpalte.bind(this)
-        window.blendeSteinAus = this.blendeSteinAus.bind(this)
+        window.spielZugAI = this.spielZugAI.bind(this)
+        window.zeigeSteinSpalteAI = this.zeigeSteinSpalteAI.bind(this)
+        window.blendeSteinAusAI = this.blendeSteinAusAI.bind(this)
     }
 
     spielKIStarten() {
@@ -89,7 +89,7 @@ class GameComponentAI {
         return body
     }
 
-    spielZug(spalte) {
+    spielZugAI(spalte) {
         if (this.game.moveGueltig(this.user.username, spalte)) {
             try { clearInterval(this.seti) } catch { }
             document.getElementById('timer').innerHTML = ""
@@ -160,7 +160,7 @@ class GameComponentAI {
         return spielefeld
     }
 
-    zeigeSteinSpalte(spalte) {
+    zeigeSteinSpalteAI(spalte) {
         if (this.user.username == this.game.aktiverSpieler && !this.game.gewinnStatus) {
             for (let zeilenZahl = this.game.maxZeile - 1; zeilenZahl < this.game.maxZeile; zeilenZahl--) {
                 if (this.game.spielfeld[zeilenZahl][spalte] == 0) {
@@ -176,7 +176,7 @@ class GameComponentAI {
         }
     }
 
-    blendeSteinAus(spalte) {
+    blendeSteinAusAI(spalte) {
         if (this.user.username == this.game.aktiverSpieler) {
             for (let zeilenZahl = this.game.maxZeile - 1; zeilenZahl < this.game.maxZeile; zeilenZahl--) {
                 if (this.game.spielfeld[zeilenZahl][spalte] == 0) {

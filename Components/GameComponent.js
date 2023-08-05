@@ -10,7 +10,8 @@ class GameComponent {
             appstatus.state = "inGame"
             this.game = new Game(player1, player2, 6, 7)
             this.user = appstatus.loginUser
-            router.gotoView("game")
+            console.log(this.user)
+            router.gotoView("game", "logedin", "game")
             if (this.game.aktiverSpieler == appstatus.loginUser.username) {
                 this.zugZeitAnzeigen()
             }
@@ -106,7 +107,7 @@ class GameComponent {
     
     zugZeitAnzeigen() {
         try { clearInterval(this.seti) } catch { }
-        this.zugzeit = 60
+        this.zugzeit = 10
 
         //Timer Start
         this.seti = setInterval(() => {
@@ -118,21 +119,24 @@ class GameComponent {
             if (this.zugzeit <= 0) {
                 
                 timerElement.innerText = " ";
-                timerElement.style.display="none"
+                
                 this.game.checkGiveUp(appstatus.loginUser.username)
                 router.refresh()
                 clearInterval(this.seti)
+                timerElement.style.display="none"
 
 
                 if (this.game.user1 == this.user.username) {
                     socket.emit("Zeitabgelaufen", this.game.user2);
                     router.refresh()
                     clearInterval(this.seti)
+                    timerElement.style.display="none"
 
                 } else {
                     socket.emit('Zeitabgelaufen', this.game.user1);
                     router.refresh()
                     clearInterval(this.seti)
+                    timerElement.style.display="none"
                 }
                 return
             }
@@ -222,6 +226,7 @@ class GameComponent {
 
             try { clearInterval(this.seti) } catch { }
             document.getElementById('timer').innerHTML = ""
+            document.getElementById('timer').style.display="none"
 
             this.game.move(this.user.username, spalte)
             for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
