@@ -50,13 +50,6 @@ io.on("connection", (socket) => {
         socket.emit("regisanswer", answer)
     })
 
-    socket.on("verifyUser", (username) => {
-        let userverify = userList.getUser(username)
-        userverify.verified = true
-        userList.addUser(userverify)
-        console.log("Account active")
-    })
-
     // Bei einer Anfrage für einen neuen Spieler
     socket.on("Newplayer", (user) => {
 
@@ -89,10 +82,11 @@ io.on("connection", (socket) => {
     socket.on("login", (pwHash, username) => {
         let userExists = userList.containsUser(username)
         let loginValide = false
-        let accVerified
+        let accVerified = false
         let user
         if (userExists) {
-            if (accVerified == userList.getUser(username).verified) {
+            accVerified = userList.getUser(username).verified
+            if (accVerified) {
                 user = userList.getUser(username) // Indikator des Objekts
                 loginValide = user.checkpassword(pwHash)
                 // Wenn der Login gültig ist, wird der Benutzername gespeichert und die Antwort an den Client gesendet
