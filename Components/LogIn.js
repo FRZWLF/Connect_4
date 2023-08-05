@@ -59,7 +59,7 @@ class WelcomeLogIn {
                 message("Login", "erfolgreich")
                 appstatus.loginUser = user
                 //spielstarten() //--> falls direkt Waitinglist
-                router.gotoView("spielregeln", "logedin", "spielregeln")
+                router.gotoView("lobby", "logedin", "lobby")
             }
 
         })

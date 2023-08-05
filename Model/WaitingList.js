@@ -14,8 +14,6 @@ class WaitingList {
                 return this.WaitingList.splice(index, 1)[0];
             }
 
-        } else {
-            console.log(`Username ist nicht in der Liste`)
         }
     }
 

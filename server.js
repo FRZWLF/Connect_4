@@ -27,6 +27,8 @@ io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
 
     let socketuser
+    let spieler1
+    let spieler2
 
     // Bei einer Registrierungsanfrage
     socket.on("registration", (data) => {
@@ -58,6 +60,8 @@ io.on("connection", (socket) => {
     //Spielstart zwischen 2 Spielern
     socket.on("startNewGame", (player1, player2) => {
         console.log(player1 + " " + player2)
+        spieler1 = player1
+        spieler2 = player2
         waitlist.removeUserFromWaitingList(player1)
         waitlist.removeUserFromWaitingList(player2)
         io.to(player1).emit("GameStart", player1, player2)
@@ -123,8 +127,13 @@ io.on("connection", (socket) => {
     })
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
-        console.log(socketuser)
-        io.emit("playerdisconnect",socketuser)
+        console.log("Gamer: ",spieler1, socketuser)
+        if(spieler1 == socketuser) {
+            io.to(spieler2).emit("matchResolve", socketuser)
+        } else {
+            io.to(spieler1).emit("matchResolve", socketuser)
+        }
+        // io.emit("playerdisconnect",socketuser)
         // Der Benutzer wird aus der Warteliste entfernt
         waitlist.removeUserFromWaitingList(socketuser)
         // Die aktualisierte Warteliste wird an alle Clients gesendet

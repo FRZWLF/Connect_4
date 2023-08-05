@@ -220,6 +220,7 @@ header a img {
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
     
@@ -1181,7 +1182,7 @@ margin-top: 80px;
     border-radius: 10px;
 }
 
-.Game_TextBox {
+#Game_TextBox {
 
     position: absolute;
     top: 40%;
@@ -1198,11 +1199,25 @@ margin-top: 80px;
     z-index: 5;
 }
 
-.Winbox {
+#Winbox {
     display: none;
+    position: absolute;
+    top: 40%;
+    left: 32%;
+    padding: 30px 35px;
+    background-color: #e99f9d;
+    color: white;
+    border-radius: 10px;
+    font-size: 24px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    z-index: 5;
 }
 
-.Game_Leave {
+#Game_Leave {
+    display: none;
     position: absolute;
     top: 38%;
     left: 32%;
@@ -1387,6 +1402,7 @@ footer a {
     padding: 10px;
     color: lightgrey;
     text-align: center;
+    z-index: 100;
 }
 
 #close{
@@ -1402,5 +1418,5 @@ footer a {
 
 #close:hover{
     background-color: #998e8e;
-
+    cursor: pointer;
 }

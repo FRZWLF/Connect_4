@@ -20,14 +20,12 @@ class WelcomeComponent {
   getHTML() {
 
     document.title = " 4 Gewinnt" + this.getYear()
-    // document.getElementById('h1').innerHTML = " Test " + this.getYear()
 
 
     var text = /*html*/`
     
     <div class="welcome-page">
       <!-- <h2> Willkommen zur Projektwoche </h2> -->
-      <br><br><br><br> <br><br><br> <br><br><br><br><br><br><br><br><br><br> <br><br><br><br> <br> <br><br><br><br>
       <h1 style="font-family:verdana">Willkommen zum 4 Gewinnt Spiel <h1>
       <h2> </h2>
       <br>

@@ -34,9 +34,10 @@ class GameComponent {
                 clearInterval(this.seti)               
                 if (!this.game.gewinnStatus) { 
                     this.game.gewinnStatus = this.user.username
-                    document.getElementById("LeavingMessage").style.display = "flex"
-                    console.log(this.game.gewinnStatus)
+                    console.log("Gewini: ",this.game.gewinnStatus)
                     this.sendHighscore()
+                    router.refresh()
+                    document.getElementById("Game_Leave").style.display = "flex"
                 }
             }
         })
@@ -52,7 +53,7 @@ class GameComponent {
                 }
                 this.sendHighscore()
                 router.refresh()
-                document.getElementById("LoosingMessage").style.display = "flex"
+                document.getElementById("Game_Leave").style.display = "flex"
                 console.log("bin da")
             }
         })
@@ -105,7 +106,7 @@ class GameComponent {
     
     zugZeitAnzeigen() {
         try { clearInterval(this.seti) } catch { }
-        this.zugzeit = 10
+        this.zugzeit = 60
 
         //Timer Start
         this.seti = setInterval(() => {
@@ -171,22 +172,23 @@ class GameComponent {
         body += /*html*/`</div>`
         console.log("Gewinnstatus: " + this.game.gewinnStatus)
         if (!this.game.gewinnStatus) {
-            body += /*html*/`<div class="Game_Textbox Winbox"><h2 id="WinnerMessage"> </h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            body += /*html*/`<div id="Winbox"><h2 id="WinnerMessage"> </h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
         } else if (this.game.gewinnStatus == this.user.username) {
 
             this.sendHighscore()
             
-            body += /*html*/`<div class="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
-            if(this.aufgeben){
-            body += /*html*/` <div class="Game_Leave"><h2 id = "LeavingMessage">Dein Gegner hat das Spiel verlassen!</h2></div>`
-            }
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            
         } else if (this.game.gewinnStatus == "unentschieden") {
-            body += /*html*/`<div class="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
         } else {
-            body += /*html*/`<div class="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
         }
         if(this.zeitabgelaufen)
-        body += /*html*/` <div class="Game_Leave" ><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
+        body += /*html*/` <div id="Game_Leave" ><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
+  
+        body += /*html*/` <div id="Game_Leave"><h2 id = "LeavingMessage">Dein Gegner hat das Spiel verlassen!</h2></div>`
+
 
         this.aufgeben = false
 
@@ -259,15 +261,6 @@ class GameComponent {
 
     erzeugeSpielfeld() {
         var spielefeld = /*html*/``
-
-        // for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
-
-        //     if (this.game.moveGueltig(this.user.username, spalte)) {
-        //         spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})"  onclick="spielZug( ${spalte})"> ${spalte + 1} </button>`
-        //     } else {
-        //         spielefeld += /*html*/`<button style="width:50px" id="button-${spalte}" disabled="true"> ${spalte + 1} </button>`
-        //     }
-        // }
 
         spielefeld += /*html*/`<br>`
 
