@@ -89,10 +89,10 @@ io.on("connection", (socket) => {
     socket.on("login", (pwHash, username) => {
         let userExists = userList.containsUser(username)
         let loginValide = false
-        let accVerified = userList.getUser(username).verified
+        let accVerified
         let user
         if (userExists) {
-            if (accVerified) {
+            if (accVerified == userList.getUser(username).verified) {
                 user = userList.getUser(username) // Indikator des Objekts
                 loginValide = user.checkpassword(pwHash)
                 // Wenn der Login gültig ist, wird der Benutzername gespeichert und die Antwort an den Client gesendet
