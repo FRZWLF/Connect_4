@@ -11,6 +11,7 @@ body {
     font-size: 14px;
     font-family: Arial;
     margin: 0;
+    overflow-y: hidden;
 }
 
 body::-webkit-scrollbar {
@@ -963,8 +964,30 @@ margin-top: 80px;
 
     border: 1px solid #ccc;
     border-radius: 20px;
-    min-height: 15vh;
     padding: 10px 10px;
+    padding-bottom: 0;
+}
+
+.Waiting_list_Scroll {
+    overflow-y: auto;
+    padding-right: 10px;
+    max-height: 30vh;
+}
+
+.Waiting_list_Scroll::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+}
+
+.Waiting_list_Scroll::-webkit-scrollbar-track {
+    background-color: #ccc;
+    border-radius: 20px;
+}
+
+.Waiting_list_Scroll::-webkit-scrollbar-thumb {
+    background-color: #636363;
+    border-radius: 20px;
+    height: 4rem;
 }
 
 
@@ -1088,7 +1111,7 @@ margin-top: 80px;
 .game-window {
 
     margin-top: 1rem;
-    min-height: 83vh;
+    height: 83vh;
     padding-top: 2rem;
     padding-bottom: 0;
         
@@ -1098,7 +1121,7 @@ margin-top: 80px;
 
     display: flex;
     flex-direction: row;
-    min-height: 83vh;
+    height: 83vh;
     
 }
 
@@ -1108,13 +1131,17 @@ margin-top: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 83vh;
+    height: 83vh;
 }
 
 .links-game {
-
-    justify-content: flex-start;
+    justify-content: space-between;
 }
+
+.rechts-game {
+    justify-content: right;
+}
+
 
 
 /* Game Player */
@@ -1122,8 +1149,8 @@ margin-top: 80px;
 .You_Player {
 
     background-color: #fff;
-    min-height: 150px;
-    min-width: 150px;
+    min-height: 100px;
+    min-width: 100px;
     border-radius: 20px;
     box-shadow: 5px 0 15px black;
     padding: 40px 60px;
@@ -1132,8 +1159,8 @@ margin-top: 80px;
 .Opp_Player {
 
     background-color: #fff;
-    min-height: 150px;
-    min-width: 150px;
+    min-height: 100px;
+    min-width: 100px;
     border-radius: 20px;
     box-shadow: 5px 0 15px black;
     padding: 40px 60px;

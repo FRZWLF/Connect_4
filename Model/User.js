@@ -41,6 +41,10 @@ class User {
 
     }
 
+    checkEmail(email){
+        return email == this.email
+    }
+
 
 }
 

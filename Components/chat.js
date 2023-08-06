@@ -9,8 +9,8 @@ class chat {
             }
         })
         // Event Listener für das Drücken der 'Enter' Taste hinzufügen
-        let input = document.getElementById("message");
-        input.addEventListener("keyup", (event) => {
+        let eingabe = document.getElementById("message");
+        eingabe.addEventListener("keyup", (event) => {
             // Überprüfen, ob die 'Enter' Taste gedrückt wurde
             if (event.keyCode === 13) {
                 // Standardaktion verhindern

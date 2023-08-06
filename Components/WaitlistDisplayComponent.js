@@ -24,6 +24,7 @@ class WaitlistDisplayComponent{
     <div class="Waiting">
         <div class="forms-window waiting-window">
             <h2 class="Headline_Game Headline_Waiting">Spielersuche</h2>
+            <div class="Waiting_list_Scroll">
                 <div class="Waiting_list">
         
     `
@@ -39,6 +40,7 @@ class WaitlistDisplayComponent{
         `
     });
     text += /*html*/`
+    </div>
     </div>
             <div class="loader">
                 <span class="loader_letter">W</span>

@@ -1,12 +1,13 @@
 const crypto = require('crypto')
-
-
+const val = require(`validator`)
 
 class WelcomeLogIn {
 
     constructor() {
         window.login = this.login.bind(this)
         window.logout = this.logout.bind(this) // Für FUnktionszugriff0
+        window.reboot = this.reboot.bind(this)
+        window.anfordern = this.anfordern.bind(this)
     }
 
 
@@ -20,7 +21,7 @@ class WelcomeLogIn {
     getHTML() {
         var text = /*html*/`
             <div class="login-page">
-                <div class="forms-window">
+                <div class="forms-window" id="Login_window">
                     <h2 class="Headline_Forms"> Login </h2>
 
 
@@ -33,14 +34,57 @@ class WelcomeLogIn {
                    </div>
                    
                    <div class="forms_buttons">
-                            <button class="forms_button-forgot">Passwort vergessen?</button>
+                            <button class="forms_button-forgot" onclick="reboot()">Passwort vergessen?</button>
                             <button class="forms_button-action" onclick="login()" >Login</button>
+                   </div>
+                 </div>
+                 <div class="forms-window" id="password_reboot" style ="display: none;">
+                    <h2 class="Headline_Forms"> Passwort Änderung  </h2>
+
+                    <div class="forms_field">
+                        <input type="text" placeholder="Benutzername" id="username1" class="forms_field-input" required><br>
+                   </div>
+                   <div class="forms_field">
+                        <input type="text" placeholder="E-Mail" id="email" class="forms_field-input" required><br>
+                   </div>
+                   
+                   <div class="forms_buttons">
+                            <button class="forms_button-action" onclick="anfordern()" >Senden</button>
                    </div>
                  </div>
             </div>     
                 
                 `
         return (text);
+    }
+
+    reboot(){
+        document.getElementById("password_reboot").style.display ="block"
+        document.getElementById("Login_window").style.display = "none"
+    }
+
+    anfordern(){
+        let username = document.getElementById("username1").value
+        let email = document.getElementById("email").value
+
+        if(username == " " || email == " ") {
+            message("Achtung", "E-Mail und Benutzername muss angegeben werden", "fehler")
+            router.refresh()
+        } else if(val.isEmail(email)) {
+            socket.emit("reboot", email, username)
+            socket.on("userUnvalid", (answer, emailValide) => {
+                if(!answer || (answer && !emailValide)){
+                    message("Achtung", "Nutzername oder E-Mail falsch", "fehler")
+                    router.refresh()
+                } else {
+                    message("Achtung", "Passwort in E-Mail ändern", "info")
+                    router.refresh()
+                }
+            })
+        } else {
+            message("Achtung", "Gültige E-Mail muss angegeben werden", "fehler")
+            router.refresh()
+        }
     }
 
     login() {

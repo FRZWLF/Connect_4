@@ -1,6 +1,7 @@
 // Importieren der benötigten Module
 const express = require('express')
 const app = express()
+const path = require("path");
 const http = require('http')
 const server = http.createServer(app)
 const SocketIO = require('socket.io')
@@ -24,6 +25,7 @@ let waitlist = new WaitList()
 // Erstellen einer neuen Chatliste
 let chatlist = new Chatlist()
 
+let PasswordRecovery_username
 // Bei einer neuen Socket.IO-Verbindung
 io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
@@ -49,6 +51,45 @@ io.on("connection", (socket) => {
         }
         socket.emit("regisanswer", answer)
     })
+
+    socket.on("reboot", async (email, username) => {
+        let answer = userList.containsUser(username)
+        let emailValide = false
+        let user
+        if (answer) {
+            user = userList.getUser(username)
+            emailValide = user.checkEmail(email)
+            if (emailValide) {
+                try {
+                    await mailer.sendRebootMail(email, username);
+                } catch (error) {
+                    console.error("Fehler beim Versenden der E-Mail:", error);
+                }
+            } socket.emit("userUnvalid", answer, emailValide)
+        } socket.emit("userUnvalid", answer, emailValide)
+    })
+
+    socket.on("Recover", (pwHash) => {
+        let OldUser = userList.getUser(PasswordRecovery_username)
+        let NewUser = new User(PasswordRecovery_username, pwHash, OldUser.firstname, OldUser.surname, OldUser.email)
+        NewUser.wallet = OldUser.wallet;
+        NewUser.skinEquipped = OldUser.skinEquipped
+        NewUser.primaryskin = OldUser.primaryskin
+        NewUser.secondaryskin = OldUser.secondaryskin
+        NewUser.gamesPlayed = OldUser.gamesPlayed
+        NewUser.wins = OldUser.wins
+        NewUser.verified = OldUser.verified
+        if (NewUser) {
+            // Wenn das alte Passwort korrekt ist, werden die Benutzerdaten aktualisiert
+            userList.addUser(NewUser)
+            // Die Antwort wird an den Client gesendet
+            socket.emit('Recovered', true);
+        } else {
+            // Wenn das alte Passwort nicht korrekt ist, wird die Antwort an den Client gesendet
+            socket.emit('Recovered', false);
+        }
+    })
+
 
     // Bei einer Anfrage für einen neuen Spieler
     socket.on("Newplayer", (user) => {
@@ -195,6 +236,14 @@ app.get("/verify/:username", (req, res) => {
     return res.status(200).send({
         msg: "Account activated",
     });
+});
+
+app.get("/change/:username", (req, res) => {
+    PasswordRecovery_username = req.params.username
+    console.log("Nen User huhu: ", PasswordRecovery_username)
+        res.sendFile(path.join(__dirname + "/public" + "/PasswordRecovery.html"), function (err) {
+            if (err) res.status(404).send('Du Depp! Die Seite gibt es garnicht!');
+        });
 });
 
 // Server starten und auf dem festgelegten Port lauschen

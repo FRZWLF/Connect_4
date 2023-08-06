@@ -58,7 +58,11 @@ module.exports = class Router {
                 document.getElementById("scoreboardlnLogin").classList.remove('active')
                 document.getElementById("gameAI").classList.remove('active')
             }
-        } else {
+        } else if (menue == "inGame") {
+            document.getElementById("Logout").style.display = "none" // NavBar Ein-/Ausblendung steuern
+            document.getElementById("Login").style.display = "none"
+        }
+        else {
 
             document.getElementById("Logout").style.display = "flex" // NavBar Ein-/Ausblendung steuern
             document.getElementById("Login").style.display = "none"

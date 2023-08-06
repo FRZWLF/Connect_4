@@ -15,6 +15,7 @@ let transporter = nodemailer.createTransport({
   }
 });
 console.log("Mailer hier")
+
 module.exports = {
     async sendOptInMail(email, username) {
       let activationLink = `${process.env.BASE_URL}verify/${username}`;
@@ -30,6 +31,22 @@ module.exports = {
         console.log('Email sent:', info);
       } catch (err) {
         console.error('Error sending email:', err);
+      }
+    },
+
+    async sendRebootMail(email, username) {
+      let changeLink = `${process.env.BASE_URL}change/${username}`;
+      let mail = {
+        from: process.env.SENDER_MAIL,
+        to: email,
+        subject: "Passwort Recovery",
+        html: `<p>To change your password, please click this link: <a href="${changeLink}">${changeLink}</a></p>`,
+      };
+      try{
+        const info = await transporter.sendMail(mail);
+        console.log('Email sent:', info);
+      }catch (err) {
+        console.error('Error sending Email:', err)
       }
     }
   };

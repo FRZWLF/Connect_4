@@ -11,7 +11,7 @@ class GameComponent {
             this.game = new Game(player1, player2, 6, 7)
             this.user = appstatus.loginUser
             console.log(this.user)
-            router.gotoView("game", "logedin", "game")
+            router.gotoView("game", "inGame", "game")
             if (this.game.aktiverSpieler == appstatus.loginUser.username) {
                 this.zugZeitAnzeigen()
             }
@@ -163,8 +163,8 @@ class GameComponent {
                                  body += /*html*/`<p id="timer"></p>`
                              
                                  body += /*html*/` 
-                       
-                    </div>
+                        </div>
+                        <div class="Lobby-button Back-Button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>
                     </div>
         
             <div class="mitte Connect4">`
@@ -176,17 +176,17 @@ class GameComponent {
         body += /*html*/`</div>`
         console.log("Gewinnstatus: " + this.game.gewinnStatus)
         if (!this.game.gewinnStatus) {
-            body += /*html*/`<div id="Winbox"><h2 id="WinnerMessage"> </h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            body += /*html*/`<div id="Winbox"><h2 id="WinnerMessage"> </h2></div><br> `
         } else if (this.game.gewinnStatus == this.user.username) {
 
             this.sendHighscore()
             
-            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br>`
             
         } else if (this.game.gewinnStatus == "unentschieden") {
-            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br>`
         } else {
-            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:beendeSpiel(); spielstarten()'>Back to Lobby</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br>`
         }
         if(this.zeitabgelaufen)
         body += /*html*/` <div id="Game_Leave" ><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
@@ -198,7 +198,7 @@ class GameComponent {
 
         body += /*html*/`
             </div>
-            <div class="rechts links-game">
+            <div class="rechts rechts-game">
                 <div class="Opp_Player">`                
                     if (this.user.username == this.game.user1) {
 
