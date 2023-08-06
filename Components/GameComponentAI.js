@@ -47,21 +47,22 @@ class GameComponentAI {
         body += /*html*/`</div>`
         console.log("Gewinnstatus: " + this.game.gewinnStatus)
         if (!this.game.gewinnStatus) {
-            body += /*html*/`<div class="Game_Textbox Winbox"><h2 id="WinnerMessage"> </h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
+            body += /*html*/`<div id="Winbox"><h2 id="WinnerMessage"> </h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
         } else if (this.game.gewinnStatus == this.user.username) {
 
             this.sendHighscore()
 
-            body += /*html*/`<h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2><br> <button onclick='javascript:restartSpiel()'>Restart</button>`
-            if (this.aufgeben) {
-                body += /*html*/` <div class="Game_Leave"><h2 id = "LeavingMessage">Dein Gegner hat das Spiel verlassen!</h2></div>`
-            }
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br> <button onclick='javascript:restartSpiel()'>Restart</button>`
+           
         } else if (this.game.gewinnStatus == "unentschieden") {
-            body += /*html*/`<div class="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
         } else {
-            body += /*html*/`<div class="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
         }
-        body += /*html*/` <div class="Game_Leave" style = "display:none;"><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
+        body += /*html*/` <div id="Game_Leave"><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
+
+        body += /*html*/` <div id="Game_Leave"><h2 id = "LeavingMessage">Dein Gegner hat das Spiel verlassen!</h2></div>`
+
 
         this.aufgeben = false
 
@@ -100,15 +101,18 @@ class GameComponentAI {
             if (this.game.gewinnStatus) {
                 //router.refresh()
                 if (this.game.gewinnStatus == "unentschieden") {
+                    document.getElementById("Winbox").style.display = "flex"
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
 
                 } else {
 
                     if (this.game.gewinnStatus == this.user.username) {
+                        document.getElementById("Winbox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
 
                         this.sendHighscore()
                     } else {
+                        document.getElementById("Winbox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren! "
 
                     }
@@ -119,15 +123,18 @@ class GameComponentAI {
                 this.game.zugGegner()
                 if (this.game.gewinnStatus) {
                     if (this.game.gewinnStatus == "unentschieden") {
+                        document.getElementById("Winbox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
 
                     } else {
 
                         if (this.game.gewinnStatus == this.user.username) {
+                            document.getElementById("Winbox").style.display = "flex"
                             document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
 
                             this.sendHighscore()
                         } else {
+                            document.getElementById("Winbox").style.display = "flex"
                             document.getElementById("WinnerMessage").innerHTML = "Du hast verloren! "
 
                         }
@@ -147,11 +154,11 @@ class GameComponentAI {
 
             for (let spalte = 0; spalte < this.game.maxSpalte; spalte++) {
                 if (this.game.spielfeld[zeile][spalte] == 1) {
-                    spielefeld += /*html*/`<div id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})"  onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" class="tile yellow-piece"></div>`
+                    spielefeld += /*html*/`<div id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalteAI(${spalte})"  onmouseout="blendeSteinAusAI(${spalte})" onClick="spielZugAI( ${spalte})" class="tile yellow-piece"></div>`
                 } else if (this.game.spielfeld[zeile][spalte] == 2) {
-                    spielefeld += /*html*/`<div id="spalte-${spalte} zeile-${zeile}"  onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" class="tile red-piece"></div>`
+                    spielefeld += /*html*/`<div id="spalte-${spalte} zeile-${zeile}"  onmouseover="zeigeSteinSpalteAI(${spalte})" onmouseout="blendeSteinAusAI(${spalte})" onClick="spielZugAI( ${spalte})" class="tile red-piece"></div>`
                 } else {
-                    spielefeld += /*html*/`<div id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalte(${spalte})" onmouseout="blendeSteinAus(${spalte})" onClick="spielZug( ${spalte})" class="tile"></div>`
+                    spielefeld += /*html*/`<div id="spalte-${spalte} zeile-${zeile}" onmouseover="zeigeSteinSpalteAI(${spalte})" onmouseout="blendeSteinAusAI(${spalte})" onClick="spielZugAI( ${spalte})" class="tile"></div>`
                 }
             }
             spielefeld += /*html*/`<br>`

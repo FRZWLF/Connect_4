@@ -39,21 +39,38 @@ header a img {
     width: auto;
 }
 
-#Scoreboardh1, .Headline_Forms, .Headline_Register {
-    display: block;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
+.scoreboard-class {
+    height: 83vh;
 }
 
 .scoreboard-table {
-    margin: auto;
     width: 100%; 
     border-collapse: collapse;
     font-size: 1.5em;
-    max-height: 40rem; 
-    overflow-y: scroll;
+    max-height: auto; 
     border: 2px solid black;
+}
+
+.scoreboard-tablebox {
+    padding-left:20px;
+    padding-right: 7px;
+    overflow-y: scroll;
+}
+
+.scoreboard-tablebox::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+}
+
+.scoreboard-tablebox::-webkit-scrollbar-track {
+    background-color: #ccc;
+    border-radius: 20px;
+}
+
+.scoreboard-tablebox::-webkit-scrollbar-thumb {
+    background-color: #636363;
+    border-radius: 20px;
+    height: 4rem;
 }
 
 .scoreboard-table th, .scoreboard-table td {
@@ -259,6 +276,7 @@ header a img {
     line-height: 1em;
     justify-content: center;
     min-height: 100vh;
+    padding-top: 1.2rem;
     
 }
 
@@ -426,6 +444,7 @@ header a img {
     line-height: 1em;
     justify-content: center;
     min-height: 100vh;
+    padding-top: 1.2rem;
 }
 
 .Headline_Register {
@@ -472,12 +491,12 @@ header a img {
     line-height: 1em;
     justify-content: center;
     height: 100vh;
-    padding-top: 1.8rem;
+    padding-top: 1.2rem;
 }
 
 .spielregeln-window {
     background: white;
-    min-height: 50vh;
+    height: 83vh;
     width: 95%;
     background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
     border-radius: 2rem;
@@ -1177,7 +1196,7 @@ margin-top: 80px;
     letter-spacing: 0.3rem;
     margin-top: 1rem;
     text-align: center;
-    padding: 10px 20px;
+    padding: 20px 20px;
     background-color: #e99f9d;
     border-radius: 10px;
 }
@@ -1389,6 +1408,52 @@ footer a {
     color: white;
 }
 
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 10rem;
+  }
+
+
+   /***** Track Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type="range"]::-webkit-slider-runnable-track {
+    background: #ffffff;
+    height: 0.5rem;
+    border-radius: 20px;
+    margin-top: -15px;
+  }
+  
+  /******** Firefox ********/
+  input[type="range"]::-moz-range-track {
+    background: #ffffff;
+    height: 0.5rem;
+    border-radius: 20px;
+    margin-top: -15px;
+  }
+
+  /***** Thumb Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -8px; /* Centers thumb on the track */
+    background-color: #e8716d;
+    height: 1.5rem;
+    width: 1rem;    
+    border-radius: 20%;
+ }
+
+ /***** Firefox *****/
+input[type="range"]::-moz-range-thumb {
+    border: none; /*Removes extra border that FF applies*/
+    border-radius: 20%; /*Removes default border-radius that FF applies*/
+    background-color: #e8716d;
+    height: 1.5rem;
+    width: 1rem;
+}
 
 
 .toast {
