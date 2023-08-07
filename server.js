@@ -131,7 +131,7 @@ io.on("connection", (socket) => {
         console.log("Gamer2: ", spieler2, socketuser)
         if (spieler1 == socketuser) {
             io.to(spieler2).emit("matchResolve", socketuser)
-        } else if (spieler2 == socketuser) {
+        } else{
             io.to(spieler1).emit("matchResolve", socketuser)
         }
         // io.emit("playerdisconnect",socketuser)
