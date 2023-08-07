@@ -40,5 +40,3 @@ class WelcomeComponent {
 }
 
 module.exports = WelcomeComponent
-
-

@@ -11,7 +11,6 @@ body {
     font-size: 14px;
     font-family: Arial;
     margin: 0;
-    overflow-y: hidden;
 }
 
 body::-webkit-scrollbar {
@@ -40,38 +39,21 @@ header a img {
     width: auto;
 }
 
-.scoreboard-class {
-    height: 83vh;
+#Scoreboardh1, .Headline_Forms, .Headline_Register {
+    display: block;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
 }
 
 .scoreboard-table {
+    margin: auto;
     width: 100%; 
     border-collapse: collapse;
     font-size: 1.5em;
-    max-height: auto; 
+    max-height: 40rem; 
+    overflow-y: scroll;
     border: 2px solid black;
-}
-
-.scoreboard-tablebox {
-    padding-left:20px;
-    padding-right: 7px;
-    overflow-y: auto;
-}
-
-.scoreboard-tablebox::-webkit-scrollbar {
-    width: 10px;
-    background-color: transparent;
-}
-
-.scoreboard-tablebox::-webkit-scrollbar-track {
-    background-color: #ccc;
-    border-radius: 20px;
-}
-
-.scoreboard-tablebox::-webkit-scrollbar-thumb {
-    background-color: #636363;
-    border-radius: 20px;
-    height: 4rem;
 }
 
 .scoreboard-table th, .scoreboard-table td {
@@ -277,7 +259,6 @@ header a img {
     line-height: 1em;
     justify-content: center;
     min-height: 100vh;
-    padding-top: 1.2rem;
     
 }
 
@@ -445,7 +426,6 @@ header a img {
     line-height: 1em;
     justify-content: center;
     min-height: 100vh;
-    padding-top: 1.2rem;
 }
 
 .Headline_Register {
@@ -492,12 +472,12 @@ header a img {
     line-height: 1em;
     justify-content: center;
     height: 100vh;
-    padding-top: 1.2rem;
+    padding-top: 1.8rem;
 }
 
 .spielregeln-window {
     background: white;
-    height: 83vh;
+    min-height: 50vh;
     width: 95%;
     background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
     border-radius: 2rem;
@@ -964,30 +944,8 @@ margin-top: 80px;
 
     border: 1px solid #ccc;
     border-radius: 20px;
+    min-height: 15vh;
     padding: 10px 10px;
-    padding-bottom: 0;
-}
-
-.Waiting_list_Scroll {
-    overflow-y: auto;
-    padding-right: 10px;
-    max-height: 30vh;
-}
-
-.Waiting_list_Scroll::-webkit-scrollbar {
-    width: 10px;
-    background-color: transparent;
-}
-
-.Waiting_list_Scroll::-webkit-scrollbar-track {
-    background-color: #ccc;
-    border-radius: 20px;
-}
-
-.Waiting_list_Scroll::-webkit-scrollbar-thumb {
-    background-color: #636363;
-    border-radius: 20px;
-    height: 4rem;
 }
 
 
@@ -1145,14 +1103,13 @@ margin-top: 80px;
 }
 
 
-
 /* Game Player */
 
 .You_Player {
 
     background-color: #fff;
-    min-height: 100px;
-    min-width: 100px;
+    min-height: 150px;
+    min-width: 150px;
     border-radius: 20px;
     box-shadow: 5px 0 15px black;
     padding: 40px 60px;
@@ -1161,8 +1118,8 @@ margin-top: 80px;
 .Opp_Player {
 
     background-color: #fff;
-    min-height: 100px;
-    min-width: 100px;
+    min-height: 150px;
+    min-width: 150px;
     border-radius: 20px;
     box-shadow: 5px 0 15px black;
     padding: 40px 60px;
@@ -1225,7 +1182,7 @@ margin-top: 80px;
     letter-spacing: 0.3rem;
     margin-top: 1rem;
     text-align: center;
-    padding: 20px 20px;
+    padding: 10px 20px;
     background-color: #e99f9d;
     border-radius: 10px;
 }
@@ -1237,6 +1194,7 @@ margin-top: 80px;
     left: 32%;
     padding: 30px 35px;
     background-color: #e99f9d;
+    color: white;
     border-radius: 10px;
     font-size: 24px;
     font-family: "Montserrat", sans-serif;
@@ -1253,6 +1211,7 @@ margin-top: 80px;
     left: 32%;
     padding: 30px 35px;
     background-color: #e99f9d;
+    color: white;
     border-radius: 10px;
     font-size: 24px;
     font-family: "Montserrat", sans-serif;
@@ -1268,8 +1227,9 @@ margin-top: 80px;
     top: 38%;
     left: 32%;
     padding: 30px 35px;
-    padding-top: 155px;
+    padding-top: 95px;
     background-color: #e99f9d;
+    color: white;
     border-radius: 10px;
     font-size: 24px;
     font-family: "Montserrat", sans-serif;
@@ -1277,7 +1237,6 @@ margin-top: 80px;
     margin-bottom: 10px;
     margin-top: 10px;
     z-index: 4;
-    color: black;
 }
 
 #timer {
@@ -1308,17 +1267,6 @@ margin-top: 80px;
 
 }
 
-#CoinMessage {
-
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1em;
-    color: black;
-    letter-spacing: 0.3rem;
-    text-align: center;
-
-}
-
 #LoosingMessage {
 
     font-size: 1.5rem;
@@ -1329,7 +1277,6 @@ margin-top: 80px;
     margin-top: 10px;
     text-align: center;
     margin-bottom: 1rem;
-    padding-right: 180px;
 }
 
 #LeavingMessage {
@@ -1446,52 +1393,6 @@ footer a {
     color: white;
 }
 
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
-    width: 10rem;
-  }
-
-
-   /***** Track Styles *****/
-/***** Chrome, Safari, Opera, and Edge Chromium *****/
-input[type="range"]::-webkit-slider-runnable-track {
-    background: #ffffff;
-    height: 0.5rem;
-    border-radius: 20px;
-    margin-top: -15px;
-  }
-  
-  /******** Firefox ********/
-  input[type="range"]::-moz-range-track {
-    background: #ffffff;
-    height: 0.5rem;
-    border-radius: 20px;
-    margin-top: -15px;
-  }
-
-  /***** Thumb Styles *****/
-/***** Chrome, Safari, Opera, and Edge Chromium *****/
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    margin-top: -8px; /* Centers thumb on the track */
-    background-color: #e8716d;
-    height: 1.5rem;
-    width: 1rem;    
-    border-radius: 20%;
- }
-
- /***** Firefox *****/
-input[type="range"]::-moz-range-thumb {
-    border: none; /*Removes extra border that FF applies*/
-    border-radius: 20%; /*Removes default border-radius that FF applies*/
-    background-color: #e8716d;
-    height: 1.5rem;
-    width: 1rem;
-}
 
 
 .toast {
@@ -1503,16 +1404,11 @@ input[type="range"]::-moz-range-thumb {
     top: 4.5rem;
     right: 5px;
     width: 300px;
-    padding: 15px 20px;
+    padding: 10px;
     color: lightgrey;
-    z-index: 100;
-    flex-direction: column;
-}
-
-.alertheadline {
     text-align: center;
+    z-index: 100;
 }
-
 
 #close{
     border-radius: 5px;

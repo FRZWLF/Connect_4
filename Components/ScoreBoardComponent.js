@@ -27,10 +27,8 @@ class ScoreboardComponent {
 
         var text = /*html*/`
         <div class="login-page">           
-            <div class="spielregeln-window scoreboard-class"> 
-                <div class= "Headline_Spielregeln">
-                    <h1 id ="Scoreboardh1">Scoreboard</h1>
-                </div>
+            <div class="spielregeln-window"> 
+                <h1 id ="Scoreboardh1">Scoreboard</h1>
                 <div class="scoreboard-tablebox">
                     <table class="scoreboard-table">
                     <thead>

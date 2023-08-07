@@ -16,7 +16,7 @@ module.exports = class MessageComponent {
         try { clearInterval(this.setI) } catch { }
         try { clearTimeout(this.setT) } catch { }
         let messagediv = document.getElementById('alert')
-        messagediv.style.display = 'flex'
+        messagediv.style.display = 'block'
 
 
         if (type == "fehler") messagediv.style.background = "red"

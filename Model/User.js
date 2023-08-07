@@ -8,14 +8,11 @@ class User {
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
-        this.verified = false
         this.wallet = 0;
         this.skinEquipped = 0
         this.primaryskin =["../public/img/1.gif"] 
         this.secondaryskin=["../public/img/2.gif"]
         this.wins = 0
-        this.loses = 0
-        this.gamesplayed = 0
         
     }
 

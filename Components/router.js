@@ -22,47 +22,38 @@ module.exports = class Router {
                 document.getElementById("lobby").classList.add('active')
                 document.getElementById("scoreboardlnLogin").classList.remove('active')
                 document.getElementById("gameAI").classList.remove('active')
-
             } else if (setActive == "nutzerdaten") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.add('active')
                 document.getElementById("spielregelnLogin").classList.remove('active')
                 document.getElementById("scoreboardlnLogin").classList.remove('active')
                 document.getElementById("gameAI").classList.remove('active')
-
             } else if (setActive == "spielregeln") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.remove('active')
                 document.getElementById("spielregelnLogin").classList.add('active')
                 document.getElementById("scoreboardlnLogin").classList.remove('active')
                 document.getElementById("gameAI").classList.remove('active')
-
             } else if (setActive == "scoreboard") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.remove('active')
                 document.getElementById("spielregelnLogin").classList.remove('active')
                 document.getElementById("scoreboardlnLogin").classList.add('active')
                 document.getElementById("gameAI").classList.remove('active')
-
             } else if (setActive == "gameAI") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.remove('active')
                 document.getElementById("spielregelnLogin").classList.remove('active')
                 document.getElementById("scoreboardlnLogin").classList.remove('active')
                 document.getElementById("gameAI").classList.add('active')
-
-            } else {
+            } else if (setActive == "game") {
                 document.getElementById("lobby").classList.remove('active')
                 document.getElementById("nutzerdaten").classList.remove('active')
                 document.getElementById("spielregelnLogin").classList.remove('active')
                 document.getElementById("scoreboardlnLogin").classList.remove('active')
                 document.getElementById("gameAI").classList.remove('active')
             }
-        } else if (menue == "inGame") {
-            document.getElementById("Logout").style.display = "none" // NavBar Ein-/Ausblendung steuern
-            document.getElementById("Login").style.display = "none"
-        }
-        else {
+        } else {
 
             document.getElementById("Logout").style.display = "flex" // NavBar Ein-/Ausblendung steuern
             document.getElementById("Login").style.display = "none"

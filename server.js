@@ -1,7 +1,6 @@
 // Importieren der benötigten Module
 const express = require('express')
 const app = express()
-const path = require("path");
 const http = require('http')
 const server = http.createServer(app)
 const SocketIO = require('socket.io')
@@ -10,8 +9,6 @@ const UserList = require('./Model/userlist.js')
 const WaitList = require('./Model/WaitingList.js')
 const User = require('./Model/User.js')
 const Chatlist = require('./Model/chatlist.js')
-const mailer = require("./Components/Mailer.js");
-require('dotenv').config();
 
 
 // Festlegen des Ports
@@ -25,7 +22,6 @@ let waitlist = new WaitList()
 // Erstellen einer neuen Chatliste
 let chatlist = new Chatlist()
 
-let PasswordRecovery_username
 // Bei einer neuen Socket.IO-Verbindung
 io.on("connection", (socket) => {
     console.log("Socket.IO-Verbindung eröffnet!")
@@ -35,68 +31,14 @@ io.on("connection", (socket) => {
     let spieler2
 
     // Bei einer Registrierungsanfrage
-    socket.on("registration", async (data) => {
+    socket.on("registration", (data) => {
         let answer = userList.containsUser(data.username)
-        // Wenn der Benutzer nicht existiert, wird er zur Benutzerliste hinzugefügt, nach Klick auf Link in Mail
+        // Wenn der Benutzer nicht existiert, wird er zur Benutzerliste hinzugefügt
         if (!answer) {
-            try {
-                await mailer.sendOptInMail(data.email, data.username);
-            } catch (error) {
-                // falls etwas schiefgeht.
-                console.error("Fehler beim Versenden der E-Mail:", error);
-                // Möglicherweise möchtest du hier den Benutzer aus der userList wieder entfernen,
-                // wenn die E-Mail nicht gesendet werden konnte.
-            }
             userList.addUser(data)
         }
         socket.emit("regisanswer", answer)
     })
-
-    socket.on("reboot", async (email, username) => {
-        let answer = userList.containsUser(username)
-        let emailValide = false
-        let user
-        if (answer) {
-            user = userList.getUser(username)
-            emailValide = user.checkEmail(email)
-            if (emailValide) {
-                try {
-                    await mailer.sendRebootMail(email, username);
-                } catch (error) {
-                    console.error("Fehler beim Versenden der E-Mail:", error);
-                }
-            } socket.emit("userUnvalid", answer, emailValide)
-        } socket.emit("userUnvalid", answer, emailValide)
-    })
-
-    socket.on("Recover", (pwHash) => {
-        let OldUser = userList.getUser(PasswordRecovery_username)
-        let pwcheck = true
-
-        if (OldUser) {
-            pwcheck = OldUser.checkpassword(pwHash)
-            if (!pwcheck) {
-                let NewUser = new User(PasswordRecovery_username, pwHash, OldUser.firstname, OldUser.surname, OldUser.email)
-                NewUser.verified = OldUser.verified
-                NewUser.wallet = OldUser.wallet;
-                NewUser.skinEquipped = OldUser.skinEquipped
-                NewUser.primaryskin = OldUser.primaryskin
-                NewUser.secondaryskin = OldUser.secondaryskin
-                NewUser.wins = OldUser.wins
-                NewUser.loses = OldUser.loses
-                NewUser.gamesplayed = OldUser.gamesplayed
-                userList.addUser(NewUser)
-                // Die Antwort wird an den Client gesendet
-                socket.emit('Recovered', true, pwcheck);
-            } else {
-                socket.emit('Recovered', true, pwcheck);
-            }
-
-        } else {
-            socket.emit('Recovered', false, pwcheck);
-        }
-    })
-
 
     // Bei einer Anfrage für einen neuen Spieler
     socket.on("Newplayer", (user) => {
@@ -130,24 +72,20 @@ io.on("connection", (socket) => {
     socket.on("login", (pwHash, username) => {
         let userExists = userList.containsUser(username)
         let loginValide = false
-        let accVerified = false
         let user
         if (userExists) {
-            accVerified = userList.getUser(username).verified
-            if (accVerified) {
-                user = userList.getUser(username) // Indikator des Objekts
-                loginValide = user.checkpassword(pwHash)
-                // Wenn der Login gültig ist, wird der Benutzername gespeichert und die Antwort an den Client gesendet
-                if (loginValide) {
-                    socketuser = username
-                    console.log('ich bin engeloggt', socketuser)
-                    socket.emit("loginValide", loginValide, userExists, user)
-                } else
-                    // Wenn der Login ungültig ist, wird die Antwort an den Client gesendet
-                    socket.emit("loginUnvalide", loginValide, userExists, accVerified)
-            } socket.emit("loginUnvalide", loginValide, userExists, accVerified)
+            user = userList.getUser(username) // Indikator des Objekts
+            loginValide = user.checkpassword(pwHash)
+            // Wenn der Login gültig ist, wird der Benutzername gespeichert und die Antwort an den Client gesendet
+            if (loginValide) {
+                socketuser = username
+                console.log('ich bin engeloggt', socketuser)
+                socket.emit("loginValide", loginValide, userExists, user)
+            } else
+                // Wenn der Login ungültig ist, wird die Antwort an den Client gesendet
+                socket.emit("loginUnvalide", loginValide, userExists)
         }
-        socket.emit("loginUnvalide", loginValide, userExists, accVerified) // war doppelt?!?
+        socket.emit("loginUnvalide", loginValide, userExists) // war doppelt?!?
     })
 
     // Bei einer Anfrage zur Aktualisierung der Benutzerdaten
@@ -180,35 +118,20 @@ io.on("connection", (socket) => {
         winUser = userList.getUser(winner)
         lossUser = userList.getUser(loser)
         winUser.wins += 1
-        winUser.gamesplayed += 1
-        console.log("Winner Games: ", winUser.gamesplayed)
-        winUser.wallet += 20
-        console.log("Winner Wallet: ", winUser.wallet)
-        lossUser.loses += 1
-        lossUser.gamesplayed += 1
-        userList.addUser(lossUser)
+        if (lossUser.wins > 0) {
+            lossUser.wins -= 1
+            userList.addUser(lossUser)
+        }
         userList.addUser(winUser)
         console.log("Users changed!")
     })
-
-    socket.on("Tietracker", (gamer1, gamer2) => {
-        gamer1User = userList.getUser(gamer1)
-        gamer2User = userList.getUser(gamer2)
-        gamer1User.gamesplayed += 1
-        gamer1User.wallet += 10
-        gamer2User.gamesplayed += 1
-        gamer2User.wallet += 10
-        userList.addUser(gamer1User)
-        userList.addUser(gamer2User)
-        console.log("Tie tracked")
-    })
-
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
-        console.log("Gamer: ", spieler1, socketuser)
+        console.log("Gamer1: ", spieler1, socketuser)
+        console.log("Gamer2: ", spieler2, socketuser)
         if (spieler1 == socketuser) {
             io.to(spieler2).emit("matchResolve", socketuser)
-        } else {
+        } else if (spieler2 == socketuser) {
             io.to(spieler1).emit("matchResolve", socketuser)
         }
         // io.emit("playerdisconnect",socketuser)
@@ -248,26 +171,6 @@ io.on("connection", (socket) => {
         socket.emit("newBoard", winner, looser)
     })
 })
-
-app.get("/verify/:username", (req, res) => {
-    let userName = req.params.username;
-    console.log(userName)
-    let userverify = userList.getUser(userName)
-    userverify.verified = true
-    userList.addUser(userverify)
-    console.log("Account active")
-    return res.status(200).send({
-        msg: "Account activated",
-    });
-});
-
-app.get("/change/:username", (req, res) => {
-    PasswordRecovery_username = req.params.username
-    console.log("Nen User huhu: ", PasswordRecovery_username)
-    res.sendFile(path.join(__dirname + "/public" + "/PasswordRecovery.html"), function (err) {
-        if (err) res.status(404).send('Du Depp! Die Seite gibt es garnicht!');
-    });
-});
 
 // Server starten und auf dem festgelegten Port lauschen
 server.listen(port, () => console.log("http://localhost:5555/index.html"));

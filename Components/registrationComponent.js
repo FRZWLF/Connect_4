@@ -7,7 +7,7 @@ const val = require(`validator`)
 class RegistrationComponent {
 
     constructor() {
-        window.registering = this.register.bind(this)
+        window.registering = this.registering.bind(this)
         window.reset = this.reset.bind(this)
     }
 
@@ -61,7 +61,7 @@ class RegistrationComponent {
         });
     }
 
-    register() {
+    registering() {
         let username = document.getElementById("username").value
         let password = document.getElementById("password").value
         let password2 = document.getElementById("password2").value
@@ -69,32 +69,9 @@ class RegistrationComponent {
         let surname = document.getElementById("surname").value
         let email = document.getElementById("email").value
 
-        if (username == "" || username.length < 5) {
-            message("Achtung", "Username muss 5 Zeichen lang sein!", "fehler")
-        } else if(password == ""){
+        if (username == "" || password == "") {
             message("Achtung", "Username und Passwort muss angegeben werden", "fehler")
-        } else if (password != "") {
-            const missingRequirements = [];
-            if (!password || password.length < 8) {
-                missingRequirements.push("min 8 Zeichen")
-            }
-            if (!/[a-z]/.test(password)) {
-                missingRequirements.push("min einem Kleinbuchstaben");
-            }
-            if (!/[A-Z]/.test(password)) {
-                missingRequirements.push("min einem Großbuchstaben");
-            }
-            if (!/\d/.test(password)) {
-                missingRequirements.push("min einer Zahl");
-            }
-            if (!/[!#$%^&*()+\=\[\]{};':"\\|,<>\/?_\-]/.test(password)) {
-                missingRequirements.push("min einem Sonderzeichen");
-            }
-            if (missingRequirements.length > 0) {
-                message("Achtung", `Passwort braucht noch:<br>${missingRequirements.map(requirement => `&nbsp;&nbsp; - ${requirement}`).join('<br>')}`, "fehler");
-
-            } else
-                if (password == password2 && val.isEmail(email)) {
+        }  else if (password == password2 && val.isEmail(email)) {
                     var hash = crypto.createHash('sha256')
                     hash.update(password)
                     let pwHash = hash.digest('hex')
@@ -107,8 +84,8 @@ class RegistrationComponent {
                         if (answer) {
                             message("Achtung", "Registration fehlgeschlagen", "fehler")
                         } else {
-                            message("Registrierung", "Bestätige deinen Account in der Email")
-                            router.gotoView("login", " ", "login")
+                            message("Registrierung","User wurde angelegt")
+                            router.gotoView("login"," ", "login")
                         }
                     })
                 } else {
@@ -116,7 +93,6 @@ class RegistrationComponent {
                 }
         }
     }
-}
 
 
 module.exports = RegistrationComponent

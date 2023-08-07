@@ -1,4 +1,3 @@
-
 class WaitingList {
     constructor() {
         this.WaitingList = []
@@ -25,7 +24,3 @@ class WaitingList {
 }
 
 module.exports = WaitingList
-
-
-
-

@@ -8,7 +8,6 @@ class ChangeuserdataComponent {
     constructor() {
         // Binden der Methode 'change' an das aktuelle Objekt
         window.change = this.change.bind(this)
-        window.changeView = this.changeView.bind(this)
     }
 
     // Methode zur Erzeugung des HTML-Formulars
@@ -27,39 +26,12 @@ class ChangeuserdataComponent {
                         </div>
                         <div class="links">
                             <div class="link">
-                                <h2 id="uebersicht" class="active" onclick="changeView('uebersicht')">Übersicht</h2>
-                            </div>
-                            <div class="link">
-                                <h2 id="userdata" onclick="changeView('profil')">Profil bearbeiten</h2>
-                            </div>
-                            <div class="link">
-                                <h2>Daten und Datenschutz</h2>
-                            </div>
-                            <div class="link">
-                                <h2>Sicherheit</h2>
-                            </div>
-                            <div class="link">
-                                <h2>Zahlungen</h2>
+                                <h2 id="userdata" class="active">Profil bearbeiten</h2>
                             </div>
                         </div>
                     </div>
                     <div class="profil-view">
-                        <div id="status_uebersicht">
-                            <div class="status">
-                                <h1>Übersicht</h1>
-                                <input type="text" class="disable">
-                            </div>
-                            <div class="cards">
-                                <div class="card">
-                                    <div class="card-info">
-                                        <h2>Deine Stats</h2>
-                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="status_userdata" style ="display: none;">
+                        <div id="status_userdata">
                             <div class="status" >
                                 <h1>Nutzerdaten ändern</h1>
                                 <input type="text" class="disable">
@@ -157,23 +129,6 @@ class ChangeuserdataComponent {
         return (text)
     }
 
-    changeView(submenue) {
-        console.log("Ich mach was")
-        if (submenue == "uebersicht") {
-            document.getElementById("status_uebersicht").style.display = "block";
-            document.getElementById("status_userdata").style.display = "none";
-            document.getElementById("uebersicht").classList.add("active");
-            document.getElementById("userdata").classList.remove("active");
-        } else {
-            document.getElementById("status_uebersicht").style.display = "none";
-            document.getElementById("status_userdata").style.display = "block";
-            document.getElementById("uebersicht").classList.remove("active");
-            document.getElementById("userdata").classList.add("active");
-        }
-
-    }
-
-    //Muss noch Seite refreshen für Änderungen!!!
 
     // Methode zur Änderung der Benutzerdaten
     change() {
@@ -193,28 +148,7 @@ class ChangeuserdataComponent {
         // Überprüfung, ob das aktuelle Passwort eingegeben wurde
         if (current_password == "") {
             message("Achtung", "Aktuelles Passwort muss angegeben werden", "fehler")
-        } else if (password != "") {
-            const missingRequirements = [];
-            if (!password || password.length < 8) {
-                missingRequirements.push("min 8 Zeichen")
-            }
-            if (!/[a-z]/.test(password)) {
-                missingRequirements.push("min einem Kleinbuchstaben");
-            }
-            if (!/[A-Z]/.test(password)) {
-                missingRequirements.push("min einem Großbuchstaben");
-            }
-            if (!/\d/.test(password)) {
-                missingRequirements.push("min einer Zahl");
-            }
-            if (!/[!#$%^&*()+\=\[\]{};':"\\|,<>\/?_\-]/.test(password)) {
-                missingRequirements.push("min einem Sonderzeichen");
-            }
-            if (missingRequirements.length > 0) {
-                message("Achtung", `Passwort braucht noch:<br>${missingRequirements.map(requirement => `&nbsp;&nbsp; - ${requirement}`).join('<br>')}`, "fehler");
-
-            } else
-                if (password == password2 && val.isEmail(email)) {
+        } else if (password == password2 && val.isEmail(email)) {
                     var hash = crypto.createHash('sha256')
                     hash.update(password)
                     let pwHash = hash.digest('hex')
@@ -222,14 +156,11 @@ class ChangeuserdataComponent {
                     // Erzeugung eines neuen Benutzerobjekts mit den aktualisierten Daten
                     let oldUser = appstatus.loginUser
                     let newUser = new User(oldUser.username, pwHash, firstname, surname, email)
-                    newUser.verified = oldUser.verified
-                    newUser.wallet = oldUser.wallet;
+                    newUser.wallet = oldUser.wallet
                     newUser.skinEquipped = oldUser.skinEquipped
                     newUser.primaryskin = oldUser.primaryskin
                     newUser.secondaryskin = oldUser.secondaryskin
                     newUser.wins = oldUser.wins
-                    newUser.loses = oldUser.loses
-                    newUser.gamesplayed = oldUser.gamesplayed
                     // Senden des neuen Benutzerobjekts an den Server zur Aktualisierung
                     socket.emit('updateUser', newUser, cpwhash)
                     router.refresh()
@@ -248,6 +179,5 @@ class ChangeuserdataComponent {
                 }
         }
     }
-}
 // Exportieren der Klasse ChangeuserdataComponent
 module.exports = ChangeuserdataComponent

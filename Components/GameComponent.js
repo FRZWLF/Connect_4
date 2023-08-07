@@ -11,23 +11,11 @@ class GameComponent {
             this.game = new Game(player1, player2, 6, 7)
             this.user = appstatus.loginUser
             console.log(this.user)
-            router.gotoView("game", "inGame", "game")
+            router.gotoView("game", "logedin", "game")
             if (this.game.aktiverSpieler == appstatus.loginUser.username) {
                 this.zugZeitAnzeigen()
             }
             
-        })
-
-        socket.on("playerdisconnect", (socketuser) => {
-            console.log(socketuser,"test")
-            if(this.user.username == socketuser){
-                clearInterval(this.seti)
-                this.game.checkGiveUp(socketuser)
-            }else{
-                clearInterval(this.seti)
-                this.game.checkGiveUp(socketuser)
-            }
-
         })
         
         socket.on("matchResolve", (playerName) => {
@@ -55,7 +43,6 @@ class GameComponent {
                 this.sendHighscore()
                 router.refresh()
                 document.getElementById("Game_Leave").style.display = "flex"
-                console.log("bin da")
             }
         })
 
@@ -65,10 +52,8 @@ class GameComponent {
                 //router.refresh()
                 if (this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("Winbox").style.display = "flex"
-                    document.getElementById("Game_TextBox").style.display = "flex"
                     console.log("ghj")
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
-                    document.getElementById("CoinMessage").innerHTML = "Wöhner-Coins   +10"
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     this.sendHighscore()
                 } else {
@@ -79,17 +64,12 @@ class GameComponent {
                             socket.emit('newWinner', this.user.username, this.game.user1)
                         }
                         document.getElementById("Winbox").style.display = "flex"
-                        document.getElementById("Game_TextBox").style.display = "flex"
-                        console.log("lhg")
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch. "
-                        document.getElementById("CoinMessage").innerHTML = "Wöhner-Coins   +20"
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                         this.sendHighscore()
                     } else {
                         document.getElementById("Winbox").style.display = "flex"
-                        document.getElementById("Game_TextBox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren!"
-                        document.getElementById("CoinMessage").innerHTML = "Wöhner-Coins   +0"
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }
 
@@ -109,20 +89,12 @@ class GameComponent {
                 if (appstatus.loginUser.username == this.game.user1) socket.emit("winTracker", this.game.user1, this.game.user2)          
                 if (appstatus.loginUser.username == this.game.user2) socket.emit("winTracker", this.game.user2, this.game.user1)
             }
-        } else if (this.game.gewinnStatus == "unentschieden") {
-            console.log("Tieie")
-            if(this.game.syncWins) {
-                console.log("Tieson")
-                this.game.syncWins = false
-                if (appstatus.loginUser.username == this.game.user1) socket.emit("Tietracker", this.game.user1, this.game.user2)
-                if (appstatus.loginUser.username == this.game.user2) socket.emit("TieTracker", this.game.user2, this.game.user1)
-            }
         }
     }   
     
     zugZeitAnzeigen() {
         try { clearInterval(this.seti) } catch { }
-        this.zugzeit = 10
+        this.zugzeit = 60
 
         //Timer Start
         this.seti = setInterval(() => {
@@ -191,20 +163,16 @@ class GameComponent {
         body += /*html*/`</div>`
         console.log("Gewinnstatus: " + this.game.gewinnStatus)
         if (!this.game.gewinnStatus) {
-            body += /*html*/`<div id="Winbox"><h2 id="WinnerMessage"> </h2></div><br> `
-            body += /*html*/`<div id="Game_TextBox" style="margin-top: 4.5rem; display: none;"><h2 id="CoinMessage"></h2></div><br>`
+            body += /*html*/`<div id="Winbox"><h2 id="WinnerMessage"> </h2></div><br>`
         } else if (this.game.gewinnStatus == this.user.username) {
 
             this.sendHighscore()
             
             body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br>`
-            body += /*html*/`<div id="Game_TextBox" style="margin-top: 4.5rem"><h2 id="WinnerMessage"> Wöhner-Coins   +20</h2></div><br>`
         } else if (this.game.gewinnStatus == "unentschieden") {
             body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br>`
-            body += /*html*/`<div id="Game_TextBox" style="margin-top: 4.5rem"><h2 id="WinnerMessage"> Wöhner-Coins   +10</h2></div><br>`
         } else {
             body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br>`
-            body += /*html*/`<div id="Game_TextBox" style="margin-top: 4.5rem"><h2 id="WinnerMessage"> Wöhner-Coins   +0</h2></div><br>`
         }
         if(this.zeitabgelaufen)
         body += /*html*/` <div id="Game_Leave" ><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
@@ -255,25 +223,19 @@ class GameComponent {
                 //router.refresh()
                 if (this.game.gewinnStatus == "unentschieden") {
                     document.getElementById("Winbox").style.display = "flex"
-                    document.getElementById("Game_TextBox").style.display = "flex"
                     document.getElementById("WinnerMessage").innerHTML = "Leider kein Gewinner."
-                    document.getElementById("CoinMessage").innerHTML = "Wöhner-Coins   +10"
                     document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     this.sendHighscore()
                 } else {
                     
                     if (this.game.gewinnStatus == this.user.username) {
                         document.getElementById("Winbox").style.display = "flex"
-                        document.getElementById("Game_TextBox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Gewonnen! Herzlichen Glückwunsch."
-                        document.getElementById("CoinMessage").innerHTML = "Wöhner-Coins   +20"
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                         this.sendHighscore()
                     } else {
                         document.getElementById("Winbox").style.display = "flex"
-                        document.getElementById("Game_TextBox").style.display = "flex"
                         document.getElementById("WinnerMessage").innerHTML = "Du hast verloren! "
-                        document.getElementById("CoinMessage").innerHTML = "Wöhner-Coins   +0"
                         document.getElementById("amzug").innerHTML = "<b>Am Zug:</b> -"
                     }
                 }
