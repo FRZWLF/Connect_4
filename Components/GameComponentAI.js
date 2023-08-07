@@ -22,19 +22,20 @@ class GameComponentAI {
                     <div class="links links-game">
                         <div class="You_Player">
                             <p id="spieler"><b class="Player-font">Spieler</b> <p class="Game-Username">${this.user.username}</p></p>`
-        body += /*html*/`<div id="Player-Stone"><p class="Player-Stone">Dein Stein</p>`
+                                 body += /*html*/`<div id="Player-Stone"><p class="Player-Stone">Dein Stein</p>`
 
-        if (this.user.username == this.game.user1) {
-            body += /*html*/`<div class="tile yellow-piece"></div>`
-        } else {
-            body += /*html*/`<div class="tile red-piece"></div>`
-        }
-        body += /*html*/`</div>`
-        body += /*html*/`<p id="timer"></p>`
-
-        body += /*html*/` 
+                                 if (this.user.username == this.game.user1) {
+                                     body += /*html*/`<div class="tile yellow-piece"></div>`
+                                 } else {
+                                     body += /*html*/`<div class="tile red-piece"></div>`
+                                 }
+                                 body += /*html*/`</div>`
+                                 body += /*html*/`<p id="timer"></p>`
+                             
+                                 body += /*html*/` 
                        
-                    </div>
+                        </div>
+                        <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>
                     </div>
         
             <div class="mitte Connect4">`
@@ -47,17 +48,17 @@ class GameComponentAI {
         body += /*html*/`</div>`
         console.log("Gewinnstatus: " + this.game.gewinnStatus)
         if (!this.game.gewinnStatus) {
-            body += /*html*/`<div id="Winbox"><h2 id="WinnerMessage"> </h2></div><br> <div class="Lobby-button"><button class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
+            body += /*html*/`<div id="Winbox"><h2 id="WinnerMessage"> </h2></div><br>`
         } else if (this.game.gewinnStatus == this.user.username) {
 
             this.sendHighscore()
 
-            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br> <button onclick='javascript:restartSpiel()'>Restart</button>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Gewonnen! Herzlichen Glückwunsch.</h2></div><br>`
            
         } else if (this.game.gewinnStatus == "unentschieden") {
-            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Unentschieden, keep trying! </h2></div><br>`
         } else {
-            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br> <div class="Lobby-button"><button  class="forms_button-action" onclick='javascript:restartSpiel()'>Restart</button></div>`
+            body += /*html*/`<div id="Game_TextBox"><h2 id="WinnerMessage"> Du hast verloren! </h2></div><br>`
         }
         body += /*html*/` <div id="Game_Leave"><h2 id = "LoosingMessage">Dein Gegner hat gepennt!</h2></div>`
 

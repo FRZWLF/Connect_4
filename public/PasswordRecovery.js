@@ -36,17 +36,19 @@ function Recover(){
         
                     socket.emit("Recover", pwHash)
 
-                  socket.on("Recovered", (answer) => {
-                    if(answer) {
+                  socket.on("Recovered", (answer, pwcheck) => {
+                    if(answer && !pwcheck) {
                         document.getElementById("passwordsecond").style.display = "block"
                         document.getElementById("passwordfirst").style.display = "none"
+                    } else if (answer && pwcheck) {
+                        message("Achtung", "Neues Passwort darf nicht altes Passwort sein", "fehler")
                     } else {
                         message("Achtung", "Fehler beim Passwort neusetzen. Try again!", "fehler")
                     }
                   })
                 
         } else {
-                message("Achtung", "Passwörter sind ungleich oder die Email ist ungültig!", "fehler")
+                message("Achtung", "Passwörter sind ungleich!", "fehler")
             }
     }
 }

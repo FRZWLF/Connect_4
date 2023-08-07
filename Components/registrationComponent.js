@@ -69,7 +69,9 @@ class RegistrationComponent {
         let surname = document.getElementById("surname").value
         let email = document.getElementById("email").value
 
-        if (username == "" || password == "") {
+        if (username == "" || username.length < 5) {
+            message("Achtung", "Username muss 5 Zeichen lang sein!", "fehler")
+        } else if(password == ""){
             message("Achtung", "Username und Passwort muss angegeben werden", "fehler")
         } else if (password != "") {
             const missingRequirements = [];

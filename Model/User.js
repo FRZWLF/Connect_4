@@ -14,6 +14,8 @@ class User {
         this.primaryskin =["../public/img/1.gif"] 
         this.secondaryskin=["../public/img/2.gif"]
         this.wins = 0
+        this.loses = 0
+        this.gamesplayed = 0
         
     }
 

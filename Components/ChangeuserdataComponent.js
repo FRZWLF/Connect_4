@@ -159,7 +159,7 @@ class ChangeuserdataComponent {
 
     changeView(submenue) {
         console.log("Ich mach was")
-        if(submenue == "uebersicht"){
+        if (submenue == "uebersicht") {
             document.getElementById("status_uebersicht").style.display = "block";
             document.getElementById("status_userdata").style.display = "none";
             document.getElementById("uebersicht").classList.add("active");
@@ -170,7 +170,7 @@ class ChangeuserdataComponent {
             document.getElementById("uebersicht").classList.remove("active");
             document.getElementById("userdata").classList.add("active");
         }
-        
+
     }
 
     //Muss noch Seite refreshen für Änderungen!!!
@@ -192,40 +192,60 @@ class ChangeuserdataComponent {
 
         // Überprüfung, ob das aktuelle Passwort eingegeben wurde
         if (current_password == "") {
-            message("Achtung","Aktuelles Passwort muss angegeben werden","fehler")
-        } else {
-            // Überprüfung, ob die E-Mail gültig ist
-            if (val.isEmail(email)) {
-                // Erzeugung eines Hashes aus dem neuen Passwort, falls eingegeben
-                let pwHash = password !== "" && password === password2 ? crypto.createHash('sha256').update(password).digest('hex') : appstatus.loginUser.password;
-
-                // Erzeugung eines neuen Benutzerobjekts mit den aktualisierten Daten
-                let oldUser = appstatus.loginUser
-                let newUser = new User(oldUser.username, pwHash, firstname, surname, email)
-                newUser.wallet = oldUser.wallet;
-                newUser.skinEquipped = oldUser.skinEquipped
-                newUser.primaryskin = oldUser.primaryskin
-                newUser.secondaryskin = oldUser.secondaryskin
-                newUser.gamesPlayed = oldUser.gamesPlayed
-                newUser.wins = oldUser.wins
-    
-                // Senden des neuen Benutzerobjekts an den Server zur Aktualisierung
-                socket.emit('updateUser', newUser, cpwhash)
-
-                // Empfangen der Antwort vom Server
-                socket.on('updateAnswer', (answer) => {
-                    if (answer) {
-                        // Aktualisierung des eingeloggten Benutzers im Frontend
-                        appstatus.loginUser = newUser
-                        message("Update erfolgt!","Nutzerdaten wurden geändert")
-                    } else {
-                        message("Achtung","Update gescheitert.","fehler")
-                    }
-                })
+            message("Achtung", "Aktuelles Passwort muss angegeben werden", "fehler")
+        } else if (password != "") {
+            const missingRequirements = [];
+            if (!password || password.length < 8) {
+                missingRequirements.push("min 8 Zeichen")
             }
-            else {
-                message("Achtung","Die Email ist ungültig.","fehler")
+            if (!/[a-z]/.test(password)) {
+                missingRequirements.push("min einem Kleinbuchstaben");
             }
+            if (!/[A-Z]/.test(password)) {
+                missingRequirements.push("min einem Großbuchstaben");
+            }
+            if (!/\d/.test(password)) {
+                missingRequirements.push("min einer Zahl");
+            }
+            if (!/[!#$%^&*()+\=\[\]{};':"\\|,<>\/?_\-]/.test(password)) {
+                missingRequirements.push("min einem Sonderzeichen");
+            }
+            if (missingRequirements.length > 0) {
+                message("Achtung", `Passwort braucht noch:<br>${missingRequirements.map(requirement => `&nbsp;&nbsp; - ${requirement}`).join('<br>')}`, "fehler");
+
+            } else
+                if (password == password2 && val.isEmail(email)) {
+                    var hash = crypto.createHash('sha256')
+                    hash.update(password)
+                    let pwHash = hash.digest('hex')
+
+                    // Erzeugung eines neuen Benutzerobjekts mit den aktualisierten Daten
+                    let oldUser = appstatus.loginUser
+                    let newUser = new User(oldUser.username, pwHash, firstname, surname, email)
+                    newUser.verified = oldUser.verified
+                    newUser.wallet = oldUser.wallet;
+                    newUser.skinEquipped = oldUser.skinEquipped
+                    newUser.primaryskin = oldUser.primaryskin
+                    newUser.secondaryskin = oldUser.secondaryskin
+                    newUser.wins = oldUser.wins
+                    newUser.loses = oldUser.loses
+                    newUser.gamesplayed = oldUser.gamesplayed
+                    // Senden des neuen Benutzerobjekts an den Server zur Aktualisierung
+                    socket.emit('updateUser', newUser, cpwhash)
+                    router.refresh()
+                    // Empfangen der Antwort vom Server
+                    socket.on('updateAnswer', (answer) => {
+                        if (answer) {
+                            // Aktualisierung des eingeloggten Benutzers im Frontend
+                            appstatus.loginUser = newUser
+                            message("Update erfolgt!", "Nutzerdaten wurden geändert")
+                        } else {
+                            message("Achtung", "Update gescheitert. Aktuelles Passwort falsch", "fehler")
+                        }
+                    })
+                } else {
+                    message("Achtung", "Passwörter sind ungleich oder Email ist ungültig.", "fehler")
+                }
         }
     }
 }

@@ -55,7 +55,7 @@ header a img {
 .scoreboard-tablebox {
     padding-left:20px;
     padding-right: 7px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .scoreboard-tablebox::-webkit-scrollbar {
@@ -1121,7 +1121,7 @@ margin-top: 80px;
 
     display: flex;
     flex-direction: row;
-    height: 83vh;
+    height: 79vh;
     
 }
 
@@ -1131,11 +1131,13 @@ margin-top: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 83vh;
+    height: auto;
 }
 
 .links-game {
     justify-content: space-between;
+    padding-bottom: 30px;
+    padding-left: 30px;
 }
 
 .rechts-game {
@@ -1235,7 +1237,6 @@ margin-top: 80px;
     left: 32%;
     padding: 30px 35px;
     background-color: #e99f9d;
-    color: white;
     border-radius: 10px;
     font-size: 24px;
     font-family: "Montserrat", sans-serif;
@@ -1252,7 +1253,6 @@ margin-top: 80px;
     left: 32%;
     padding: 30px 35px;
     background-color: #e99f9d;
-    color: white;
     border-radius: 10px;
     font-size: 24px;
     font-family: "Montserrat", sans-serif;
@@ -1268,9 +1268,8 @@ margin-top: 80px;
     top: 38%;
     left: 32%;
     padding: 30px 35px;
-    padding-top: 95px;
+    padding-top: 155px;
     background-color: #e99f9d;
-    color: white;
     border-radius: 10px;
     font-size: 24px;
     font-family: "Montserrat", sans-serif;
@@ -1278,6 +1277,7 @@ margin-top: 80px;
     margin-bottom: 10px;
     margin-top: 10px;
     z-index: 4;
+    color: black;
 }
 
 #timer {
@@ -1298,6 +1298,17 @@ margin-top: 80px;
 }
 
 #WinnerMessage {
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1em;
+    color: black;
+    letter-spacing: 0.3rem;
+    text-align: center;
+
+}
+
+#CoinMessage {
 
     font-size: 1.5rem;
     font-weight: 600;

@@ -71,22 +71,29 @@ io.on("connection", (socket) => {
 
     socket.on("Recover", (pwHash) => {
         let OldUser = userList.getUser(PasswordRecovery_username)
-        let NewUser = new User(PasswordRecovery_username, pwHash, OldUser.firstname, OldUser.surname, OldUser.email)
-        NewUser.wallet = OldUser.wallet;
-        NewUser.skinEquipped = OldUser.skinEquipped
-        NewUser.primaryskin = OldUser.primaryskin
-        NewUser.secondaryskin = OldUser.secondaryskin
-        NewUser.gamesPlayed = OldUser.gamesPlayed
-        NewUser.wins = OldUser.wins
-        NewUser.verified = OldUser.verified
-        if (NewUser) {
-            // Wenn das alte Passwort korrekt ist, werden die Benutzerdaten aktualisiert
-            userList.addUser(NewUser)
-            // Die Antwort wird an den Client gesendet
-            socket.emit('Recovered', true);
+        let pwcheck = true
+
+        if (OldUser) {
+            pwcheck = OldUser.checkpassword(pwHash)
+            if (!pwcheck) {
+                let NewUser = new User(PasswordRecovery_username, pwHash, OldUser.firstname, OldUser.surname, OldUser.email)
+                NewUser.verified = OldUser.verified
+                NewUser.wallet = OldUser.wallet;
+                NewUser.skinEquipped = OldUser.skinEquipped
+                NewUser.primaryskin = OldUser.primaryskin
+                NewUser.secondaryskin = OldUser.secondaryskin
+                NewUser.wins = OldUser.wins
+                NewUser.loses = OldUser.loses
+                NewUser.gamesplayed = OldUser.gamesplayed
+                userList.addUser(NewUser)
+                // Die Antwort wird an den Client gesendet
+                socket.emit('Recovered', true, pwcheck);
+            } else {
+                socket.emit('Recovered', true, pwcheck);
+            }
+
         } else {
-            // Wenn das alte Passwort nicht korrekt ist, wird die Antwort an den Client gesendet
-            socket.emit('Recovered', false);
+            socket.emit('Recovered', false, pwcheck);
         }
     })
 
@@ -173,13 +180,29 @@ io.on("connection", (socket) => {
         winUser = userList.getUser(winner)
         lossUser = userList.getUser(loser)
         winUser.wins += 1
-        if (lossUser.wins > 0) {
-            lossUser.wins -= 1
-            userList.addUser(lossUser)
-        }
+        winUser.gamesplayed += 1
+        console.log("Winner Games: ", winUser.gamesplayed)
+        winUser.wallet += 20
+        console.log("Winner Wallet: ", winUser.wallet)
+        lossUser.loses += 1
+        lossUser.gamesplayed += 1
+        userList.addUser(lossUser)
         userList.addUser(winUser)
         console.log("Users changed!")
     })
+
+    socket.on("Tietracker", (gamer1, gamer2) => {
+        gamer1User = userList.getUser(gamer1)
+        gamer2User = userList.getUser(gamer2)
+        gamer1User.gamesplayed += 1
+        gamer1User.wallet += 10
+        gamer2User.gamesplayed += 1
+        gamer2User.wallet += 10
+        userList.addUser(gamer1User)
+        userList.addUser(gamer2User)
+        console.log("Tie tracked")
+    })
+
     // Bei einer Socket.IO-Verbindungsunterbrechung
     socket.on('disconnect', () => {
         console.log("Gamer: ", spieler1, socketuser)
@@ -241,9 +264,9 @@ app.get("/verify/:username", (req, res) => {
 app.get("/change/:username", (req, res) => {
     PasswordRecovery_username = req.params.username
     console.log("Nen User huhu: ", PasswordRecovery_username)
-        res.sendFile(path.join(__dirname + "/public" + "/PasswordRecovery.html"), function (err) {
-            if (err) res.status(404).send('Du Depp! Die Seite gibt es garnicht!');
-        });
+    res.sendFile(path.join(__dirname + "/public" + "/PasswordRecovery.html"), function (err) {
+        if (err) res.status(404).send('Du Depp! Die Seite gibt es garnicht!');
+    });
 });
 
 // Server starten und auf dem festgelegten Port lauschen

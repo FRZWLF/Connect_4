@@ -35,6 +35,8 @@ class UserList {
         let userJson = this.userlist[username]
         let userObjkt = new User(userJson.username, userJson.password, userJson.firstname, userJson.surname, userJson.email)
         userObjkt.wins = userJson.wins
+        userObjkt.loses = userJson.loses
+        userObjkt.gamesplayed = userJson.gamesplayed
         userObjkt.wallet = userJson.wallet
         userObjkt.skinEquipped = userJson.skinEquipped
         userObjkt.primaryskin = userJson.primaryskin
